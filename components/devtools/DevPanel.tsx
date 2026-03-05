@@ -13,7 +13,7 @@ export function DevPanelButton() {
     <button
       type="button"
       onClick={togglePanel}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-medium tracking-tight text-slate-200 shadow-card transition-all duration-200 hover:border-slate-600 hover:bg-slate-800 active:scale-[0.98]"
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full border border-white/10 bg-obsidian/80 px-4 py-2 text-sm font-medium tracking-tight text-ivory/90 shadow-card backdrop-blur-md transition-all duration-200 hover:border-champagne/30 hover:bg-obsidian/90 active:scale-[0.98]"
       aria-label="Open Dev Panel"
     >
       <Settings2 className="h-4 w-4" />

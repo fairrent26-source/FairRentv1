@@ -21,10 +21,14 @@ const STEPS = [
   { label: "Launch" },
 ];
 
+/** Landlord entity type for identity step — mutually exclusive, DB-ready. */
+export type LandlordEntityType = "private_landlord" | "limited_company";
+
 export default function LandlordOnboardingPage() {
   const router = useRouter();
   const completeOnboarding = useAuthStore((s) => s.completeOnboarding);
   const [step, setStep] = useState(0);
+  const [landlordEntityType, setLandlordEntityType] = useState<LandlordEntityType | null>(null);
 
   const handleContinue = () => {
     if (step < STEPS.length - 1) {
@@ -54,10 +58,25 @@ export default function LandlordOnboardingPage() {
             <div className="mt-8 space-y-6">
               <div>
                 <label className="mb-1 block text-sm font-medium text-ivory/70">Are you a Private Landlord or a Company/Entity?</label>
-                <div className="mt-2 flex gap-2">
-                  <Button type="button" className="rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90">Private Landlord</Button>
-                  <Button type="button" variant="outline" className="rounded-[2rem] border-white/20 text-ivory/80 hover:border-champagne/50">Limited Company / Entity</Button>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    onClick={() => setLandlordEntityType("private_landlord")}
+                    className={`rounded-[2rem] ${landlordEntityType === "private_landlord" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                    variant={landlordEntityType === "private_landlord" ? undefined : "outline"}
+                  >
+                    Private Landlord
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => setLandlordEntityType("limited_company")}
+                    className={`rounded-[2rem] ${landlordEntityType === "limited_company" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                    variant={landlordEntityType === "limited_company" ? undefined : "outline"}
+                  >
+                    Limited Company / Entity
+                  </Button>
                 </div>
+                <p className="mt-1.5 text-xs text-ivory/50">Select one. This will be saved with your profile.</p>
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium text-ivory/70">Full Legal Name</label>

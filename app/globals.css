@@ -207,6 +207,81 @@
     0% { background-position: 0 200%; }
     100% { background-position: 0 -200%; }
   }
+
+  /* Spatial: glass artifact with 1px gradient border (to-bottom-right) */
+  .glass-artifact-metric {
+    position: relative;
+    border-radius: 2rem;
+    backdrop-filter: blur(2rem);
+    -webkit-backdrop-filter: blur(2rem);
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  .glass-artifact-metric::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 2rem;
+    padding: 1px;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Process card: Champagne border beam on hover */
+  .process-card-spatial {
+    position: relative;
+    border-radius: 2rem;
+    backdrop-filter: blur(2rem);
+    -webkit-backdrop-filter: blur(2rem);
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .process-card-spatial:hover {
+    border-color: rgba(201, 168, 76, 0.3);
+    box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.2), 0 0 24px -4px rgba(201, 168, 76, 0.15);
+  }
+  .process-card-spatial:hover::before,
+  .process-card-spatial:hover::after {
+    opacity: 1;
+  }
+  .process-card-spatial::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.5) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: border-beam-h 4s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .process-card-spatial::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, transparent 0%, rgba(201,168,76,0.5) 50%, transparent 100%);
+    background-size: 100% 200%;
+    animation: border-beam-v 4s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 }
 
 @layer utilities {

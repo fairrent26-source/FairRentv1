@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { PageEntrance } from "@/components/atmosphere/PageEntrance";
 import { ScrollEmphasis } from "@/components/atmosphere/ScrollEmphasis";
-import { MouseGlowCard } from "@/components/atmosphere/MouseGlowCard";
+import { SpatialMetricsProcess } from "@/components/atmosphere/SpatialMetricsProcess";
 import { HeroTitleFade } from "@/components/atmosphere/HeroTitleFade";
 import { LandingNav } from "@/components/layout/LandingNav";
 import { LUXE_IMAGES } from "@/lib/images";
@@ -90,77 +89,19 @@ export default function LandingPage() {
             </ScrollEmphasis>
           </section>
 
-          <section className="vanish-bottom mb-20 grid gap-6 md:grid-cols-2 lg:grid-cols-4" data-entrance>
-            <Card className="rounded-[2rem]">
-              <CardContent className="pt-6">
-                <p className="mb-2 text-xs text-ivory/60">t Score</p>
-                <Progress value={35} className="h-2" indicatorClassName="bg-champagne" />
-                <p className="mt-1 text-xs text-ivory/50">0 — 5 scale</p>
-              </CardContent>
-            </Card>
-            <Card className="rounded-[2rem]">
-              <CardContent className="pt-6">
-                <p className="mb-2 text-sm font-medium text-ivory">Property Metrics</p>
-                <p className="text-sm text-ivory/60">Portfolio and compliance at a glance.</p>
-              </CardContent>
-            </Card>
-            <Card className="rounded-[2rem] border-champagne/10">
-              <CardContent className="pt-6">
-                <p className="mb-2 text-sm font-medium text-ivory">Communication</p>
-                <ul className="space-y-1 text-sm text-champagne">
-                  <li>&gt; SLA Met</li>
-                  <li>&gt; Repair Verified</li>
-                  <li>&gt; Payment Confirmed</li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="rounded-[2rem]">
-              <CardContent className="pt-6">
-                <p className="mb-2 text-sm font-medium text-ivory">Scheduling</p>
-                <p className="text-xs text-ivory/50">Maintenance window and calendar.</p>
-              </CardContent>
-            </Card>
+          {/* Spatial: Metrics + Process in one atmospheric field (no outer boxes) */}
+          <section className="vanish-bottom edge-soften-y mb-20" data-entrance>
+            <SpatialMetricsProcess />
           </section>
 
-          {/* Layer 1: Watermarks (0.05) — Layer 2: Floating cards (high-spread shadow) — Border beam top+left */}
-          <section
-            className="relative -mt-20 rounded-[2rem] border border-white/[0.06] bg-white/[0.02] p-8 backdrop-blur-2xl"
-            data-entrance
-          >
-            <p className="mb-8 text-center text-sm text-ivory/60">Experience Unrivaled Comfort.</p>
-            <div className="grid gap-6 md:grid-cols-3">
-              <MouseGlowCard className="border-beam-edges glass-card shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                <CardContent className="relative p-6 pt-6">
-                  <span className="pointer-events-none absolute right-4 top-4 select-none font-display text-[8rem] font-normal italic leading-none text-champagne/[0.05]" aria-hidden>01</span>
-                  <p className="relative text-right text-2xl font-bold font-mono text-champagne/60">01.</p>
-                  <p className="relative text-lg font-semibold text-ivory">Verify</p>
-                </CardContent>
-              </MouseGlowCard>
-              <MouseGlowCard className="border-beam-edges glass-card shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                <CardContent className="relative p-6 pt-6">
-                  <span className="pointer-events-none absolute right-4 top-4 select-none font-display text-[8rem] font-normal italic leading-none text-champagne/[0.05]" aria-hidden>02</span>
-                  <p className="relative text-right text-2xl font-bold font-mono text-champagne/60">02.</p>
-                  <p className="relative text-lg font-semibold text-ivory">Quantify</p>
-                </CardContent>
-              </MouseGlowCard>
-              <MouseGlowCard className="border-beam-edges glass-card shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                <CardContent className="relative p-6 pt-6">
-                  <span className="pointer-events-none absolute right-4 top-4 select-none font-display text-[8rem] font-normal italic leading-none text-champagne/[0.05]" aria-hidden>03</span>
-                  <p className="relative text-right text-2xl font-bold font-mono text-champagne/60">03.</p>
-                  <p className="relative text-lg font-semibold text-ivory">Standardize</p>
-                </CardContent>
-              </MouseGlowCard>
-            </div>
-          </section>
-
-          <section className="mt-20 flex justify-center gap-4" data-entrance>
-            <Button asChild variant="outline">
+          <section className="mt-20 flex flex-wrap justify-center gap-4" data-entrance>
+            <Button asChild variant="outline" className="rounded-full backdrop-blur-md border-white/20">
               <Link href="/auth">Enter as Landlord</Link>
             </Button>
-            <Button asChild>
+            <Button asChild className="rounded-full backdrop-blur-md">
               <Link href="/auth">Enter as Tenant</Link>
             </Button>
-            <Button asChild variant="secondary">
+            <Button asChild variant="secondary" className="rounded-full backdrop-blur-md">
               <Link href="/marketplace">Browse Marketplace</Link>
             </Button>
           </section>
