@@ -34,6 +34,9 @@ export const LUXE_IMAGES = {
   /** Onboarding: tenant — warm architectural lighting, high-end minimalist lounge */
   onboardingTenant:
     `${BASE}/photo-1600607687939-ce8a6c25118c?w=1920&q=85`,
+  /** Financial / Connect Bank — architectural blueprints, vault, modern finance */
+  financialVault:
+    `${BASE}/photo-1554224155-6726b3ff858f?w=1920&q=85`,
 } as const;
 
 /** Ordered list for cycling in cards */

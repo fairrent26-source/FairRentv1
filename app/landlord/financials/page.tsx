@@ -1,65 +1,186 @@
 "use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
 import { Button } from "@/components/ui/button";
-import { ScoreDisplay } from "@/components/scoring/ScoreDisplay";
-import { upcomingPayouts, revenueVsExpenses, investmentHealthScore, bankAccountMasked } from "@/mock/financials";
+import { Switch } from "@/components/ui/switch";
+import { ShieldCheck, Lock, Globe } from "lucide-react";
+import { LUXE_IMAGES } from "@/lib/images";
+
+/** Mock Plaid/TrueLayer Link: returns public_token. No bank details stored. */
+function mockOpenBankLink(): Promise<{ public_token: string }> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ public_token: `tl_${Math.random().toString(36).slice(2, 14)}` });
+    }, 2200);
+  });
+}
 
 export default function LandlordFinancialsPage() {
+  const [connected, setConnected] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [tokenId, setTokenId] = useState<string | null>(null);
+  const [autoRentTracking, setAutoRentTracking] = useState(true);
+  const [autoInvoices, setAutoInvoices] = useState(true);
+  const initialRef = useRef<HTMLDivElement>(null);
+  const verifiedRef = useRef<HTMLDivElement>(null);
+
+  const handleBankLink = async () => {
+    setLoading(true);
+    try {
+      const { public_token } = await mockOpenBankLink();
+      setTokenId(public_token);
+      setConnected(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!connected) return;
+    const initial = initialRef.current;
+    const verified = verifiedRef.current;
+    if (!initial || !verified) return;
+    gsap.set(verified, { opacity: 0, scale: 0.98 });
+    const tl = gsap.timeline({
+      onComplete: () => {
+        if (verified) (verified as HTMLElement).style.pointerEvents = "auto";
+      },
+    });
+    tl.to(initial, { opacity: 0, duration: 0.35, ease: "power2.inOut" });
+    tl.to(verified, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }, "-=0.1");
+    return () => {
+      tl.kill();
+      if (verified) (verified as HTMLElement).style.pointerEvents = "";
+    };
+  }, [connected]);
+
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-slate-100">Financial Fortification Hub</h2>
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <span className="text-sm font-medium text-slate-100">Upcoming Payouts</span>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-slate-100">£{upcomingPayouts[0]?.amount ?? 0} clearing on {upcomingPayouts[0]?.clearingDate}</p>
-            <ul className="mt-2 space-y-1 text-sm text-slate-400">
-              {upcomingPayouts[0]?.properties.map((p) => (
-                <li key={p.address} className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  {p.address} (Direct Debit Verified)
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <span className="text-sm font-medium text-slate-100">Investment Health Score</span>
-          </CardHeader>
-          <CardContent>
-            <ScoreDisplay value={investmentHealthScore} max={5} label="Health" size="sm" />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <span className="text-sm font-medium text-slate-100">Revenue vs Expenses</span>
-          </CardHeader>
-          <CardContent>
-            <div className="flex gap-4">
-              <div className="h-24 flex-1 rounded-xl bg-emerald-500/20" style={{ height: `${(revenueVsExpenses.revenue / 6000) * 96}px` }} />
-              <div className="h-24 flex-1 rounded-xl bg-slate-600" style={{ height: `${(revenueVsExpenses.expenses / 6000) * 96}px` }} />
+    <div className={`relative min-h-[calc(100vh-8rem)] overflow-hidden rounded-[2rem] ${!connected ? "pb-24 md:pb-0" : ""}`}>
+      {/* Full-bleed background: 15% opacity, radial mask → Obsidian at edges */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          maskImage: "radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 75%)",
+          WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 75%)",
+        }}
+      >
+        <img
+          src={LUXE_IMAGES.financialVault}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.15]"
+        />
+      </div>
+      <div className="relative z-10 mx-auto max-w-2xl px-2 py-6 sm:px-4">
+        {/* Glass Vault container */}
+        <div className="relative min-h-[320px] rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
+          {/* Initial state: Connect CTA */}
+          <div ref={initialRef} className={connected ? "pointer-events-none absolute inset-0 rounded-[2.5rem] p-6 sm:p-8" : ""}>
+            <h2 className="font-bold tracking-tight text-ivory" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
+              Secure Bank Integration
+            </h2>
+            <p className="mt-2 font-display-italic text-lg text-ivory/70">Automated Financial Intelligence.</p>
+            <div className="mt-8 flex flex-col items-center">
+              <div className="relative">
+                {loading && (
+                  <span
+                    className="absolute inset-0 animate-ping rounded-[2rem] opacity-40"
+                    style={{ backgroundColor: "#C9A84C", animationDuration: "1.2s" }}
+                  />
+                )}
+                <Button
+                  size="lg"
+                  disabled={loading}
+                  onClick={handleBankLink}
+                  className="relative rounded-[2rem] bg-champagne px-8 py-6 text-base font-semibold text-obsidian shadow-lg transition-all hover:bg-champagne/90 disabled:opacity-90"
+                  style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+                >
+                  {loading ? "Connecting…" : "Connect Bank"}
+                </Button>
+              </div>
             </div>
-            <p className="mt-2 text-xs text-slate-400">Revenue £{revenueVsExpenses.revenue} · Expenses £{revenueVsExpenses.expenses}</p>
-          </CardContent>
-        </Card>
+            {/* Security badges */}
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-white/10 pt-6">
+              <span className="flex items-center gap-2 text-xs text-ivory/50">
+                <ShieldCheck className="h-4 w-4" /> FCA Regulated
+              </span>
+              <span className="flex items-center gap-2 text-xs text-ivory/50">
+                <Lock className="h-4 w-4" /> AES-256
+              </span>
+              <span className="flex items-center gap-2 text-xs text-ivory/50">
+                <Globe className="h-4 w-4" /> Open Banking
+              </span>
+            </div>
+          </div>
+
+          {/* Verified state: badge + automation toggles (overlay after connect) */}
+          <div
+            ref={verifiedRef}
+            className="absolute inset-0 z-10 rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-2xl sm:p-8"
+            style={{ opacity: 0 }}
+          >
+            <div
+              className="rounded-2xl px-4 py-3 text-center"
+              style={{
+                background: "linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%)",
+                border: "1px solid rgba(201,168,76,0.25)",
+              }}
+            >
+              <span className="text-sm font-medium text-champagne">Verified Landlord</span>
+              {tokenId && (
+                <p className="mt-1 font-mono text-xs text-ivory/70" style={{ fontFamily: "var(--font-jetbrains), monospace" }}>
+                  ID: {tokenId}
+                </p>
+              )}
+            </div>
+            <h3 className="mt-8 text-sm font-semibold text-ivory">Payment Automation Preferences</h3>
+            <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
+              <div
+                className={`flex flex-1 items-center justify-between rounded-2xl border px-4 py-3 transition-all ${
+                  connected ? "border-champagne/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]" : "border-white/10"
+                }`}
+              >
+                <span className="text-sm text-ivory/80">Automated Rent Tracking</span>
+                <Switch checked={autoRentTracking} onCheckedChange={setAutoRentTracking} className="data-[state=checked]:bg-champagne" />
+              </div>
+              <div
+                className={`flex flex-1 items-center justify-between rounded-2xl border px-4 py-3 transition-all ${
+                  connected ? "border-champagne/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]" : "border-white/10"
+                }`}
+              >
+                <span className="text-sm text-ivory/80">Auto-generate Monthly Invoices</span>
+                <Switch checked={autoInvoices} onCheckedChange={setAutoInvoices} className="data-[state=checked]:bg-champagne" />
+              </div>
+            </div>
+            <p className="mt-3 text-xs text-ivory/50">
+              Verification uses Open Banking. We never see or store your account number or sort code.
+            </p>
+          </div>
+        </div>
+
+        {/* Manual fallback: small, dimmed */}
+        <p className="mt-6 text-center">
+          <a href="#" className="text-xs text-slate-500 hover:text-slate-400">
+            Use manual details
+          </a>
+        </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <span className="text-sm font-medium text-slate-100">Banking & Rent Collection</span>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-slate-400">Rent Collection Account: Linked to Business Account ending in {bankAccountMasked}</p>
-          <Button size="sm">Verify New Account</Button>
-        </CardContent>
-      </Card>
+      {/* Mobile only: sticky Connect button when not connected */}
+      {!connected && (
+        <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-white/10 bg-obsidian/80 p-4 backdrop-blur-xl md:hidden">
+          <div className="mx-auto max-w-2xl">
+            <Button
+              size="lg"
+              disabled={loading}
+              onClick={handleBankLink}
+              className="w-full rounded-[2rem] bg-champagne py-6 text-base font-semibold text-obsidian hover:bg-champagne/90"
+            >
+              {loading ? "Connecting…" : "Connect Bank"}
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
