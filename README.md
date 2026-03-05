@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FairRent — UI Prototype
 
-## Getting Started
+Frontend-only, local-first interactive prototype. No backend, no auth, no APIs. All data is mock-driven.
 
-First, run the development server:
+## Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Use **Dev Panel** (bottom-right) to toggle edge-case states (empty matches, low score, no tenancy, etc.).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Public:** `/`, `/marketplace`, `/property/[id]`
+- **Landlord:** `/landlord`, `/landlord/portfolio`, `/landlord/portfolio/[id]`, `/landlord/matches`, `/landlord/maintenance`, `/landlord/financials`, `/landlord/pedigree`, `/landlord/messages`, `/landlord/settings`
+- **Tenant:** `/tenant`, `/tenant/marketplace`, `/tenant/matches`, `/tenant/passport`, `/tenant/tenancy`, `/tenant/messages`, `/tenant/settings`
 
-## Learn More
+Switch roles via Landing page (“Enter as Landlord” / “Enter as Tenant”) or sidebar “Log out” then Landing.
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Next.js 14 (App Router), TypeScript (strict), TailwindCSS, shadcn-style components (Radix + CVA), Lucide React, Zustand (dev toggles only).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Structure
 
-## Deploy on Vercel
+- `app/(public)/` — Landing, marketplace, property detail
+- `app/landlord/` — Landlord dashboard and sub-routes
+- `app/tenant/` — Tenant dashboard and sub-routes
+- `components/` — layout, navigation, cards, widgets, scoring, compliance, marketplace, messaging, forms, devtools
+- `mock/` — typed data (landlords, tenants, properties, matches, messages, maintenance, compliance, financials)
+- `store/` — Zustand dev panel state
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Design: Preset B (dark, slate-950/900/800, rounded-2xl, emerald/amber/red states).

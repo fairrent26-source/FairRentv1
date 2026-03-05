@@ -1,0 +1,86 @@
+"use client";
+
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { LuxeImage } from "@/components/ui/LuxeImage";
+import { LUXE_IMAGE_LIST } from "@/lib/images";
+import { cn } from "@/lib/utils";
+import type { MatchCandidate } from "@/mock/types";
+import { Check } from "lucide-react";
+
+interface MatchCardProps {
+  match: MatchCandidate;
+  variant?: "landlord" | "tenant" | "marketplace";
+  showVerificationFlags?: boolean;
+  primaryActionLabel?: string;
+  secondaryActionLabel?: string;
+  premiumBadge?: boolean;
+  className?: string;
+}
+
+function pickImage(id: string) {
+  const i = id.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
+  return LUXE_IMAGE_LIST[i % LUXE_IMAGE_LIST.length];
+}
+
+export function MatchCard({
+  match,
+  variant = "tenant",
+  showVerificationFlags = true,
+  primaryActionLabel = "Request Private Viewing",
+  secondaryActionLabel = "Shortlist",
+  premiumBadge = false,
+  className,
+}: MatchCardProps) {
+  const matchPct = match.matchPercent / 100;
+  const isHighMatch = match.matchPercent >= 90;
+
+  return (
+    <Card className={cn("overflow-hidden", className)}>
+      <div className="relative aspect-video w-full overflow-hidden">
+        <LuxeImage src={pickImage(match.id)} alt={match.address} />
+        {premiumBadge && (
+          <Badge className="absolute left-2 top-2" variant="info">
+            Premium Match
+          </Badge>
+        )}
+        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+          <span className={cn("font-semibold tabular-nums font-mono", isHighMatch ? "text-champagne" : "text-ivory/80")}>
+            {match.matchPercent}% Match
+          </span>
+          {variant === "landlord" && (
+            <span className="text-sm text-ivory/70">Strength: {match.strengthScore}</span>
+          )}
+        </div>
+      </div>
+      <CardContent className="space-y-2 pt-4">
+        <p className="font-medium text-ivory">{match.address}</p>
+        <p className="text-sm font-mono text-champagne">
+          £{match.rent}/mo · {match.beds} Beds | {match.baths} Bath
+          {match.sqft ? ` | ${match.sqft} sqft` : ""}
+        </p>
+        {showVerificationFlags && match.verificationFlags.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {match.verificationFlags.map((flag) => (
+              <span key={flag} className="inline-flex items-center gap-1 rounded-md bg-slate-luxe/60 border border-slate-luxe/50 px-2 py-0.5 text-xs text-ivory/80">
+                <Check className="h-3 w-3 text-champagne" />
+                {flag}
+              </span>
+            ))}
+          </div>
+        )}
+        <Progress value={matchPct * 100} className="h-1.5" indicatorClassName="bg-champagne" />
+      </CardContent>
+      <CardFooter className="flex gap-2">
+        <Button variant="outline" size="sm" className="flex-1">
+          {secondaryActionLabel}
+        </Button>
+        <Button size="sm" className="flex-1">
+          {primaryActionLabel}
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}

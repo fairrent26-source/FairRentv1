@@ -2,26 +2,264 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+/* Midnight Luxe — Preset B: Dark Editorial */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --obsidian: #0D0D12;
+    --champagne: #C9A84C;
+    --ivory: #FAF8F5;
+    --slate-luxe: #2A2A35;
+    --background: 240 10% 5%;
+    --foreground: 40 25% 97%;
+    --card: 240 8% 8%;
+    --card-foreground: 40 25% 97%;
+    --border: 240 8% 18%;
+    --primary: 43 52% 54%;
+    --primary-foreground: 240 10% 5%;
+    --secondary: 240 8% 18%;
+    --muted: 240 8% 18%;
+    --muted-foreground: 240 6% 55%;
+    --accent: 43 52% 54%;
+    --destructive: 0 72% 51%;
+    --positive: 43 52% 54%;
+    --warning: 38 92% 48%;
+    --info: 43 52% 54%;
+  }
+
+  * {
+    @apply border-[#2A2A35];
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply min-h-screen font-sans text-ivory;
+    background-color: var(--obsidian);
+    font-feature-settings: "rlig" 1, "calt" 1, "tnum" 1;
+  }
+
+  /* Typography: Inter headings + Playfair drama */
+  h1,
+  h2,
+  .heading-1 {
+    @apply font-bold tracking-tight text-ivory;
+    letter-spacing: -0.02em;
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+
+  h1,
+  .heading-1 {
+    @apply text-xl;
+  }
+
+  h2,
+  .heading-2 {
+    @apply text-lg font-bold tracking-tight text-ivory;
+    letter-spacing: -0.02em;
+  }
+
+  .font-display-italic {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-style: italic;
+  }
+
+  /* Section titles: Inter Bold + Playfair Italic emphasis */
+  .section-title {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ivory);
+  }
+  .section-title em {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .text-secondary {
+    @apply text-ivory/80;
+  }
+
+  .text-muted {
+    @apply text-ivory/60;
+  }
+
+  .num-display {
+    @apply font-semibold tabular-nums tracking-tight font-mono text-ivory;
+  }
+
+  .num-positive {
+    @apply font-semibold tabular-nums font-mono text-champagne;
+  }
+
+  .num-warning {
+    @apply font-semibold tabular-nums font-mono text-amber-400;
+  }
+
+  .num-risk {
+    @apply font-semibold tabular-nums font-mono text-red-400;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .section-divide {
+    @apply border-t border-slate-luxe/50;
+  }
+
+  .alert-positive {
+    @apply border-l-4 border-l-champagne bg-champagne/5 pl-4;
+  }
+
+  .alert-warning {
+    @apply border-l-4 border-l-amber-500 bg-amber-500/5 pl-4;
+  }
+
+  .alert-risk {
+    @apply border-l-4 border-l-red-500 bg-red-500/5 pl-4;
+  }
+
+  /* Glass border: 1px Slate at 0.5 opacity */
+  .border-glass {
+    border: 1px solid rgba(42, 42, 53, 0.5);
+  }
+
+  /* Magnetic hover — applied via GSAP or utility */
+  .hover-magnetic {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .hover-magnetic:hover {
+    transform: scale(1.03);
+  }
+
+  /* Pool of light — champagne (use for inline pools) */
+  .pool-light {
+    background: radial-gradient(ellipse 100% 80% at var(--pool-x, 50%) var(--pool-y, 30%), rgba(201, 168, 76, 0.05) 0%, transparent 60%);
+  }
+  .pool-light-center {
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201, 168, 76, 0.05) 0%, transparent 65%);
+  }
+
+  /* Edge softening: fade into obsidian */
+  .edge-soften-y {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+
+  /* Vanish: fade into obsidian over 150px at bottom / edges */
+  .vanish-bottom {
+    mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 150px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 150px), transparent 100%);
+  }
+  .vanish-edges {
+    mask-image: linear-gradient(to right, transparent 0, black 150px, black calc(100% - 150px), transparent 100%),
+      linear-gradient(to bottom, transparent 0, black 150px, black calc(100% - 150px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 150px, black calc(100% - 150px), transparent 100%),
+      linear-gradient(to bottom, transparent 0, black 150px, black calc(100% - 150px), transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+
+  /* Glass: dark glass sheets, not solid blocks */
+  .glass-card {
+    @apply rounded-[2rem] border border-white/[0.06] backdrop-blur-2xl;
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  /* Border beam: tiny Champagne light along top + left edge only */
+  .border-beam-edges {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: inherit;
+  }
+  .border-beam-edges::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(201, 168, 76, 0.5) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: border-beam-h 4s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .border-beam-edges::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent 0%, rgba(201, 168, 76, 0.5) 50%, transparent 100%);
+    background-size: 100% 200%;
+    animation: border-beam-v 4s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  @keyframes border-beam-h {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @keyframes border-beam-v {
+    0% { background-position: 0 200%; }
+    100% { background-position: 0 -200%; }
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Dashboard: minimalist scrollbar with Champagne accent */
+  .custom-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #C9A84C40 var(--obsidian);
+  }
+  .custom-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background: rgba(201, 168, 76, 0.4);
+    border-radius: 3px;
+  }
+  .custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(201, 168, 76, 0.6);
+  }
+
+  .page-enter {
+    animation: pageEnter 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  @keyframes pageEnter {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .modal-enter {
+    animation: modalEnter 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  @keyframes modalEnter {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 }
