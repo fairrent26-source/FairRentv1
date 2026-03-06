@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import gsap from "gsap";
+import { ShieldCheck, Lock, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { LuxeImage } from "@/components/ui/LuxeImage";
@@ -12,6 +14,15 @@ import { OnboardingTextarea } from "@/components/onboarding/OnboardingTextarea";
 import { LUXE_IMAGES, LUXE_IMAGE_LIST } from "@/lib/images";
 import { OnboardingGuard } from "@/components/auth/OnboardingGuard";
 import { useAuthStore } from "@/store/auth-store";
+
+/** Mock Plaid/TrueLayer Link: returns public_token. No bank details stored. */
+function mockOpenBankLink(): Promise<{ public_token: string }> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ public_token: `tl_${Math.random().toString(36).slice(2, 14)}` });
+    }, 2200);
+  });
+}
 
 const STEPS = [
   { label: "Identity" },
@@ -127,6 +138,24 @@ export default function LandlordOnboardingPage() {
   const [billsIncludedInRent, setBillsIncludedInRent] = useState<boolean>(false);
   const [billItems, setBillItems] = useState<BillItem[]>(() => defaultBillItems.map((b) => ({ ...b })));
   const [savedProperties, setSavedProperties] = useState<SavedProperty[]>([]);
+  const [bankConnected, setBankConnected] = useState(false);
+  const [bankLoading, setBankLoading] = useState(false);
+  const [bankTokenId, setBankTokenId] = useState<string | null>(null);
+  const [bankAutoRentTracking, setBankAutoRentTracking] = useState(true);
+  const [bankAutoInvoices, setBankAutoInvoices] = useState(true);
+  const bankInitialRef = useRef<HTMLDivElement>(null);
+  const bankVerifiedRef = useRef<HTMLDivElement>(null);
+
+  const handleBankLink = async () => {
+    setBankLoading(true);
+    try {
+      const { public_token } = await mockOpenBankLink();
+      setBankTokenId(public_token);
+      setBankConnected(true);
+    } finally {
+      setBankLoading(false);
+    }
+  };
 
   const handlePropertyPhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
@@ -242,6 +271,25 @@ export default function LandlordOnboardingPage() {
       router.push("/landlord");
     }
   };
+
+  useEffect(() => {
+    if (!bankConnected) return;
+    const initial = bankInitialRef.current;
+    const verified = bankVerifiedRef.current;
+    if (!initial || !verified) return;
+    gsap.set(verified, { opacity: 0, scale: 0.98 });
+    const tl = gsap.timeline({
+      onComplete: () => {
+        if (verified) (verified as HTMLElement).style.pointerEvents = "auto";
+      },
+    });
+    tl.to(initial, { opacity: 0, duration: 0.35, ease: "power2.inOut" });
+    tl.to(verified, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }, "-=0.1");
+    return () => {
+      tl.kill();
+      if (verified) (verified as HTMLElement).style.pointerEvents = "";
+    };
+  }, [bankConnected]);
 
   return (
     <OnboardingGuard role="landlord">
@@ -883,36 +931,100 @@ export default function LandlordOnboardingPage() {
               Secure the settlement.
             </h1>
             <p className="mt-2 text-ivory/60">
-              Connect your account to enable automated rent collection and instant payouts. No more chasing transfers—just seamless cash flow.
+              Connect your account to enable automated rent collection and instant payouts. We never see or store your account number or sort code.
             </p>
-            <div className="mt-8 space-y-6">
-              <Button className="w-full justify-start gap-2 rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg">
-                🏦 Connect Bank for Rent Payouts
-              </Button>
-              <p className="text-xs text-ivory/50">We use bank-level encryption to ensure your rental income reaches you safely and on time, every month.</p>
-              <Button variant="link" size="sm" className="text-champagne">Use manual details</Button>
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-ivory">Payment Automation Preferences</h3>
-                <div className="mt-4 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-ivory/80">Enable Automated Rent Tracking</span>
-                    <Switch defaultChecked className="data-[state=checked]:bg-champagne" />
+
+            {/* Glass Vault: API-first bank connection (same pattern as dashboard financials) */}
+            <div className="relative mt-8 min-h-[280px] rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
+              <div ref={bankInitialRef} className={bankConnected ? "pointer-events-none absolute inset-0 rounded-[2.5rem] p-6 sm:p-8" : ""}>
+                <h2 className="font-bold tracking-tight text-ivory" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
+                  Secure Bank Integration
+                </h2>
+                <p className="mt-2 font-display-italic text-lg text-ivory/70">Automated Financial Intelligence.</p>
+                <div className="mt-8 flex flex-col items-center">
+                  <div className="relative">
+                    {bankLoading && (
+                      <span
+                        className="absolute inset-0 animate-ping rounded-[2rem] opacity-40"
+                        style={{ backgroundColor: "#C9A84C", animationDuration: "1.2s" }}
+                      />
+                    )}
+                    <Button
+                      size="lg"
+                      disabled={bankLoading}
+                      onClick={handleBankLink}
+                      className="relative rounded-[2rem] bg-champagne px-8 py-6 text-base font-semibold text-obsidian shadow-lg transition-all hover:bg-champagne/90 disabled:opacity-90"
+                      style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+                    >
+                      {bankLoading ? "Connecting…" : "Connect Bank"}
+                    </Button>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-ivory/80">Auto-generate Monthly Invoices for Tenants</span>
-                    <Switch defaultChecked className="data-[state=checked]:bg-champagne" />
-                  </div>
-                  <p className="text-xs text-ivory/50">By enabling automation, your FairRent Pedigree score increases as we can verify payment consistency automatically.</p>
                 </div>
-              </section>
-              <div className="flex flex-wrap gap-4 text-xs text-ivory/50">
-                <span>🛡 FCA Regulated Partner</span>
-                <span>🔒 AES-256 Encrypted</span>
-                <span>💳 PCI-DSS Compliant</span>
+                <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-white/10 pt-6">
+                  <span className="flex items-center gap-2 text-xs text-ivory/50">
+                    <ShieldCheck className="h-4 w-4" /> FCA Regulated
+                  </span>
+                  <span className="flex items-center gap-2 text-xs text-ivory/50">
+                    <Lock className="h-4 w-4" /> AES-256
+                  </span>
+                  <span className="flex items-center gap-2 text-xs text-ivory/50">
+                    <Globe className="h-4 w-4" /> Open Banking
+                  </span>
+                </div>
+              </div>
+
+              <div
+                ref={bankVerifiedRef}
+                className="absolute inset-0 z-10 rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-2xl sm:p-8"
+                style={{ opacity: 0 }}
+              >
+                <div
+                  className="rounded-2xl px-4 py-3 text-center"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%)",
+                    border: "1px solid rgba(201,168,76,0.25)",
+                  }}
+                >
+                  <span className="text-sm font-medium text-champagne">Bank connected</span>
+                  {bankTokenId && (
+                    <p className="mt-1 font-mono text-xs text-ivory/70" style={{ fontFamily: "var(--font-jetbrains), monospace" }}>
+                      ID: {bankTokenId}
+                    </p>
+                  )}
+                </div>
+                <h3 className="mt-8 text-sm font-semibold text-ivory">Payment Automation Preferences</h3>
+                <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
+                  <div
+                    className={`flex flex-1 items-center justify-between rounded-2xl border px-4 py-3 transition-all ${
+                      bankConnected ? "border-champagne/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]" : "border-white/10"
+                    }`}
+                  >
+                    <span className="text-sm text-ivory/80">Automated Rent Tracking</span>
+                    <Switch checked={bankAutoRentTracking} onCheckedChange={setBankAutoRentTracking} className="data-[state=checked]:bg-champagne" />
+                  </div>
+                  <div
+                    className={`flex flex-1 items-center justify-between rounded-2xl border px-4 py-3 transition-all ${
+                      bankConnected ? "border-champagne/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]" : "border-white/10"
+                    }`}
+                  >
+                    <span className="text-sm text-ivory/80">Auto-generate Monthly Invoices</span>
+                    <Switch checked={bankAutoInvoices} onCheckedChange={setBankAutoInvoices} className="data-[state=checked]:bg-champagne" />
+                  </div>
+                </div>
+                <p className="mt-3 text-xs text-ivory/50">
+                  Verification uses Open Banking. We never see or store your account number or sort code.
+                </p>
               </div>
             </div>
+
+            <p className="mt-6 text-center">
+              <button type="button" className="text-xs text-slate-500 hover:text-slate-400">
+                Use manual details
+              </button>
+            </p>
+
             <Button className="mt-8 w-full rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg" onClick={handleContinue}>
-              Secure my financial setup and continue
+              {bankConnected ? "Continue" : "Continue to next step"}
             </Button>
           </>
         )}
