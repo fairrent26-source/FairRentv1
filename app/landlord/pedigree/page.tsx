@@ -1,6 +1,5 @@
 "use client";
 
-import { useDevStore } from "@/store/dev-store";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ScoreDisplay } from "@/components/scoring/ScoreDisplay";
 import { Badge } from "@/components/ui/badge";
@@ -9,8 +8,7 @@ import { getPrimaryLandlord } from "@/mock/landlords";
 
 export default function LandlordPedigreePage() {
   const landlord = getPrimaryLandlord();
-  const highScore = useDevStore((s) => s.highScore);
-  const displayScore = highScore ? landlord.pedigreeScore : 3.2;
+  const displayScore = landlord.pedigreeScore;
 
   return (
     <div className="space-y-6">

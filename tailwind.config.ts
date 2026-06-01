@@ -11,33 +11,84 @@ const config: Config = {
     extend: {
       colors: {
         obsidian: "#0D0D12",
-        champagne: "#C9A84C",
+        champagne: {
+          DEFAULT: "#C9A84C",
+          soft: "#D8BE73",
+          deep: "#A88B3A",
+        },
         ivory: "#FAF8F5",
         slate: {
           luxe: "#2A2A35",
         },
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        card: "var(--card)",
-        "card-foreground": "var(--card-foreground)",
-        border: "var(--border)",
-        primary: "var(--primary)",
-        "primary-foreground": "var(--primary-foreground)",
-        secondary: "var(--secondary)",
-        muted: "var(--muted)",
-        "muted-foreground": "var(--muted-foreground)",
-        accent: "var(--accent)",
-        destructive: "var(--destructive)",
-        positive: "var(--positive)",
-        warning: "var(--warning)",
-        info: "var(--info)",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: "hsl(var(--card))",
+        "card-foreground": "hsl(var(--card-foreground))",
+        border: "hsl(var(--border))",
+        ring: "hsl(var(--ring))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: "hsl(var(--secondary))",
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: "hsl(var(--accent))",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        positive: "hsl(var(--positive))",
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
+        },
+        verified: {
+          DEFAULT: "hsl(var(--verified))",
+          foreground: "hsl(var(--verified-foreground))",
+          solid: "hsl(var(--verified-solid-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         display: ["var(--font-playfair)", "Georgia", "serif"],
         mono: ["var(--font-jetbrains)", "monospace"],
       },
+      fontSize: {
+        eyebrow: ["0.6875rem", { lineHeight: "1", letterSpacing: "0.2em" }],
+        "display-xl": [
+          "clamp(2.75rem, 6vw, 4.5rem)",
+          { lineHeight: "1.02", letterSpacing: "-0.03em" },
+        ],
+        display: [
+          "clamp(2.25rem, 4.5vw, 3.5rem)",
+          { lineHeight: "1.05", letterSpacing: "-0.028em" },
+        ],
+        h1: [
+          "clamp(1.75rem, 3vw, 2.5rem)",
+          { lineHeight: "1.1", letterSpacing: "-0.022em" },
+        ],
+        h2: [
+          "clamp(1.375rem, 2.2vw, 1.875rem)",
+          { lineHeight: "1.16", letterSpacing: "-0.02em" },
+        ],
+        h3: [
+          "clamp(1.125rem, 1.6vw, 1.375rem)",
+          { lineHeight: "1.25", letterSpacing: "-0.015em" },
+        ],
+      },
       letterSpacing: {
+        tighter: "-0.03em",
         tight: "-0.02em",
       },
       borderRadius: {
@@ -56,11 +107,21 @@ const config: Config = {
       },
       animation: {
         "border-beam": "border-beam 4s linear infinite",
+        "progress-shimmer": "progress-shimmer 2.2s ease-in-out infinite",
+        "skeleton-pulse": "skeleton-pulse 1.6s ease-in-out infinite",
       },
       keyframes: {
         "border-beam": {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
+        },
+        "progress-shimmer": {
+          "0%": { transform: "translateX(-100%)" },
+          "60%, 100%": { transform: "translateX(200%)" },
+        },
+        "skeleton-pulse": {
+          "0%, 100%": { opacity: "0.45" },
+          "50%": { opacity: "0.85" },
         },
       },
       backgroundImage: {

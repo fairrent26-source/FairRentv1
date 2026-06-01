@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { DevPanelButton, DevPanelModal } from "@/components/devtools/DevPanel";
 import { NoiseOverlay } from "@/components/atmosphere/NoiseOverlay";
 
 const inter = Inter({
@@ -37,8 +36,6 @@ export default function RootLayout({
       <body className="min-h-screen bg-obsidian text-ivory antialiased font-sans">
         {children}
         <NoiseOverlay />
-        <DevPanelButton />
-        <DevPanelModal />
       </body>
     </html>
   );

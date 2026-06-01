@@ -1,6 +1,5 @@
 "use client";
 
-import { useDevStore } from "@/store/dev-store";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,9 +12,8 @@ import { ScoreDisplay } from "@/components/scoring/ScoreDisplay";
 const urgencyBg = { emergency: "bg-red-500/20", warning: "bg-amber-500/20", info: "bg-blue-500/20" };
 
 export default function LandlordMaintenancePage() {
-  const emergencyMaintenance = useDevStore((s) => s.emergencyMaintenance);
   const [activeThreadId, setActiveThreadId] = useState<string | null>(landlordThreads[0]?.id ?? null);
-  const tickets = emergencyMaintenance ? maintenanceTickets : maintenanceTickets.filter((t) => t.priority !== "emergency");
+  const tickets = maintenanceTickets;
 
   return (
     <div className="space-y-8">

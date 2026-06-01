@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PublicMarketplaceNav } from "@/components/layout/PublicMarketplaceNav";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,25 +16,7 @@ function pickImage(id: string) {
 export default function MarketplacePage() {
   return (
     <div className="min-h-screen">
-      <header className="flex h-14 items-center justify-between border-b border-slate-luxe/50 px-6 bg-obsidian/95 backdrop-blur-sm">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-luxe/60 border border-slate-luxe/50">
-            <span className="text-lg text-champagne">✓</span>
-          </div>
-          <span className="font-bold tracking-tight text-ivory" style={{ letterSpacing: "-0.02em" }}>FairRent</span>
-        </Link>
-        <nav className="flex gap-4">
-          <Link href="/">
-            <Button variant="ghost" size="sm">Landing</Button>
-          </Link>
-          <Link href="/landlord">
-            <Button variant="outline" size="sm">Landlord</Button>
-          </Link>
-          <Link href="/tenant">
-            <Button size="sm">Tenant</Button>
-          </Link>
-        </nav>
-      </header>
+      <PublicMarketplaceNav />
 
       <main className="mx-auto max-w-6xl px-6 py-8">
         <h1 className="mb-2 text-2xl font-bold text-ivory tracking-tight" style={{ letterSpacing: "-0.02em" }}>Discover properties</h1>

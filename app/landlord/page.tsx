@@ -1,6 +1,5 @@
 "use client";
 
-import { useDevStore } from "@/store/dev-store";
 import { Button } from "@/components/ui/button";
 import { ScoreDisplay } from "@/components/scoring/ScoreDisplay";
 import { MatchCard } from "@/components/marketplace/MatchCard";
@@ -18,10 +17,9 @@ import { useState } from "react";
 
 export default function LandlordOverviewPage() {
   const landlord = getPrimaryLandlord();
-  const emptyMatches = useDevStore((s) => s.emptyMatches);
   const [activeThreadId, setActiveThreadId] = useState<string | null>(landlordThreads[0]?.id ?? null);
   const activeThread = landlordThreads.find((t) => t.id === activeThreadId) ?? null;
-  const displayScore = useDevStore((s) => s.highScore) ? landlord.pedigreeScore : 3.2;
+  const displayScore = landlord.pedigreeScore;
 
   return (
     <div className="space-y-8">
@@ -70,10 +68,7 @@ export default function LandlordOverviewPage() {
         <DashboardWidget className="p-6 lg:col-span-2">
           <span className="block text-sm font-medium tracking-tight text-ivory">Top Tenant Matches</span>
           <div className="mt-4">
-            {emptyMatches ? (
-              <p className="py-8 text-center text-ivory/50">No matches yet. Add properties to get matches.</p>
-            ) : (
-              <div className="space-y-4">
+            <div className="space-y-4">
                 {landlordMatchCandidates.slice(0, 2).map((m) => (
                   <MatchCard
                     key={m.id}
@@ -84,7 +79,6 @@ export default function LandlordOverviewPage() {
                   />
                 ))}
               </div>
-            )}
           </div>
         </DashboardWidget>
 

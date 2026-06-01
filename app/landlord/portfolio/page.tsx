@@ -1,6 +1,5 @@
 "use client";
 
-import { useDevStore } from "@/store/dev-store";
 import Link from "next/link";
 import { PropertyCard } from "@/components/marketplace/PropertyCard";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -12,8 +11,7 @@ import { slaSummary, maintenanceTickets } from "@/mock/maintenance";
 
 export default function LandlordPortfolioPage() {
   const landlord = getPrimaryLandlord();
-  const emptyPortfolio = useDevStore((s) => s.emptyPortfolio);
-  const properties = emptyPortfolio ? [] : getPropertiesByLandlord(landlord.id);
+  const properties = getPropertiesByLandlord(landlord.id);
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -22,7 +20,7 @@ export default function LandlordPortfolioPage() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
-          {emptyPortfolio ? (
+          {properties.length === 0 ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-16 text-center">
                 <p className="text-slate-400">No properties yet. Add your first asset to get started.</p>

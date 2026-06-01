@@ -1,19 +1,64 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState, type MouseEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { LANDING_SECTIONS } from "@/lib/landing-sections";
 
 const SCROLL_THRESHOLD = 48;
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return false;
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+  window.history.pushState(null, "", `/#${id}`);
+  return true;
+}
+
+function LandingNavLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (!href.startsWith("/#")) return;
+    const id = href.slice(2);
+    if (pathname === "/" && scrollToSection(id)) {
+      e.preventDefault();
+    }
+  };
+
+  return (
+    <Link
+      href={href}
+      onClick={handleClick}
+      className="text-[11px] text-ivory/70 transition-colors hover:text-ivory sm:text-xs"
+    >
+      {children}
+    </Link>
+  );
+}
 
 export function LandingNav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
-    onScroll(); // run once for SSR/initial
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace(/^#/, "");
+    if (!hash) return;
+    const t = window.setTimeout(() => scrollToSection(hash), 100);
+    return () => window.clearTimeout(t);
   }, []);
 
   return (
@@ -37,13 +82,9 @@ export function LandingNav() {
             FairRent
           </span>
         </Link>
-        <nav className="flex items-center gap-3 sm:gap-4">
-          <Link href="/marketplace" className="text-[11px] text-ivory/70 transition-colors hover:text-ivory sm:text-xs">
-            How It Works
-          </Link>
-          <Link href="/marketplace" className="text-[11px] text-ivory/70 transition-colors hover:text-ivory sm:text-xs">
-            The Score
-          </Link>
+        <nav className="flex items-center gap-3 sm:gap-4" aria-label="Landing">
+          <LandingNavLink href={`/#${LANDING_SECTIONS.howItWorks}`}>How It Works</LandingNavLink>
+          <LandingNavLink href={`/#${LANDING_SECTIONS.accountability}`}>The Score</LandingNavLink>
           <Link href="/marketplace" className="text-[11px] text-ivory/70 transition-colors hover:text-ivory sm:text-xs">
             Marketplace
           </Link>

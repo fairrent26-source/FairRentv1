@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import gsap from "gsap";
 import { ShieldCheck, Lock, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -145,6 +144,9 @@ export default function LandlordOnboardingPage() {
   const [bankAutoInvoices, setBankAutoInvoices] = useState(true);
   const bankInitialRef = useRef<HTMLDivElement>(null);
   const bankVerifiedRef = useRef<HTMLDivElement>(null);
+  const [, setProfileImageFile] = useState<File | null>(null);
+  const [profileImagePreviewUrl, setProfileImagePreviewUrl] = useState<string | null>(null);
+  const profileImageInputRef = useRef<HTMLInputElement>(null);
 
   const handleBankLink = async () => {
     setBankLoading(true);
@@ -155,6 +157,22 @@ export default function LandlordOnboardingPage() {
     } finally {
       setBankLoading(false);
     }
+  };
+
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !file.type.startsWith("image/")) return;
+    if (profileImagePreviewUrl) URL.revokeObjectURL(profileImagePreviewUrl);
+    setProfileImageFile(file);
+    setProfileImagePreviewUrl(URL.createObjectURL(file));
+    e.target.value = "";
+  };
+
+  const handleProfileImageDelete = () => {
+    if (profileImagePreviewUrl) URL.revokeObjectURL(profileImagePreviewUrl);
+    setProfileImageFile(null);
+    setProfileImagePreviewUrl(null);
+    if (profileImageInputRef.current) profileImageInputRef.current.value = "";
   };
 
   const handlePropertyPhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -331,7 +349,7 @@ export default function LandlordOnboardingPage() {
                 <p className="mt-1.5 text-xs text-ivory/50">Select one. This will be saved with your profile.</p>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-ivory/70">Full Legal Name</label>
+                <label className="mb-1 block text-sm font-medium text-ivory/70">Full Name</label>
                 <OnboardingInput placeholder="Enter your full legal name" />
               </div>
               <div>
@@ -348,9 +366,57 @@ export default function LandlordOnboardingPage() {
               </div>
               <div>
                 <h3 className="text-sm font-medium text-ivory">Professional Profile</h3>
+                <input
+                  ref={profileImageInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="sr-only"
+                  aria-hidden
+                  onChange={handleProfileImageChange}
+                />
                 <div className="mt-2 flex items-center gap-4">
-                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[2rem] border-2 border-dashed border-white/20 bg-white/5 text-2xl text-ivory/50">+</div>
-                  <p className="text-xs text-ivory/50">Upload a headshot or company logo. This will be visible to tenants.</p>
+                  <button
+                    type="button"
+                    className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-[2rem] border-2 border-dashed border-white/20 bg-white/5 text-2xl text-ivory/50 hover:border-white/30 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-champagne/50"
+                    onClick={() => !profileImagePreviewUrl && profileImageInputRef.current?.click()}
+                  >
+                    {profileImagePreviewUrl ? (
+                      <img src={profileImagePreviewUrl} alt="Profile" className="h-full w-full object-cover" />
+                    ) : (
+                      "+"
+                    )}
+                  </button>
+                  <div className="min-w-0 flex-1">
+                    {profileImagePreviewUrl ? (
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        <button
+                          type="button"
+                          onClick={() => window.open(profileImagePreviewUrl ?? undefined, "_blank")}
+                          className="font-medium text-champagne underline underline-offset-2 hover:text-champagne/80"
+                        >
+                          View
+                        </button>
+                        <span className="text-ivory/40">·</span>
+                        <button
+                          type="button"
+                          onClick={() => profileImageInputRef.current?.click()}
+                          className="font-medium text-champagne underline underline-offset-2 hover:text-champagne/80"
+                        >
+                          Change
+                        </button>
+                        <span className="text-ivory/40">·</span>
+                        <button
+                          type="button"
+                          onClick={handleProfileImageDelete}
+                          className="font-medium text-red-400/90 underline underline-offset-2 hover:text-red-400"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-ivory/50">Upload a headshot or company logo. This will be visible to tenants.</p>
+                    )}
+                  </div>
                 </div>
                 <div className="mt-4">
                   <label className="mb-1 block text-xs text-ivory/60">Bio / Management Philosophy</label>
@@ -931,7 +997,7 @@ export default function LandlordOnboardingPage() {
               Secure the settlement.
             </h1>
             <p className="mt-2 text-ivory/60">
-              Connect your account to enable automated rent collection and instant payouts. We never see or store your account number or sort code.
+              Connect your account for automated rent collection and instant payouts. With our partner connection we don&apos;t store your banking details. If you add manual details instead, we store them securely and only share them once a tenancy agreement has been initiated.
             </p>
 
             {/* Glass Vault: API-first bank connection (same pattern as dashboard financials) */}
@@ -962,13 +1028,13 @@ export default function LandlordOnboardingPage() {
                 </div>
                 <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-white/10 pt-6">
                   <span className="flex items-center gap-2 text-xs text-ivory/50">
-                    <ShieldCheck className="h-4 w-4" /> FCA Regulated
+                    <ShieldCheck className="h-4 w-4" /> Authorised partners
                   </span>
                   <span className="flex items-center gap-2 text-xs text-ivory/50">
                     <Lock className="h-4 w-4" /> AES-256
                   </span>
                   <span className="flex items-center gap-2 text-xs text-ivory/50">
-                    <Globe className="h-4 w-4" /> Open Banking
+                    <Globe className="h-4 w-4" /> Third-party APIs
                   </span>
                 </div>
               </div>
@@ -1012,7 +1078,7 @@ export default function LandlordOnboardingPage() {
                   </div>
                 </div>
                 <p className="mt-3 text-xs text-ivory/50">
-                  Verification uses Open Banking. We never see or store your account number or sort code.
+                  Banking is connected through authorised third-party providers. We don&apos;t store your banking details.
                 </p>
               </div>
             </div>
@@ -1021,6 +1087,7 @@ export default function LandlordOnboardingPage() {
               <button type="button" className="text-xs text-slate-500 hover:text-slate-400">
                 Use manual details
               </button>
+              <span className="mt-1 block text-xs text-ivory/40">Stored securely and only shared once a tenancy agreement has been initiated.</span>
             </p>
 
             <Button className="mt-8 w-full rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg" onClick={handleContinue}>

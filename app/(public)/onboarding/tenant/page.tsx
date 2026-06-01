@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -52,7 +51,7 @@ export default function TenantOnboardingPage() {
                 <h2 className="text-sm font-medium text-champagne">Status</h2>
                 <div className="mt-4 space-y-4">
                   <div>
-                    <label className="mb-1 block text-xs text-ivory/60">Full Legal Name</label>
+                    <label className="mb-1 block text-xs text-ivory/60">Full Name</label>
                     <OnboardingInput placeholder="John Doe" />
                   </div>
                   <div>

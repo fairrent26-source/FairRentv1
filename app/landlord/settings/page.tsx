@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { ScoreDisplay } from "@/components/scoring/ScoreDisplay";
+import { VerifiedBadge } from "@/components/ui/VerifiedBadge";
 import { getPrimaryLandlord } from "@/mock/landlords";
 
 export default function LandlordSettingsPage() {
@@ -15,9 +16,7 @@ export default function LandlordSettingsPage() {
       <div>
         <h2 className="text-xl font-semibold text-slate-100">Professional Settings</h2>
         <p className="text-slate-400">Manage your landlord entity, verified credentials, and portfolio-wide permissions.</p>
-        <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-medium text-blue-400">
-          ✓ Verified Professional Landlord
-        </span>
+        <VerifiedBadge status="verified" label="Verified Professional Landlord" className="mt-2" />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">

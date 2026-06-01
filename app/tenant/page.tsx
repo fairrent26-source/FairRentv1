@@ -1,6 +1,5 @@
 "use client";
 
-import { useDevStore } from "@/store/dev-store";
 import { Button } from "@/components/ui/button";
 import { ScoreDisplay } from "@/components/scoring/ScoreDisplay";
 import { MatchCard } from "@/components/marketplace/MatchCard";
@@ -11,10 +10,8 @@ import { getPrimaryTenant } from "@/mock/tenants";
 
 export default function TenantOverviewPage() {
   const tenant = getPrimaryTenant();
-  const highScore = useDevStore((s) => s.highScore);
-  const displayScore = highScore ? tenant.strengthScore : 3.2;
-  const emptyMatches = useDevStore((s) => s.emptyMatches);
-  const matches = emptyMatches ? [] : tenantMatchCandidates.slice(0, 2);
+  const displayScore = tenant.strengthScore;
+  const matches = tenantMatchCandidates.slice(0, 2);
 
   return (
     <div className="space-y-6">

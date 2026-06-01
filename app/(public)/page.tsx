@@ -1,17 +1,29 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { PageEntrance } from "@/components/atmosphere/PageEntrance";
-import { ScrollEmphasis } from "@/components/atmosphere/ScrollEmphasis";
 import { SpatialMetricsProcess } from "@/components/atmosphere/SpatialMetricsProcess";
 import { HeroTitleFade } from "@/components/atmosphere/HeroTitleFade";
 import { LandingNav } from "@/components/layout/LandingNav";
+import { LandingBridge } from "@/components/atmosphere/LandingBridge";
 import { LUXE_IMAGES } from "@/lib/images";
+import { cn } from "@/lib/utils";
+
+const COMPARISON_PANELS = [
+  {
+    eyebrow: "Standard markets focus on",
+    headline: "Subjective reviews.",
+    emphasis: false,
+  },
+  {
+    eyebrow: "We focus on",
+    headline: "Verified track records.",
+    emphasis: true,
+  },
+] as const;
 
 export default function LandingPage() {
   return (
     <div className="relative min-h-screen bg-obsidian">
-      {/* Layer 0: Ambient light pools — 3% Champagne, 800px wide, fixed */}
       <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
         <div
           className="absolute left-1/2 top-[12%] h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full"
@@ -21,34 +33,24 @@ export default function LandingPage() {
           className="absolute bottom-[25%] left-[15%] h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{ background: "radial-gradient(circle, rgba(201,168,76,0.03) 0%, transparent 70%)" }}
         />
-        <div
-          className="absolute right-[10%] top-[50%] h-[800px] w-[800px] -translate-y-1/2 translate-x-1/2 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(201,168,76,0.03) 0%, transparent 70%)" }}
-        />
-        <div
-          className="absolute bottom-[5%] right-1/4 h-[800px] w-[800px] translate-x-1/2 translate-y-1/2 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(201,168,76,0.03) 0%, transparent 70%)" }}
-        />
       </div>
 
       <LandingNav />
 
-      {/* Hero: full-bleed to top of viewport (under navbar), gradient fades to obsidian at bottom */}
       <section className="relative z-10 min-h-[100vh] w-full overflow-hidden" aria-label="Hero">
         <img
           src={LUXE_IMAGES.hero}
           alt="Luxury apartment interior — minimalist, high-end materials, soft natural lighting"
           className="absolute inset-0 h-full w-full object-cover grayscale-[0.08] brightness-[0.92]"
         />
-        {/* Soft fade into obsidian: long gradient so the bottom blends seamlessly */}
         <div
           className="absolute inset-0"
           style={{
-            background: "linear-gradient(to bottom, transparent 0%, transparent 45%, rgba(13,13,18,0.15) 60%, rgba(13,13,18,0.45) 78%, rgba(13,13,18,0.85) 92%, #0D0D12 100%)",
+            background:
+              "linear-gradient(to bottom, transparent 0%, transparent 42%, rgba(13,13,18,0.2) 58%, rgba(13,13,18,0.55) 75%, rgba(13,13,18,0.92) 92%, #0D0D12 100%)",
           }}
           aria-hidden
         />
-        {/* Subtle luminosity for depth */}
         <div
           className="absolute inset-0 opacity-30 mix-blend-luminosity"
           style={{
@@ -56,46 +58,63 @@ export default function LandingPage() {
           }}
           aria-hidden
         />
-        {/* Hero title: higher on mobile, centered on desktop */}
         <div className="relative flex min-h-[100vh] flex-col items-center justify-start px-6 pt-24 text-center md:justify-center md:pt-16">
           <HeroTitleFade>
-            <h1 className="text-4xl font-bold tracking-tight text-ivory md:text-5xl [-webkit-font-smoothing:antialiased]" style={{ letterSpacing: "-0.02em" }}>
-              Replacing blind trust with… <span className="font-display italic text-champagne">accountability.</span>
+            <h1
+              className="text-4xl font-bold tracking-tight text-ivory md:text-5xl [-webkit-font-smoothing:antialiased]"
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              Replacing blind trust with…{" "}
+              <span className="font-display italic text-champagne">accountability.</span>
             </h1>
           </HeroTitleFade>
         </div>
       </section>
 
-      <main className="relative z-10 mx-auto max-w-5xl px-6 pb-24 pt-0">
-        <PageEntrance>
-
-          {/* Cards anchored in bottom of hero so “Verified track records” sits in the image */}
-          <section className="vanish-bottom edge-soften-y -mt-56 mb-20 grid gap-3 md:grid-cols-3 md:-mt-40 md:gap-6" data-entrance>
-            <ScrollEmphasis className="transition-all duration-300">
-              <Card className="rounded-[2rem] border-0 bg-transparent shadow-none backdrop-blur-none">
-                <CardContent className="pt-6 [&_*]:opacity-100">
-                  <p className="mb-2 text-base font-medium text-champagne">Standard markets focus on:</p>
-                  <p className="text-3xl text-ivory md:text-3xl">Subjective reviews.</p>
-                </CardContent>
-              </Card>
-            </ScrollEmphasis>
-            <ScrollEmphasis className="transition-all duration-300">
-              <Card className="rounded-[2rem] border-0 bg-transparent shadow-none backdrop-blur-none">
-                <CardContent className="pt-6 box-content [&_*]:opacity-100">
-                  <p className="mb-2 text-base font-medium text-champagne">We focus on:</p>
-                  <p className="font-display text-3xl font-bold italic text-champagne md:text-3xl">Verified track records.</p>
-                </CardContent>
-              </Card>
-            </ScrollEmphasis>
+      <PageEntrance>
+        <LandingBridge className="-mt-24 md:-mt-32">
+          <section className="mb-14 md:mb-20" data-entrance>
+            <p className="mb-8 text-center text-sm font-medium uppercase tracking-[0.2em] text-champagne/80">
+              A different standard
+            </p>
+            <div className="grid gap-5 md:grid-cols-2 md:gap-7">
+              {COMPARISON_PANELS.map((panel) => (
+                <article
+                  key={panel.headline}
+                  className={cn(
+                    "landing-panel landing-panel-beam rounded-[2.5rem] p-7 md:rounded-[3.5rem] md:p-9",
+                    panel.emphasis && "ring-1 ring-champagne/15"
+                  )}
+                >
+                  <p className="mb-3 text-sm font-medium text-champagne">{panel.eyebrow}</p>
+                  <p
+                    className={cn(
+                      "text-2xl leading-snug text-ivory md:text-3xl",
+                      panel.emphasis && "font-display text-3xl font-bold italic text-champagne md:text-4xl"
+                    )}
+                  >
+                    {panel.headline}
+                  </p>
+                </article>
+              ))}
+            </div>
+            <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-ivory/55">
+              FairRent scores landlords and tenants on verifiable behaviour — payments, repairs, and compliance —
+              not star ratings left after a move-out.
+            </p>
           </section>
 
-          {/* Spatial: Metrics + Process in one atmospheric field (no outer boxes) */}
-          <section className="vanish-bottom edge-soften-y mb-20" data-entrance>
+          <section data-entrance>
             <SpatialMetricsProcess />
           </section>
+        </LandingBridge>
 
-          <section className="mt-20 flex flex-wrap justify-center gap-4" data-entrance>
-            <Button asChild variant="outline" className="rounded-full backdrop-blur-md border-white/20">
+        <main className="relative z-10 mx-auto max-w-5xl px-6 pb-24 pt-8">
+          <section
+            className="landing-panel flex flex-wrap justify-center gap-4 rounded-[2.5rem] px-8 py-11 md:rounded-[3.5rem] md:px-10 md:py-12"
+            data-entrance
+          >
+            <Button asChild variant="outline" className="rounded-full border-white/20 backdrop-blur-md">
               <Link href="/auth">Enter as Landlord</Link>
             </Button>
             <Button asChild className="rounded-full backdrop-blur-md">
@@ -105,8 +124,8 @@ export default function LandingPage() {
               <Link href="/marketplace">Browse Marketplace</Link>
             </Button>
           </section>
-        </PageEntrance>
-      </main>
+        </main>
+      </PageEntrance>
     </div>
   );
 }

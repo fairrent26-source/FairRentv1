@@ -29,6 +29,13 @@ function getStrokeGradient(value: number, max: number): string {
   return "url(#score-red)";
 }
 
+function getGlow(value: number, max: number): string {
+  const pct = value / max;
+  if (pct >= 0.9) return "drop-shadow(0 0 6px rgba(201, 168, 76, 0.45))";
+  if (pct >= 0.6) return "drop-shadow(0 0 6px rgba(245, 158, 11, 0.35))";
+  return "drop-shadow(0 0 6px rgba(248, 113, 113, 0.35))";
+}
+
 export function ScoreDisplay({
   value,
   max = maxDefault,
@@ -99,7 +106,8 @@ export function ScoreDisplay({
             stroke={getStrokeGradient(value, max)}
             strokeDasharray={circumference}
             strokeDashoffset={mounted ? offset : circumference}
-            className="transition-[stroke-dashoffset] duration-700 ease-out"
+            className="transition-[stroke-dashoffset] duration-700 ease-out motion-reduce:transition-none"
+            style={{ filter: getGlow(value, max) }}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">

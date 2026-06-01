@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { LuxeImage } from "@/components/ui/LuxeImage";
+import { VerifiedBadge } from "@/components/ui/VerifiedBadge";
 import { LUXE_IMAGE_LIST } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import type { MatchCandidate } from "@/mock/types";
-import { Check } from "lucide-react";
 
 interface MatchCardProps {
   match: MatchCandidate;
@@ -62,12 +62,9 @@ export function MatchCard({
           {match.sqft ? ` | ${match.sqft} sqft` : ""}
         </p>
         {showVerificationFlags && match.verificationFlags.length > 0 && (
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1.5">
             {match.verificationFlags.map((flag) => (
-              <span key={flag} className="inline-flex items-center gap-1 rounded-md bg-slate-luxe/60 border border-slate-luxe/50 px-2 py-0.5 text-xs text-ivory/80">
-                <Check className="h-3 w-3 text-champagne" />
-                {flag}
-              </span>
+              <VerifiedBadge key={flag} status="verified" label={flag} size="sm" />
             ))}
           </div>
         )}

@@ -3,15 +3,19 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
+import { Check } from "lucide-react";
+import { LandingAgentComparison } from "@/components/atmosphere/LandingAgentComparison";
+import { LANDING_SECTIONS } from "@/lib/landing-sections";
 
 const METRICS = [
   {
     key: "score",
-    label: "t Score",
+    label: "Trust Score",
     scale: "0 — 5 scale",
     mono: true,
     progress: true,
-    value: 35,
+    value: 72,
   },
   {
     key: "metrics",
@@ -21,156 +25,241 @@ const METRICS = [
   {
     key: "communication",
     label: "Communication",
-    items: ["> SLA Met", "> Repair Verified", "> Payment Confirmed"],
-    champagneList: true,
+    items: ["SLA Met", "Repair Verified", "Payment Confirmed"],
   },
   {
     key: "scheduling",
     label: "Scheduling",
-    desc: "Maintenance window and calendar.",
+    desc: "Maintenance windows and tenancy calendar in one place.",
   },
-];
+] as const;
 
 const STEPS = [
-  { num: "01", title: "Verify" },
-  { num: "02", title: "Quantify" },
-  { num: "03", title: "Standardize" },
-];
+  {
+    num: "01",
+    title: "Verify",
+    desc: "Identity, income, and compliance documents — verified once, reused everywhere.",
+  },
+  {
+    num: "02",
+    title: "Quantify",
+    desc: "Behaviour becomes a score: payments, repairs, notices, and statutory deadlines.",
+  },
+  {
+    num: "03",
+    title: "Standardize",
+    desc: "Match on track records, not anecdotes. Every party sees the same facts.",
+  },
+] as const;
+
+const PRICING = [
+  {
+    role: "Tenants",
+    price: "Free",
+    period: "to build your Passport",
+    features: ["Universal Tenant Passport", "Marketplace & premium matches", "Tenancy ledger & repair logging"],
+    highlighted: false,
+  },
+  {
+    role: "Landlords",
+    price: "£9",
+    period: "per unit / month",
+    features: ["Pedigree score & compliance hub", "Tenant matching & messaging", "Maintenance SLA tracking"],
+    highlighted: true,
+  },
+  {
+    role: "FairRent Pay",
+    price: "1.2%",
+    period: "on rent collected",
+    features: ["Automated rent collection", "Payout routing to verified accounts", "No hidden listing fees"],
+    highlighted: false,
+  },
+] as const;
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="mb-8 text-center text-sm font-medium uppercase tracking-[0.2em] text-champagne/80">
+      {children}
+    </p>
+  );
+}
+
+function GlassPanel({
+  className,
+  children,
+  emphasized,
+  ...rest
+}: React.HTMLAttributes<HTMLElement> & { emphasized?: boolean }) {
+  return (
+    <article
+      className={cn(
+        "landing-panel landing-panel-beam rounded-[2.5rem] p-7 md:rounded-[3.5rem] md:p-9",
+        emphasized && "ring-1 ring-champagne/15",
+        className
+      )}
+      {...rest}
+    >
+      {children}
+    </article>
+  );
+}
 
 export function SpatialMetricsProcess() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const metricsRef = useRef<HTMLDivElement>(null);
-  const processRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    const metricsWrap = metricsRef.current;
-    const processWrap = processRef.current;
-    if (!section || !metricsWrap || !processWrap) return;
+    const root = rootRef.current;
+    if (!root) return;
 
     const ctx = gsap.context(() => {
-      const metricEls = metricsWrap.querySelectorAll("[data-metric-card]");
-      const processEls = processWrap.querySelectorAll("[data-process-card]");
-
+      const cards = root.querySelectorAll("[data-landing-card]");
       gsap.fromTo(
-        metricEls,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power3.out", overwrite: "auto" }
+        cards,
+        { y: 28, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.55,
+          stagger: 0.06,
+          ease: "power3.out",
+          overwrite: "auto",
+        }
       );
-
-      processEls.forEach((el, i) => {
-        gsap.to(el, {
-          y: 5,
-          duration: 2 + i * 0.3,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: 0.4 + i * 0.15,
-        });
-      });
-    }, section);
+    }, root);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative overflow-hidden rounded-[3rem] bg-obsidian px-4 py-16 md:px-6 md:py-20"
-      aria-label="Metrics and process"
-    >
-      {/* Atmospheric field: two soft Champagne radials (2%) */}
-      <div
-        className="pointer-events-none absolute -left-[20%] -top-[20%] h-[80vh] w-[80vw] rounded-full opacity-100"
-        style={{ background: "radial-gradient(circle, rgba(201,168,76,0.02) 0%, transparent 65%)" }}
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -bottom-[20%] -right-[20%] h-[80vh] w-[80vw] rounded-full opacity-100"
-        style={{ background: "radial-gradient(circle, rgba(201,168,76,0.02) 0%, transparent 65%)" }}
-        aria-hidden
-      />
-
-      {/* Metrics: fluid grid, no outer box */}
-      <div
-        ref={metricsRef}
-        className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4"
+    <div ref={rootRef} className="space-y-14 md:space-y-20" aria-label="Product capabilities and pricing">
+      {/* Capability metrics — same glass language as comparison panels */}
+      <section
+        id={LANDING_SECTIONS.accountability}
+        className="scroll-mt-28"
+        aria-labelledby="landing-accountability-heading"
       >
-        {METRICS.map((m, i) => (
-          <div
-            key={m.key}
-            data-metric-card
-            className="glass-artifact-metric p-5 md:p-6"
-          >
-            <p className={`mb-2 text-xs text-ivory/60 ${m.mono ? "font-mono" : "font-medium"}`}>
-              {m.label}
-            </p>
-            {m.progress && (
-              <>
-                <Progress value={m.value!} className="h-2" indicatorClassName="bg-champagne" />
-                <p className="mt-1 font-mono text-xs text-ivory/50">{m.scale}</p>
-              </>
-            )}
-            {m.desc && <p className="text-sm text-ivory/60">{m.desc}</p>}
-            {m.items && (
-              <ul className="space-y-1.5 text-sm text-ivory/80">
-                {m.items.map((item) => {
-                  const parts = item.split(" ");
-                  const symbol = parts[0];
-                  const rest = parts.slice(1).join(" ");
-                  return (
+        <SectionEyebrow>
+          <span id="landing-accountability-heading">Built for accountability</span>
+        </SectionEyebrow>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          {METRICS.map((m) => (
+            <GlassPanel key={m.key} data-landing-card className="flex flex-col">
+              <p
+                className={cn(
+                  "mb-3 text-sm font-medium text-champagne",
+                  "mono" in m && m.mono && "font-mono text-xs uppercase tracking-wider"
+                )}
+              >
+                {m.label}
+              </p>
+              {"progress" in m && m.progress && (
+                <>
+                  <Progress value={m.value} className="h-2" indicatorClassName="bg-champagne" />
+                  <p className="mt-2 font-mono text-xs text-ivory/50">{m.scale}</p>
+                </>
+              )}
+              {"desc" in m && m.desc && (
+                <p className="text-sm leading-relaxed text-ivory/65">{m.desc}</p>
+              )}
+              {"items" in m && m.items && (
+                <ul className="mt-auto space-y-2 text-sm text-ivory/80">
+                  {m.items.map((item) => (
                     <li key={item} className="flex items-center gap-2">
-                      <span
-                        className="font-mono text-champagne"
-                        style={{ textShadow: "0 0 12px rgba(201,168,76,0.4)" }}
-                      >
-                        {symbol}
-                      </span>
-                      <span>{rest}</span>
+                      <Check className="h-3.5 w-3.5 shrink-0 text-champagne" aria-hidden />
+                      <span>{item}</span>
                     </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-        ))}
-      </div>
+                  ))}
+                </ul>
+              )}
+            </GlassPanel>
+          ))}
+        </div>
+      </section>
 
-      {/* Overlap: pull Process up into the field */}
-      <div ref={processRef} className="-mt-24">
-        <p
-          className="mb-8 text-center text-sm text-ivory/60"
-          style={{ letterSpacing: "0.2em" }}
+      <LandingAgentComparison />
+
+      {/* How it works + pricing */}
+      <div>
+        <section
+          id={LANDING_SECTIONS.howItWorks}
+          className="scroll-mt-28"
+          aria-labelledby="landing-how-it-works-heading"
         >
-          Experience Unrivaled Comfort.
-        </p>
-        <div className="grid gap-6 md:grid-cols-3">
-          {STEPS.map((s, i) => (
-            <div
+          <SectionEyebrow>
+            <span id="landing-how-it-works-heading">How it works</span>
+          </SectionEyebrow>
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
+          {STEPS.map((s) => (
+            <GlassPanel
               key={s.num}
-              data-process-card
-              className="process-card-spatial relative overflow-hidden p-6 pt-6"
+              data-landing-card
+              className="relative min-h-[200px] overflow-hidden"
             >
               <span
-                className="pointer-events-none absolute right-4 top-4 select-none font-display text-[8rem] font-normal italic leading-none text-champagne/[0.03]"
+                className="pointer-events-none absolute -bottom-4 -right-2 select-none font-mono text-[7rem] font-bold leading-none text-ivory/[0.04]"
                 aria-hidden
               >
                 {s.num}
               </span>
-              <p className="relative text-right font-mono text-2xl font-bold text-champagne">
-                {s.num}.
-              </p>
-              <p
-                className="relative text-lg font-bold tracking-tight text-ivory"
-                style={{ letterSpacing: "-0.03em" }}
-              >
-                {s.title}
-              </p>
-            </div>
+              <p className="relative text-right font-mono text-xl font-bold text-champagne">{s.num}.</p>
+              <h3 className="relative mt-6 text-2xl font-bold tracking-tight text-ivory">{s.title}</h3>
+              <p className="relative mt-3 text-sm leading-relaxed text-ivory/60">{s.desc}</p>
+            </GlassPanel>
           ))}
         </div>
+        </section>
+
+        <GlassPanel
+          data-landing-card
+          emphasized
+          className="mt-6 md:mt-7"
+          aria-label="Pricing"
+        >
+          <div className="mb-8 text-center md:mb-10">
+            <p className="text-sm font-medium text-champagne">Transparent pricing</p>
+            <h3 className="mt-2 font-display text-2xl italic text-ivory md:text-3xl">
+              Pay for outcomes, not listings.
+            </h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-ivory/55">
+              No bidding wars on visibility. Tenants verify for free; landlords scale per unit; rent collection
+              is a simple platform fee.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
+            {PRICING.map((tier) => (
+              <div
+                key={tier.role}
+                className={cn(
+                  "landing-panel-nested rounded-[2rem] p-6 transition-colors duration-300 md:rounded-[2.75rem] md:p-7",
+                  tier.highlighted
+                    ? "border-champagne/25 bg-champagne/[0.07] ring-1 ring-champagne/10"
+                    : "border-white/[0.07] bg-white/[0.035]"
+                )}
+              >
+                <p className="text-xs font-medium uppercase tracking-[0.15em] text-champagne/90">{tier.role}</p>
+                <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-0">
+                  <span className="font-mono text-3xl font-bold text-ivory md:text-4xl">{tier.price}</span>
+                  <span className="text-sm text-ivory/50">{tier.period}</span>
+                </p>
+                <ul className="mt-5 space-y-2.5 border-t border-white/[0.08] pt-5">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-ivory/75">
+                      <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-champagne" aria-hidden />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-6 text-center text-xs text-ivory/45">
+            Prices shown are indicative for the UK market. Final fees confirmed at onboarding.
+          </p>
+        </GlassPanel>
       </div>
-    </section>
+    </div>
   );
 }

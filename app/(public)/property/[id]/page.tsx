@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PublicMarketplaceNav } from "@/components/layout/PublicMarketplaceNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { LuxeImage } from "@/components/ui/LuxeImage";
@@ -22,17 +23,7 @@ export default async function PropertyDetailPage({
 
   return (
     <div className="min-h-screen">
-      <header className="flex h-14 items-center justify-between border-b border-slate-luxe/50 px-6 bg-obsidian/95 backdrop-blur-sm">
-        <Link href="/marketplace" className="text-sm text-ivory/70 hover:text-ivory">
-          ← Back to Marketplace
-        </Link>
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-bold tracking-tight text-ivory" style={{ letterSpacing: "-0.02em" }}>FairRent</span>
-        </Link>
-        <Link href="/tenant">
-          <Button size="sm">Apply as Tenant</Button>
-        </Link>
-      </header>
+      <PublicMarketplaceNav />
 
       <main className="mx-auto max-w-4xl px-6 py-8">
         <div className="mb-6 overflow-hidden rounded-[2rem] border border-slate-luxe/50">

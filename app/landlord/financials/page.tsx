@@ -102,13 +102,13 @@ export default function LandlordFinancialsPage() {
             {/* Security badges */}
             <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-white/10 pt-6">
               <span className="flex items-center gap-2 text-xs text-ivory/50">
-                <ShieldCheck className="h-4 w-4" /> FCA Regulated
+                <ShieldCheck className="h-4 w-4" /> Authorised partners
               </span>
               <span className="flex items-center gap-2 text-xs text-ivory/50">
                 <Lock className="h-4 w-4" /> AES-256
               </span>
               <span className="flex items-center gap-2 text-xs text-ivory/50">
-                <Globe className="h-4 w-4" /> Open Banking
+                <Globe className="h-4 w-4" /> Third-party APIs
               </span>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function LandlordFinancialsPage() {
               </div>
             </div>
             <p className="mt-3 text-xs text-ivory/50">
-              Verification uses Open Banking. We never see or store your account number or sort code.
+              Banking is connected through authorised third-party providers. We don&apos;t store your banking details.
             </p>
           </div>
         </div>
@@ -163,6 +163,7 @@ export default function LandlordFinancialsPage() {
           <a href="#" className="text-xs text-slate-500 hover:text-slate-400">
             Use manual details
           </a>
+          <span className="mt-1 block text-xs text-ivory/40">Stored securely and only shared once a tenancy agreement has been initiated.</span>
         </p>
       </div>
 

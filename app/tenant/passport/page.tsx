@@ -1,6 +1,5 @@
 "use client";
 
-import { useDevStore } from "@/store/dev-store";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScoreDisplay } from "@/components/scoring/ScoreDisplay";
@@ -9,8 +8,7 @@ import { getPrimaryTenant } from "@/mock/tenants";
 
 export default function TenantPassportPage() {
   const tenant = getPrimaryTenant();
-  const highScore = useDevStore((s) => s.highScore);
-  const displayScore = highScore ? tenant.strengthScore : 3.2;
+  const displayScore = tenant.strengthScore;
 
   return (
     <div className="space-y-8">

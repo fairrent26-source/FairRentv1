@@ -20,10 +20,24 @@
     --muted: 240 8% 18%;
     --muted-foreground: 240 6% 55%;
     --accent: 43 52% 54%;
-    --destructive: 0 72% 51%;
-    --positive: 43 52% 54%;
-    --warning: 38 92% 48%;
-    --info: 43 52% 54%;
+    --ring: 43 52% 54%;
+
+    /* Trust & status — each semantic now reads distinctly.
+       Champagne stays the premium brand/score accent; emerald is reserved
+       exclusively for verified / secure / success states so trust signals
+       never blend into the brand gold. */
+    --verified: 152 56% 45%;
+    --verified-foreground: 152 72% 96%;
+    --verified-solid-foreground: 156 70% 9%;
+    --success: 152 56% 45%;
+    --success-foreground: 152 72% 96%;
+    --info: 204 64% 60%;
+    --info-foreground: 204 78% 96%;
+    --warning: 38 92% 52%;
+    --warning-foreground: 40 95% 10%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --positive: 152 56% 45%;
   }
 
   * {
@@ -32,6 +46,23 @@
 
   html {
     @apply antialiased;
+    scroll-behavior: smooth;
+  }
+
+  /* WCAG 2.3.3 — honor reduced-motion: disable decorative/continuous motion,
+     keep content instantly legible. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   body {
@@ -40,24 +71,38 @@
     font-feature-settings: "rlig" 1, "calt" 1, "tnum" 1;
   }
 
-  /* Typography: Inter headings + Playfair drama */
+  /* Typography: Inter headings + Playfair drama.
+     Fluid clamp() scale gives dashboards real hierarchy. Components that set an
+     explicit size class (e.g. CardTitle) override these base defaults. */
   h1,
   h2,
-  .heading-1 {
-    @apply font-bold tracking-tight text-ivory;
-    letter-spacing: -0.02em;
+  h3,
+  .heading-1,
+  .heading-2,
+  .heading-3 {
+    @apply font-bold text-ivory text-balance;
     font-family: var(--font-inter), system-ui, sans-serif;
   }
 
   h1,
   .heading-1 {
-    @apply text-xl;
+    @apply text-h1;
   }
 
   h2,
   .heading-2 {
-    @apply text-lg font-bold tracking-tight text-ivory;
-    letter-spacing: -0.02em;
+    @apply text-h2;
+  }
+
+  h3,
+  .heading-3 {
+    @apply text-h3 font-semibold;
+  }
+
+  /* Eyebrow / section kicker — uppercase, tracked, restrained.
+     Pair with the `text-display` / `text-display-xl` font-size utilities for hero type. */
+  .eyebrow {
+    @apply text-eyebrow font-medium uppercase text-champagne/80;
   }
 
   .font-display-italic {
@@ -165,6 +210,90 @@
   .glass-card {
     @apply rounded-[2rem] border border-white/[0.06] backdrop-blur-2xl;
     background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  /* Landing: softer, pill-like panels — explicit radius (do not use inherit on same node) */
+  .landing-panel {
+    --landing-radius: 2.5rem;
+    border-radius: var(--landing-radius);
+    @apply border border-white/[0.05] backdrop-blur-2xl transition-all duration-300 ease-out;
+    background: linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.025) 45%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  }
+  @media (min-width: 768px) {
+    .landing-panel {
+      --landing-radius: 3.5rem;
+    }
+  }
+  .landing-panel:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 14px 48px rgba(0, 0, 0, 0.28),
+      0 0 48px rgba(201, 168, 76, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  /* Accent trace — must not override .landing-panel border-radius */
+  .landing-panel-beam {
+    position: relative;
+    overflow: hidden;
+  }
+  .landing-panel-beam::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(201, 168, 76, 0.35) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: border-beam-h 6s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.85;
+  }
+  .landing-panel-beam::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(201, 168, 76, 0.28) 50%,
+      transparent 100%
+    );
+    background-size: 100% 200%;
+    animation: border-beam-v 6s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.85;
+  }
+
+  .landing-panel-nested {
+    border-radius: 2rem;
+    @apply border border-white/[0.06];
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  @media (min-width: 768px) {
+    .landing-panel-nested {
+      border-radius: 2.75rem;
+    }
   }
 
   /* Border beam: tiny Champagne light along top + left edge only */

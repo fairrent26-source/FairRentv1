@@ -1,12 +1,10 @@
 "use client";
 
-import { useDevStore } from "@/store/dev-store";
 import { MatchCard } from "@/components/marketplace/MatchCard";
 import { landlordMatchCandidates } from "@/mock/matches";
 
 export default function LandlordMatchesPage() {
-  const emptyMatches = useDevStore((s) => s.emptyMatches);
-  const list = emptyMatches ? [] : landlordMatchCandidates;
+  const list = landlordMatchCandidates;
 
   return (
     <div className="space-y-6">

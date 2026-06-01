@@ -8,8 +8,10 @@ const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> & {
     indicatorClassName?: string;
+    /** Adds a subtle moving sheen over the filled portion. */
+    shimmer?: boolean;
   }
->(({ className, value, indicatorClassName, ...props }, ref) => (
+>(({ className, value, indicatorClassName, shimmer = false, ...props }, ref) => (
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
@@ -19,9 +21,21 @@ const Progress = React.forwardRef<
     {...props}
   >
     <ProgressPrimitive.Indicator
-      className={cn("h-full w-full flex-1 transition-all duration-200", indicatorClassName)}
+      className={cn(
+        "relative h-full w-full flex-1 overflow-hidden rounded-full transition-transform duration-700 ease-out motion-reduce:transition-none",
+        // Default fill: champagne gradient. Override via indicatorClassName.
+        "bg-gradient-to-r from-champagne-deep via-champagne to-champagne-soft",
+        indicatorClassName
+      )}
       style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}
-    />
+    >
+      {shimmer && (
+        <span
+          aria-hidden
+          className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent animate-progress-shimmer motion-reduce:hidden"
+        />
+      )}
+    </ProgressPrimitive.Indicator>
   </ProgressPrimitive.Root>
 ));
 Progress.displayName = ProgressPrimitive.Root.displayName;

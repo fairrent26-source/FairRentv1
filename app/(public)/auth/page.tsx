@@ -1,20 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuthStore, type AuthRole } from "@/store/auth-store";
 import { LUXE_IMAGES } from "@/lib/images";
 
+function roleFromParam(value: string | null): AuthRole | null {
+  return value === "landlord" || value === "tenant" ? value : null;
+}
+
 export default function AuthPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-obsidian" />}>
+      <AuthPageInner />
+    </Suspense>
+  );
+}
+
+function AuthPageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const login = useAuthStore((s) => s.login);
   const [role, setRole] = useState<AuthRole>("tenant");
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const fromQuery = roleFromParam(searchParams.get("role"));
+    if (fromQuery) setRole(fromQuery);
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
