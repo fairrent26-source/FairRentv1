@@ -16,7 +16,7 @@ export default function LandlordMaintenancePage() {
   const tickets = maintenanceTickets;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <h2 className="text-xl font-semibold tracking-tight text-slate-100">Maintenance & Statutory Compliance</h2>
 
       <div className="grid gap-6 lg:grid-cols-3">

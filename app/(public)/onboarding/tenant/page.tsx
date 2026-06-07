@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -16,13 +16,22 @@ const STEPS = [
   { label: "Status/Preferences" },
   { label: "Reputation" },
   { label: "Financials" },
+  { label: "Identity & Bio" },
   { label: "Review" },
 ];
+
+const BIO_MAX_CHARS = 300;
+const BIO_PLACEHOLDER =
+  "e.g. Quiet professional working in tech, originally from Manchester. I keep my space tidy, love cooking on weekends, and I'm looking for a long-term home where I can settle in. Non-smoker, no pets, always pay rent on time.";
 
 export default function TenantOnboardingPage() {
   const router = useRouter();
   const completeOnboarding = useAuthStore((s) => s.completeOnboarding);
   const [step, setStep] = useState(0);
+  const [docType, setDocType] = useState<"passport" | "license" | null>(null);
+  const [uploadedDoc, setUploadedDoc] = useState<File | null>(null);
+  const [bio, setBio] = useState("");
+  const docInputRef = useRef<HTMLInputElement>(null);
 
   const handleContinue = () => {
     if (step < STEPS.length - 1) {
@@ -217,6 +226,103 @@ export default function TenantOnboardingPage() {
         {step === 3 && (
           <>
             <h1 className="text-2xl font-semibold tracking-tight text-ivory md:text-3xl" style={{ letterSpacing: "-0.02em" }}>
+              Verify your identity and add a personal touch
+            </h1>
+            <p className="mt-2 text-ivory/60">
+              A one-time identity check unlocks the &ldquo;Verified&rdquo; badge landlords trust. Add an optional bio to stand out once you match.
+            </p>
+            <div className="mt-8 grid gap-6 sm:grid-cols-2">
+              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
+                <h2 className="text-sm font-medium text-champagne">Government ID Verification</h2>
+                <p className="mt-2 text-xs text-ivory/60">
+                  Upload a clear photo of one certified government document.
+                </p>
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  {([
+                    { id: "passport", label: "Passport" },
+                    { id: "license", label: "Driver's License" },
+                  ] as const).map((opt) => (
+                    <Button
+                      key={opt.id}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setDocType(opt.id)}
+                      className={`h-auto min-h-9 whitespace-normal px-2 py-2 text-xs leading-tight rounded-[2rem] border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory ${
+                        docType === opt.id ? "border-champagne bg-champagne/10 text-ivory" : ""
+                      }`}
+                    >
+                      {opt.label}
+                    </Button>
+                  ))}
+                </div>
+                <input
+                  ref={docInputRef}
+                  type="file"
+                  accept="image/*,.pdf"
+                  className="hidden"
+                  onChange={(e) => setUploadedDoc(e.target.files?.[0] ?? null)}
+                />
+                <button
+                  type="button"
+                  onClick={() => docInputRef.current?.click()}
+                  disabled={!docType}
+                  className="mt-4 w-full rounded-[2rem] border border-dashed border-white/20 bg-white/5 py-6 text-center text-sm text-ivory/50 transition-colors hover:border-champagne/50 hover:text-ivory disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {uploadedDoc
+                    ? `Selected: ${uploadedDoc.name}`
+                    : docType
+                    ? `Tap to upload your ${docType === "passport" ? "passport" : "driver's license"}`
+                    : "Select a document type first"}
+                </button>
+                <div className="mt-4 rounded-[2rem] border border-champagne/20 bg-champagne/10 p-4 text-xs text-ivory/80">
+                  <p className="font-medium text-champagne">🔒 We never store your document.</p>
+                  <p className="mt-1">
+                    Your ID is sent directly to our FCA-regulated verification partner to be checked and reviewed, then permanently deleted. We&apos;ll notify you once your verification is complete. FairRent only ever receives a pass/fail result—never the image itself.
+                  </p>
+                </div>
+              </section>
+              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-sm font-medium text-ivory">Your Bio</h2>
+                  <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wide text-ivory/50">
+                    Optional
+                  </span>
+                </div>
+                <p className="mt-2 text-xs text-ivory/60">
+                  A short, friendly intro shared with landlords only after you match.
+                </p>
+                <div className="mt-4">
+                  <OnboardingTextarea
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value.slice(0, BIO_MAX_CHARS))}
+                    maxLength={BIO_MAX_CHARS}
+                    placeholder={BIO_PLACEHOLDER}
+                    className="min-h-[160px]"
+                  />
+                  <div className="mt-1 flex justify-end">
+                    <span
+                      className={`text-xs tabular-nums ${
+                        bio.length >= BIO_MAX_CHARS ? "text-red-400" : "text-ivory/50"
+                      }`}
+                    >
+                      {bio.length} / {BIO_MAX_CHARS}
+                    </span>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <p className="mt-4 flex items-center gap-2 text-xs text-ivory/50">
+              🔒 Identity checks are processed by a certified third party. Your bio stays hidden until you choose to match.
+            </p>
+            <Button className="mt-6 w-full rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg" onClick={handleContinue}>
+              Verify my identity and continue
+            </Button>
+          </>
+        )}
+
+        {step === 4 && (
+          <>
+            <h1 className="text-2xl font-semibold tracking-tight text-ivory md:text-3xl" style={{ letterSpacing: "-0.02em" }}>
               Review your FairRent Profile
             </h1>
             <p className="mt-2 text-ivory/60">
@@ -241,6 +347,9 @@ export default function TenantOnboardingPage() {
                 <p className="mt-2 text-xs text-champagne">Equifax: Linked</p>
                 <p className="text-xs text-ivory/50">References: Pending</p>
                 <p className="text-xs text-champagne">Bank: Connected · Direct Debit: Enabled</p>
+                <p className="text-xs text-champagne">
+                  Identity: {docType ? "Verified ✓" : "Pending"}
+                </p>
               </section>
             </div>
             <section className="mt-6 rounded-[2rem] border border-champagne/20 bg-champagne/10 p-6">

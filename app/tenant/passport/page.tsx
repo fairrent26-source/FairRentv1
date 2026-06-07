@@ -11,7 +11,7 @@ export default function TenantPassportPage() {
   const displayScore = tenant.strengthScore;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <h2 className="text-xl font-semibold text-slate-100">Your Universal Tenant Passport</h2>
 
       <Card>

@@ -188,7 +188,7 @@ function AuthPageInner() {
 
         <p className="mt-8 flex items-center gap-2 text-xs text-ivory/50">
           <span>🔒</span>
-          FairRent uses bank-level encryption. Your data is used only for verification.
+          We encrypt your data and use it only to verify your identity.
         </p>
       </div>
     </div>

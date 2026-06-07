@@ -70,11 +70,11 @@ export function MatchCard({
         )}
         <Progress value={matchPct * 100} className="h-1.5" indicatorClassName="bg-champagne" />
       </CardContent>
-      <CardFooter className="flex gap-2">
-        <Button variant="outline" size="sm" className="flex-1">
+      <CardFooter className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-end">
+        <Button variant="outline" size="sm" className="w-full sm:w-auto">
           {secondaryActionLabel}
         </Button>
-        <Button size="sm" className="flex-1">
+        <Button size="sm" className="w-full sm:w-auto">
           {primaryActionLabel}
         </Button>
       </CardFooter>

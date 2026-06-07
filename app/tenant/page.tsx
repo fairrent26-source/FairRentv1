@@ -19,7 +19,7 @@ export default function TenantOverviewPage() {
         <h2 className="text-xl font-semibold text-ivory">
           Welcome back, {tenant.name}. You have {matches.length} new premium matches.
         </h2>
-        <Button variant="outline" size="sm" className="rounded-[2rem] border-white/20 text-ivory/80 hover:border-champagne/50">Edit Search Criteria</Button>
+        <Button variant="outline" size="sm">Edit Search Criteria</Button>
       </div>
 
       <DashboardWidget className="p-6">
@@ -79,7 +79,7 @@ export default function TenantOverviewPage() {
               <span className="inline-block rounded-full bg-champagne/20 px-2 py-0.5 text-xs text-champagne">Auto-Pay Linked</span>
               <p className="text-sm text-ivory/60">The Trust Ledger: Streak: 12 months on-time payments.</p>
               <p className="text-sm text-emerald-500">↑ Your score improved by +0.2 this month.</p>
-              <Button size="sm" className="mt-2 rounded-[2rem]">Log a Repair Ticket</Button>
+              <Button size="sm" className="mt-2">Log a Repair Ticket</Button>
               <p className="text-xs text-ivory/50">Landlord Avg. SLA: 14 hours</p>
             </div>
           </DashboardWidget>

@@ -12,7 +12,7 @@ export default function LandlordSettingsPage() {
   const landlord = getPrimaryLandlord();
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold text-slate-100">Professional Settings</h2>
         <p className="text-slate-400">Manage your landlord entity, verified credentials, and portfolio-wide permissions.</p>

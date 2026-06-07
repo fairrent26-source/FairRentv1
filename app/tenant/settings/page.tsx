@@ -6,7 +6,7 @@ import { Switch } from "@/components/ui/switch";
 
 export default function TenantSettingsPage() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold text-slate-100">Settings</h2>
         <p className="text-slate-400">Manage your account and preferences.</p>

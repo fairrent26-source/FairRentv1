@@ -13,9 +13,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       className={cn(
         "rounded-[2rem] border border-white/[0.06] text-ivory shadow-elevated-card",
         "bg-white/[0.02] backdrop-blur-2xl",
-        "transition-all duration-200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] motion-reduce:transition-none",
+        "transition-[border-color,box-shadow,background-color] duration-200 ease-out motion-reduce:transition-none",
         interactive
-          ? "cursor-pointer hover:-translate-y-0.5 hover:border-champagne/30 hover:shadow-[0_18px_50px_-12px_rgba(0,0,0,0.5),0_0_28px_-8px_rgba(201,168,76,0.18)] motion-reduce:hover:translate-y-0"
+          ? "cursor-pointer hover:border-champagne/30 hover:bg-white/[0.04] hover:shadow-[0_18px_50px_-12px_rgba(0,0,0,0.5),0_0_28px_-8px_rgba(201,168,76,0.18)]"
           : "hover:border-white/[0.08] hover:shadow-elevated-metric",
         className
       )}

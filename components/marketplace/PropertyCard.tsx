@@ -72,7 +72,7 @@ export function PropertyCard({
         )}
       </CardContent>
       <CardFooter>
-        <Button asChild size="sm" className="w-full">
+        <Button asChild size="sm" className="w-full sm:w-auto">
           <Link href={href}>View Details</Link>
         </Button>
       </CardFooter>

@@ -22,7 +22,7 @@ export default function LandlordOverviewPage() {
   const displayScore = landlord.pedigreeScore;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="section-divide pt-0">
         <h2 className="text-xl font-semibold tracking-tight text-ivory">
           Welcome back, {landlord.entityName.split(" ")[0]}
@@ -37,7 +37,7 @@ export default function LandlordOverviewPage() {
             <p className="text-center text-sm text-ivory/60">
               Upload Gas Safety Certificate for Property A to reach 4.9.
             </p>
-            <Button size="sm" className="rounded-[2rem]">Upload Now</Button>
+            <Button size="sm">Upload Now</Button>
           </div>
         </DashboardWidget>
 

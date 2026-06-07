@@ -110,7 +110,7 @@ export function ChatWindow({ thread, className }: ChatWindowProps) {
         />
         <button
           type="button"
-          className="flex shrink-0 items-center gap-2 rounded-[2rem] bg-champagne px-4 py-2 text-sm font-medium text-obsidian transition-colors hover:bg-champagne/90 active:scale-[0.98]"
+          className="flex shrink-0 items-center gap-2 rounded-[2rem] bg-champagne px-4 py-2 text-sm font-medium text-obsidian transition-colors duration-200 hover:bg-champagne/90 active:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne/60 focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian"
         >
           <span className="hidden sm:inline">Send</span>
           <Send className="h-4 w-4" />
