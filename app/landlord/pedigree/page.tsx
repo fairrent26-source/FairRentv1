@@ -12,15 +12,15 @@ export default function LandlordPedigreePage() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-slate-100">Your FairRent Pedigree & Certification</h2>
+      <h2 className="text-xl font-display font-bold uppercase tracking-display text-text-primary">Your FairRent Pedigree & Certification</h2>
 
       <Card className="mx-auto max-w-md">
         <CardHeader>
-          <span className="text-sm font-medium text-slate-100">Your Super-Landlord Score</span>
+          <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Your Super-Landlord Score</span>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-4">
           <ScoreDisplay value={displayScore} max={5} label="Pedigree" size="lg" />
-          <p className="text-center text-sm text-slate-400">Upload Gas Safety Certificate for Property A to reach 4.9.</p>
+          <p className="text-center text-sm text-text-muted">Upload Gas Safety Certificate for Property A to reach 4.9.</p>
         </CardContent>
       </Card>
 
@@ -33,12 +33,12 @@ export default function LandlordPedigreePage() {
         ].map((item) => (
           <Card key={item.label}>
             <CardContent className="pt-6">
-              <p className="text-2xl font-bold text-slate-100">{item.metric}</p>
+              <p className="text-2xl font-bold text-text-primary">{item.metric}</p>
               <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-800">
                 <div className={cn("h-full rounded-full", item.color)} style={{ width: item.metric }} />
               </div>
-              <p className="mt-2 text-sm font-medium text-slate-100">{item.label}</p>
-              <p className="text-xs text-slate-400">{item.desc}</p>
+              <p className="mt-2 text-sm font-medium text-text-primary">{item.label}</p>
+              <p className="text-xs text-text-muted">{item.desc}</p>
             </CardContent>
           </Card>
         ))}
@@ -47,16 +47,16 @@ export default function LandlordPedigreePage() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <span className="text-sm font-medium text-slate-100">Local Ranking</span>
+            <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Local Ranking</span>
           </CardHeader>
           <CardContent>
             <p className="text-lg font-semibold text-emerald-500">Top 5% in SW1</p>
-            <p className="text-sm text-slate-400">Your 4.8 score places you among the best.</p>
+            <p className="text-sm text-text-muted">Your 4.8 score places you among the best.</p>
           </CardContent>
         </Card>
         <Card className="border-amber-500/50">
           <CardHeader className="flex flex-row items-center gap-2">
-            <span className="text-sm font-medium text-slate-100">Action Required: Pedigree Alert</span>
+            <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Action Required: Pedigree Alert</span>
             <Badge variant="warning">⚠</Badge>
           </CardHeader>
           <CardContent>
@@ -67,7 +67,7 @@ export default function LandlordPedigreePage() {
 
       <Card>
         <CardHeader>
-          <span className="text-sm font-medium text-slate-100">Visual Achievement Tracker</span>
+          <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Visual Achievement Tracker</span>
         </CardHeader>
         <CardContent>
           <div className="flex gap-4">

@@ -35,7 +35,7 @@ export function MaintenanceSLAWidget({
   return (
     <Card className={cn(className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
-        <span className="text-sm font-medium text-ivory">Maintenance SLA Status</span>
+        <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Maintenance SLA Status</span>
         {allClear ? (
           <Badge variant="positive">All Clear</Badge>
         ) : (
@@ -45,36 +45,36 @@ export function MaintenanceSLAWidget({
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div>
-            <p className="text-ivory/60">SLA Met (30d)</p>
-            <p className="font-semibold font-mono text-champagne">{percentMet}%</p>
+            <p className="text-text-muted">SLA Met (30d)</p>
+            <p className="font-semibold font-mono text-brand-teal">{percentMet}%</p>
           </div>
           <div>
-            <p className="text-ivory/60">Avg. Resolution</p>
-            <p className="font-semibold font-mono text-ivory">{avgResolutionHours} Hours</p>
+            <p className="text-text-muted">Avg. Resolution</p>
+            <p className="font-semibold font-mono text-text-primary">{avgResolutionHours} Hours</p>
           </div>
         </div>
         {allClear ? (
-          <p className="text-sm text-ivory/70">0 Active Issues. You are completely up to date.</p>
+          <p className="text-sm text-text-muted">0 Active Issues. You are completely up to date.</p>
         ) : null}
-        <p className="flex items-center gap-1.5 text-sm text-ivory/70">
-          <Shield className="h-4 w-4 text-champagne" />
+        <p className="flex items-center gap-1.5 text-sm text-text-muted">
+          <Shield className="h-4 w-4 text-brand-teal" />
           {historicResolved} historic repairs resolved successfully since joining.
         </p>
         {tickets.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs font-medium text-champagne">Recent tickets</p>
+            <p className="text-xs font-medium text-brand-teal">Recent tickets</p>
             <ul className="space-y-2">
               {tickets.slice(0, 4).map((t) => (
                 <li
                   key={t.id}
-                  className="flex items-center justify-between rounded-xl border border-slate-luxe/50 bg-slate-luxe/30 p-3"
+                  className="flex items-center justify-between rounded-xl border border-ui-tags/50 bg-ui-tags/30 p-3"
                 >
                   <div>
-                    <p className="text-sm font-medium text-ivory">
+                    <p className="text-sm font-display font-bold uppercase tracking-display text-text-primary">
                       {t.title}
                       {t.unit ? ` - ${t.unit}` : ""}
                     </p>
-                    <p className="text-xs text-ivory/60">Tenant Sentiment: {t.tenantSentiment ?? "—"}/10</p>
+                    <p className="text-xs text-text-muted">Tenant Sentiment: {t.tenantSentiment ?? "—"}/10</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge variant={priorityVariant[t.priority]}>{t.priority}</Badge>

@@ -9,7 +9,7 @@ function Skeleton({ className, ...props }: SkeletonProps) {
     <div
       aria-hidden
       className={cn(
-        "rounded-xl bg-white/[0.06] animate-skeleton-pulse motion-reduce:animate-none",
+        "rounded-xl bg-ui-tags animate-skeleton-pulse motion-reduce:animate-none",
         className
       )}
       {...props}

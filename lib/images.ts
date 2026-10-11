@@ -37,6 +37,9 @@ export const LUXE_IMAGES = {
   /** Financial / Connect Bank — architectural blueprints, vault, modern finance */
   financialVault:
     `${BASE}/photo-1554224155-6726b3ff858f?w=1920&q=85`,
+  /** How it works — sunlit living space, Unsplash License */
+  howItWorks:
+    `${BASE}/photo-1502672260266-1c1ef2d93688?w=1600&q=85`,
 } as const;
 
 /** Ordered list for cycling in cards */

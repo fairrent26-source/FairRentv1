@@ -10,7 +10,7 @@ interface MouseGlowCardProps {
 }
 
 /** #C9A84C at ~6% opacity (0x10 in 8-digit hex) — subtle radial behind glass */
-const GLOW_COLOR = "rgba(201, 168, 76, 0.06)";
+const GLOW_COLOR = "rgba(0, 210, 211, 0.06)";
 
 /**
  * Card with GSAP-powered mouse-follow radial glow.

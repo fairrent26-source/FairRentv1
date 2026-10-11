@@ -39,14 +39,14 @@ export function ComplianceCard({ item, className }: ComplianceCardProps) {
       )}
     >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <span className="text-sm font-medium text-ivory">{item.label}</span>
+        <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">{item.label}</span>
         <Badge variant={variant} className="gap-1">
           <Icon className="h-3 w-3" />
           {label}
         </Badge>
       </CardHeader>
       <CardContent className="space-y-3">
-        <p className="text-xs text-ivory/60">
+        <p className="text-xs text-text-muted">
           Expiry: {item.expiryDate}
           {item.propertyAddress && ` · ${item.propertyAddress}`}
         </p>

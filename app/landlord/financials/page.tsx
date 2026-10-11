@@ -73,13 +73,13 @@ export default function LandlordFinancialsPage() {
       </div>
       <div className="relative z-10 mx-auto max-w-2xl px-2 py-6 sm:px-4">
         {/* Glass Vault container */}
-        <div className="relative min-h-[320px] rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
+        <div className="relative min-h-[320px] rounded-[2.5rem] border border-ui-tags bg-bg-card p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
           {/* Initial state: Connect CTA */}
           <div ref={initialRef} className={connected ? "pointer-events-none absolute inset-0 rounded-[2.5rem] p-6 sm:p-8" : ""}>
-            <h2 className="font-bold tracking-tight text-ivory" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
+            <h2 className="font-display font-bold uppercase tracking-display text-text-primary">
               Secure Bank Integration
             </h2>
-            <p className="mt-2 font-display-italic text-lg text-ivory/70">Automated Financial Intelligence.</p>
+            <p className="mt-2 font-accent italic text-lg text-text-muted">Automated Financial Intelligence.</p>
             <div className="mt-8 flex flex-col items-center">
               <div className="relative">
                 {loading && (
@@ -92,22 +92,22 @@ export default function LandlordFinancialsPage() {
                   size="lg"
                   disabled={loading}
                   onClick={handleBankLink}
-                  className="relative rounded-[2rem] bg-champagne px-8 py-6 text-base font-semibold text-obsidian shadow-lg transition-all hover:bg-champagne/90 disabled:opacity-90"
-                  style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+                  className="relative rounded-[2rem] bg-brand-teal px-8 py-6 text-base font-semibold text-text-primary shadow-lg transition-all hover:bg-accent-lime disabled:opacity-90"
+                  style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}
                 >
                   {loading ? "Connecting…" : "Connect Bank"}
                 </Button>
               </div>
             </div>
             {/* Security badges */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-white/10 pt-6">
-              <span className="flex items-center gap-2 text-xs text-ivory/50">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-ui-tags pt-6">
+              <span className="flex items-center gap-2 text-xs text-text-muted">
                 <ShieldCheck className="h-4 w-4" /> Authorised partners
               </span>
-              <span className="flex items-center gap-2 text-xs text-ivory/50">
+              <span className="flex items-center gap-2 text-xs text-text-muted">
                 <Lock className="h-4 w-4" /> AES-256
               </span>
-              <span className="flex items-center gap-2 text-xs text-ivory/50">
+              <span className="flex items-center gap-2 text-xs text-text-muted">
                 <Globe className="h-4 w-4" /> Third-party APIs
               </span>
             </div>
@@ -116,43 +116,43 @@ export default function LandlordFinancialsPage() {
           {/* Verified state: badge + automation toggles (overlay after connect) */}
           <div
             ref={verifiedRef}
-            className="absolute inset-0 z-10 rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-2xl sm:p-8"
+            className="absolute inset-0 z-10 rounded-[2.5rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-2xl sm:p-8"
             style={{ opacity: 0 }}
           >
             <div
               className="rounded-2xl px-4 py-3 text-center"
               style={{
-                background: "linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%)",
-                border: "1px solid rgba(201,168,76,0.25)",
+                background: "linear-gradient(135deg, rgba(0, 210, 211,0.15) 0%, rgba(0, 210, 211,0.05) 100%)",
+                border: "1px solid rgba(0, 210, 211,0.25)",
               }}
             >
-              <span className="text-sm font-medium text-champagne">Verified Landlord</span>
+              <span className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Verified Landlord</span>
               {tokenId && (
-                <p className="mt-1 font-mono text-xs text-ivory/70" style={{ fontFamily: "var(--font-jetbrains), monospace" }}>
+                <p className="mt-1 font-mono text-xs text-text-muted" style={{ fontFamily: "var(--font-jetbrains), monospace" }}>
                   ID: {tokenId}
                 </p>
               )}
             </div>
-            <h3 className="mt-8 text-sm font-semibold text-ivory">Payment Automation Preferences</h3>
+            <h3 className="mt-8 text-sm font-semibold text-text-primary">Payment Automation Preferences</h3>
             <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
               <div
                 className={`flex flex-1 items-center justify-between rounded-2xl border px-4 py-3 transition-all ${
-                  connected ? "border-champagne/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]" : "border-white/10"
+                  connected ? "border-brand-teal/30 shadow-[0_0_20px_rgba(0, 210, 211,0.12)]" : "border-ui-tags"
                 }`}
               >
-                <span className="text-sm text-ivory/80">Automated Rent Tracking</span>
-                <Switch checked={autoRentTracking} onCheckedChange={setAutoRentTracking} className="data-[state=checked]:bg-champagne" />
+                <span className="text-sm text-text-muted">Automated Rent Tracking</span>
+                <Switch checked={autoRentTracking} onCheckedChange={setAutoRentTracking} className="data-[state=checked]:bg-brand-teal" />
               </div>
               <div
                 className={`flex flex-1 items-center justify-between rounded-2xl border px-4 py-3 transition-all ${
-                  connected ? "border-champagne/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]" : "border-white/10"
+                  connected ? "border-brand-teal/30 shadow-[0_0_20px_rgba(0, 210, 211,0.12)]" : "border-ui-tags"
                 }`}
               >
-                <span className="text-sm text-ivory/80">Auto-generate Monthly Invoices</span>
-                <Switch checked={autoInvoices} onCheckedChange={setAutoInvoices} className="data-[state=checked]:bg-champagne" />
+                <span className="text-sm text-text-muted">Auto-generate Monthly Invoices</span>
+                <Switch checked={autoInvoices} onCheckedChange={setAutoInvoices} className="data-[state=checked]:bg-brand-teal" />
               </div>
             </div>
-            <p className="mt-3 text-xs text-ivory/50">
+            <p className="mt-3 text-xs text-text-muted">
               Banking is connected through authorised third-party providers. We don&apos;t store your banking details.
             </p>
           </div>
@@ -160,22 +160,22 @@ export default function LandlordFinancialsPage() {
 
         {/* Manual fallback: small, dimmed */}
         <p className="mt-6 text-center">
-          <a href="#" className="text-xs text-slate-500 hover:text-slate-400">
+          <a href="#" className="text-xs text-slate-500 hover:text-text-primary">
             Use manual details
           </a>
-          <span className="mt-1 block text-xs text-ivory/40">Stored securely and only shared once a tenancy agreement has been initiated.</span>
+          <span className="mt-1 block text-xs text-text-primary/40">Stored securely and only shared once a tenancy agreement has been initiated.</span>
         </p>
       </div>
 
       {/* Mobile only: sticky Connect button when not connected */}
       {!connected && (
-        <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-white/10 bg-obsidian/80 p-4 backdrop-blur-xl md:hidden">
+        <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-ui-tags bg-bg-main/80 p-4 backdrop-blur-xl md:hidden">
           <div className="mx-auto max-w-2xl">
             <Button
               size="lg"
               disabled={loading}
               onClick={handleBankLink}
-              className="w-full rounded-[2rem] bg-champagne py-6 text-base font-semibold text-obsidian hover:bg-champagne/90"
+              className="w-full rounded-[2rem] bg-brand-teal py-6 text-base font-semibold text-text-primary hover:bg-accent-lime"
             >
               {loading ? "Connecting…" : "Connect Bank"}
             </Button>

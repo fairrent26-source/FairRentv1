@@ -26,18 +26,18 @@ export default async function PropertyDetailPage({
       <PublicMarketplaceNav />
 
       <main className="mx-auto max-w-4xl px-6 py-8">
-        <div className="mb-6 overflow-hidden rounded-[2rem] border border-slate-luxe/50">
+        <div className="mb-6 overflow-hidden rounded-[2rem] border border-ui-tags/50">
           <LuxeImage src={pickImage(property.id)} alt={property.address} />
         </div>
-        <h1 className="mb-2 text-2xl font-bold text-ivory tracking-tight" style={{ letterSpacing: "-0.02em" }}>{property.address}</h1>
-        <p className="mb-6 font-mono text-champagne">
+        <h1 className="mb-2 text-2xl font-display font-bold uppercase tracking-display text-text-primary">{property.address}</h1>
+        <p className="mb-6 font-mono text-brand-teal">
           £{property.rent}/month · {property.beds} Beds · {property.baths} Bath
         </p>
         {property.description && (
           <Card className="mb-6 rounded-[2rem]">
             <CardContent className="pt-6">
-              <h2 className="mb-2 font-medium text-ivory">Description</h2>
-              <p className="text-ivory/80">{property.description}</p>
+              <h2 className="mb-2 font-display font-bold uppercase tracking-display text-text-primary">Description</h2>
+              <p className="text-text-muted">{property.description}</p>
             </CardContent>
           </Card>
         )}

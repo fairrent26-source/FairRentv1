@@ -19,8 +19,8 @@ export default function MarketplacePage() {
       <PublicMarketplaceNav />
 
       <main className="mx-auto max-w-6xl px-6 py-8">
-        <h1 className="mb-2 text-2xl font-bold text-ivory tracking-tight" style={{ letterSpacing: "-0.02em" }}>Discover properties</h1>
-        <p className="mb-8 text-ivory/70">Browse verified listings. Match by FairRent Strength.</p>
+        <h1 className="mb-2 text-2xl font-display font-bold uppercase tracking-display text-text-primary">Discover properties</h1>
+        <p className="mb-8 text-text-muted">Browse verified listings. Match by FairRent Strength.</p>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {marketplaceListings.map((listing) => {
@@ -34,8 +34,8 @@ export default function MarketplacePage() {
                   </Badge>
                 </div>
                 <CardContent className="pt-4">
-                  <p className="font-medium text-ivory">{listing.address}</p>
-                  <p className="text-sm font-mono text-champagne">
+                  <p className="font-medium text-text-primary">{listing.address}</p>
+                  <p className="text-sm font-mono text-brand-teal">
                     £{listing.rent}/month · {listing.beds} Beds | {listing.baths} Bath
                   </p>
                 </CardContent>

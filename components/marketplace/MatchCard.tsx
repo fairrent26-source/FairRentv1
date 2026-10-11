@@ -47,17 +47,17 @@ export function MatchCard({
           </Badge>
         )}
         <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
-          <span className={cn("font-semibold tabular-nums font-mono", isHighMatch ? "text-champagne" : "text-ivory/80")}>
+          <span className={cn("font-semibold tabular-nums font-mono", isHighMatch ? "text-brand-teal" : "text-text-muted")}>
             {match.matchPercent}% Match
           </span>
           {variant === "landlord" && (
-            <span className="text-sm text-ivory/70">Strength: {match.strengthScore}</span>
+            <span className="text-sm text-text-muted">Strength: {match.strengthScore}</span>
           )}
         </div>
       </div>
       <CardContent className="space-y-2 pt-4">
-        <p className="font-medium text-ivory">{match.address}</p>
-        <p className="text-sm font-mono text-champagne">
+        <p className="font-medium text-text-primary">{match.address}</p>
+        <p className="text-sm font-mono text-brand-teal">
           £{match.rent}/mo · {match.beds} Beds | {match.baths} Bath
           {match.sqft ? ` | ${match.sqft} sqft` : ""}
         </p>
@@ -68,7 +68,7 @@ export function MatchCard({
             ))}
           </div>
         )}
-        <Progress value={matchPct * 100} className="h-1.5" indicatorClassName="bg-champagne" />
+        <Progress value={matchPct * 100} className="h-1.5" indicatorClassName="bg-brand-teal" />
       </CardContent>
       <CardFooter className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-end">
         <Button variant="outline" size="sm" className="w-full sm:w-auto">

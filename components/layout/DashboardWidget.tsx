@@ -8,12 +8,12 @@ interface DashboardWidgetProps {
   className?: string;
 }
 
-/** Glass artifact for dashboard: bg-white/[0.03], backdrop-blur-xl, border-white/10. */
+/** Glass artifact for dashboard: bg-bg-card, backdrop-blur-xl, border-ui-tags. */
 export function DashboardWidget({ children, className }: DashboardWidgetProps) {
   return (
     <div
       className={cn(
-        "rounded-[2rem] border border-white/10 bg-white/[0.03] backdrop-blur-xl",
+        "rounded-[2rem] border border-ui-tags bg-bg-card backdrop-blur-xl",
         className
       )}
     >

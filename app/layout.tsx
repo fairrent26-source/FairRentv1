@@ -1,23 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
+import { Outfit, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { NoiseOverlay } from "@/components/atmosphere/NoiseOverlay";
 
-const inter = Inter({
+const outfit = Outfit({
+  weight: ["700", "800"],
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-display",
   display: "swap",
 });
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  style: "italic",
+  variable: "--font-accent",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -32,8 +34,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${playfair.variable} ${jetbrainsMono.variable}`}>
-      <body className="min-h-screen bg-obsidian text-ivory antialiased font-sans">
+    <html lang="en">
+      <body
+        className={`${outfit.variable} ${playfair.variable} ${inter.variable} min-h-screen antialiased font-body`}
+      >
         {children}
         <NoiseOverlay />
       </body>

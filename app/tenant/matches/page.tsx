@@ -15,10 +15,10 @@ export default function TenantMatchesPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-slate-100">Your Top-Tier Matches.</h2>
+        <h2 className="text-xl font-display font-bold uppercase tracking-display text-text-primary">Your Top-Tier Matches.</h2>
         <Button variant="outline" size="sm">Search Criteria</Button>
       </div>
-      <p className="text-slate-400">You have new premium matches based on your Strength.</p>
+      <p className="text-text-muted">You have new premium matches based on your Strength.</p>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-4">
@@ -43,16 +43,16 @@ export default function TenantMatchesPage() {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <span className="text-sm font-medium text-slate-100">Your FairRent Strength</span>
+              <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Your FairRent Strength</span>
             </CardHeader>
             <CardContent>
               <ScoreDisplay value={displayScore} max={5} label="Strength" size="md" />
-              <p className="mt-2 text-sm text-slate-400">Increase your strength to 4.5 by setting up Auto-Pay.</p>
+              <p className="mt-2 text-sm text-text-muted">Increase your strength to 4.5 by setting up Auto-Pay.</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <span className="text-sm font-medium text-slate-100">Improve Your Score</span>
+              <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Improve Your Score</span>
             </CardHeader>
             <CardContent className="space-y-2">
               <label className="flex items-center gap-2 text-sm text-slate-300">
@@ -67,23 +67,23 @@ export default function TenantMatchesPage() {
           </Card>
           <Card>
             <CardHeader>
-              <span className="text-sm font-medium text-slate-100">Target Postcode Insight</span>
+              <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Target Postcode Insight</span>
             </CardHeader>
             <CardContent>
               <div className="flex gap-2">
                 <div className="h-12 flex-1 rounded bg-red-500/30" />
-                <div className="h-8 flex-1 rounded bg-amber-500/30" />
+                <div className="h-8 flex-1 rounded bg-ui-tags" />
                 <div className="h-6 flex-1 rounded bg-emerald-500/30" />
               </div>
               <p className="mt-2 text-xs text-slate-500">Pricing Trends (Heat Map)</p>
-              <p className="mt-1 text-sm text-slate-400">Highly Competitive: 12 new tenants searching in this area today. Your profile is in the top 5%.</p>
+              <p className="mt-1 text-sm text-text-muted">Highly Competitive: 12 new tenants searching in this area today. Your profile is in the top 5%.</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <span className="text-sm font-medium text-slate-100">Your Activity</span>
+              <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Your Activity</span>
             </CardHeader>
-            <CardContent className="space-y-1 text-sm text-slate-400">
+            <CardContent className="space-y-1 text-sm text-text-muted">
               <p>Matches Viewed: 14</p>
               <p>Viewings Requested: 2</p>
               <p>Saved Favorites: 5</p>

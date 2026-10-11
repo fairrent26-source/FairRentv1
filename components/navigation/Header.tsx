@@ -20,13 +20,13 @@ export function Header({
   action,
 }: HeaderProps) {
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between border-b border-slate-luxe/50 bg-obsidian/95 px-6 backdrop-blur-sm">
+    <header className="flex h-14 shrink-0 items-center justify-between border-b border-ui-tags/50 bg-bg-main/95 px-6 backdrop-blur-sm">
       <div>
-        <h1 className="text-lg font-bold tracking-tight text-ivory [-webkit-font-smoothing:antialiased]" style={{ letterSpacing: "-0.02em" }}>
+        <h1 className="text-lg font-display font-bold uppercase tracking-display text-text-primary [-webkit-font-smoothing:antialiased]">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-sm text-ivory/60">{subtitle}</p>
+          <p className="text-sm text-text-muted">{subtitle}</p>
         )}
       </div>
       <div className="flex items-center gap-2">

@@ -24,17 +24,17 @@ export default function LandlordOverviewPage() {
   return (
     <div className="space-y-6">
       <div className="section-divide pt-0">
-        <h2 className="text-xl font-semibold tracking-tight text-ivory">
+        <h2 className="text-xl font-display font-bold uppercase tracking-display text-text-primary">
           Welcome back, {landlord.entityName.split(" ")[0]}
         </h2>
       </div>
 
       <DashboardGrid className="lg:grid-cols-3">
         <DashboardWidget className="p-6">
-          <span className="block text-sm font-medium tracking-tight text-ivory">Your FairRent Pedigree</span>
+          <span className="block text-sm font-medium tracking-tight text-text-primary">Your FairRent Pedigree</span>
           <div className="mt-4 flex flex-col items-center gap-4">
             <ScoreDisplay value={displayScore} max={5} label="Pedigree" />
-            <p className="text-center text-sm text-ivory/60">
+            <p className="text-center text-sm text-text-muted">
               Upload Gas Safety Certificate for Property A to reach 4.9.
             </p>
             <Button size="sm">Upload Now</Button>
@@ -42,19 +42,19 @@ export default function LandlordOverviewPage() {
         </DashboardWidget>
 
         <DashboardWidget className="p-6">
-          <span className="block text-sm font-medium tracking-tight text-ivory">Asset Overview</span>
+          <span className="block text-sm font-medium tracking-tight text-text-primary">Asset Overview</span>
           <div className="mt-4 grid grid-cols-3 gap-4 text-center">
             <div>
               <p className="num-display text-2xl">4</p>
-              <p className="text-xs text-ivory/50">Total Units</p>
+              <p className="text-xs text-text-muted">Total Units</p>
             </div>
             <div>
               <p className="num-positive text-2xl">3</p>
-              <p className="text-xs text-ivory/50">Occupied</p>
+              <p className="text-xs text-text-muted">Occupied</p>
             </div>
             <div>
               <p className="num-warning text-2xl">1</p>
-              <p className="text-xs text-ivory/50">Vacant</p>
+              <p className="text-xs text-text-muted">Vacant</p>
             </div>
           </div>
           <div className="alert-warning mt-4 flex items-start gap-2 rounded-[2rem] p-3 text-sm text-amber-200">
@@ -66,7 +66,7 @@ export default function LandlordOverviewPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <DashboardWidget className="p-6 lg:col-span-2">
-          <span className="block text-sm font-medium tracking-tight text-ivory">Top Tenant Matches</span>
+          <span className="block text-sm font-medium tracking-tight text-text-primary">Top Tenant Matches</span>
           <div className="mt-4">
             <div className="space-y-4">
                 {landlordMatchCandidates.slice(0, 2).map((m) => (
@@ -94,10 +94,10 @@ export default function LandlordOverviewPage() {
             />
           </DashboardWidget>
           <DashboardWidget className="p-6">
-            <span className="block text-sm font-medium tracking-tight text-ivory">Upcoming Payouts</span>
+            <span className="block text-sm font-medium tracking-tight text-text-primary">Upcoming Payouts</span>
             <div className="mt-4">
-              <p className="text-2xl font-bold text-ivory">£{upcomingPayouts[0]?.amount ?? 0} clearing on {upcomingPayouts[0]?.clearingDate}</p>
-              <ul className="mt-2 space-y-1 text-sm text-ivory/60">
+              <p className="text-2xl font-bold text-text-primary">£{upcomingPayouts[0]?.amount ?? 0} clearing on {upcomingPayouts[0]?.clearingDate}</p>
+              <ul className="mt-2 space-y-1 text-sm text-text-muted">
                 {upcomingPayouts[0]?.properties.map((p) => (
                   <li key={p.address} className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -111,9 +111,9 @@ export default function LandlordOverviewPage() {
       </div>
 
       <DashboardWidget className="flex min-h-0 flex-col overflow-hidden p-6">
-        <span className="block shrink-0 text-sm font-medium tracking-tight text-ivory">Tenant Messages</span>
+        <span className="block shrink-0 text-sm font-medium tracking-tight text-text-primary">Tenant Messages</span>
         <div className="mt-4 flex min-h-[280px] flex-1 flex-col overflow-hidden sm:min-h-[320px] md:flex-row">
-          <div className="w-full shrink-0 border-b border-white/10 md:max-h-none md:w-64 md:border-b-0 md:border-r md:border-white/10 lg:w-72">
+          <div className="w-full shrink-0 border-b border-ui-tags md:max-h-none md:w-64 md:border-b-0 md:border-r md:border-ui-tags lg:w-72">
             <ThreadList
               threads={landlordThreads}
               activeId={activeThreadId}

@@ -35,7 +35,7 @@ export function Stepper({ steps, currentIndex, className }: StepperProps) {
             <span
               className={cn(
                 "text-sm font-medium",
-                isCurrent ? "text-slate-100" : "text-slate-500"
+                isCurrent ? "text-text-primary" : "text-slate-500"
               )}
             >
               {step.label}

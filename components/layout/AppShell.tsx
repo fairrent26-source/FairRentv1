@@ -31,7 +31,7 @@ export function AppShell({
   headerAction,
 }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-obsidian">
+    <div className="min-h-screen bg-bg-main">
       <Sidebar role={role} unreadMessages={unreadMessages} entityName={entityName} />
       {/* Main content: offset by fixed sidebar width on desktop so it never sits under the nav */}
       <div className="relative flex min-h-screen min-w-0 flex-col md:ml-64">

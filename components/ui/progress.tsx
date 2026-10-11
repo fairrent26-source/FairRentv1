@@ -15,7 +15,7 @@ const Progress = React.forwardRef<
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
-      "relative h-2 w-full overflow-hidden rounded-full bg-slate-luxe/60",
+      "relative h-2 w-full overflow-hidden rounded-full bg-ui-tags",
       className
     )}
     {...props}
@@ -24,7 +24,7 @@ const Progress = React.forwardRef<
       className={cn(
         "relative h-full w-full flex-1 overflow-hidden rounded-full transition-transform duration-700 ease-out motion-reduce:transition-none",
         // Default fill: champagne gradient. Override via indicatorClassName.
-        "bg-gradient-to-r from-champagne-deep via-champagne to-champagne-soft",
+        "bg-gradient-to-r from-brand-teal via-brand-teal to-accent-lime",
         indicatorClassName
       )}
       style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}

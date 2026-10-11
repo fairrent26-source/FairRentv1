@@ -14,7 +14,7 @@ export default function LandlordMessagesPage() {
     <div className="flex min-h-[60vh] flex-col overflow-hidden sm:min-h-[70vh] lg:min-h-[calc(100vh-8rem)]">
       <DashboardWidget className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-[2rem] p-0">
         <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-          <div className="w-full shrink-0 border-b border-white/10 md:max-h-none md:w-64 md:border-b-0 md:border-r md:border-white/10 lg:w-80">
+          <div className="w-full shrink-0 border-b border-ui-tags md:max-h-none md:w-64 md:border-b-0 md:border-r md:border-ui-tags lg:w-80">
             <ThreadList
               threads={landlordThreads}
               activeId={activeThreadId}

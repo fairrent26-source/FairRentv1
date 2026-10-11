@@ -319,20 +319,20 @@ export default function LandlordOnboardingPage() {
       >
         {step === 0 && (
           <>
-            <h1 className="text-2xl font-semibold tracking-tight text-ivory md:text-3xl" style={{ letterSpacing: "-0.02em" }}>
+            <h1 className="text-2xl font-display font-bold uppercase tracking-display text-text-primary md:text-3xl">
               Verify your identity.
             </h1>
-            <p className="mt-2 text-ivory/60">
+            <p className="mt-2 text-text-muted">
               Secure your profile. Whether you&apos;re an individual or an entity, we ensure your landlord status is verified and protected.
             </p>
             <div className="mt-8 space-y-6">
               <div>
-                <label className="mb-1 block text-sm font-medium text-ivory/70">Are you a Private Landlord or a Company/Entity?</label>
+                <label className="mb-1 block text-sm font-medium text-text-muted">Are you a Private Landlord or a Company/Entity?</label>
                 <div className="mt-2 flex flex-wrap gap-2">
                   <Button
                     type="button"
                     onClick={() => setLandlordEntityType("private_landlord")}
-                    className={`rounded-[2rem] ${landlordEntityType === "private_landlord" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                    className={`rounded-[2rem] ${landlordEntityType === "private_landlord" ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                     variant={landlordEntityType === "private_landlord" ? undefined : "outline"}
                   >
                     Private Landlord
@@ -340,32 +340,32 @@ export default function LandlordOnboardingPage() {
                   <Button
                     type="button"
                     onClick={() => setLandlordEntityType("limited_company")}
-                    className={`rounded-[2rem] ${landlordEntityType === "limited_company" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                    className={`rounded-[2rem] ${landlordEntityType === "limited_company" ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                     variant={landlordEntityType === "limited_company" ? undefined : "outline"}
                   >
                     Limited Company / Entity
                   </Button>
                 </div>
-                <p className="mt-1.5 text-xs text-ivory/50">Select one. This will be saved with your profile.</p>
+                <p className="mt-1.5 text-xs text-text-muted">Select one. This will be saved with your profile.</p>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-ivory/70">Full Name</label>
+                <label className="mb-1 block text-sm font-medium text-text-muted">Full Name</label>
                 <OnboardingInput placeholder="Enter your full legal name" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-ivory/70">Current Business/Residential Address</label>
+                <label className="mb-1 block text-sm font-medium text-text-muted">Current Business/Residential Address</label>
                 <OnboardingInput placeholder="Search or enter address" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-ivory/70">Professional Email</label>
+                <label className="mb-1 block text-sm font-medium text-text-muted">Professional Email</label>
                 <OnboardingInput type="email" placeholder="your@email.com" />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-ivory/70">Professional Phone</label>
+                <label className="mb-1 block text-sm font-medium text-text-muted">Professional Phone</label>
                 <OnboardingInput placeholder="+44 7XXX XXXXXX" />
               </div>
               <div>
-                <h3 className="text-sm font-medium text-ivory">Professional Profile</h3>
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Professional Profile</h3>
                 <input
                   ref={profileImageInputRef}
                   type="file"
@@ -377,7 +377,7 @@ export default function LandlordOnboardingPage() {
                 <div className="mt-2 flex items-center gap-4">
                   <button
                     type="button"
-                    className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-[2rem] border-2 border-dashed border-white/20 bg-white/5 text-2xl text-ivory/50 hover:border-white/30 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-champagne/50"
+                    className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-[2rem] border-2 border-dashed border-ui-tags bg-bg-card text-2xl text-text-muted hover:border-white/30 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-brand-teal/50"
                     onClick={() => !profileImagePreviewUrl && profileImageInputRef.current?.click()}
                   >
                     {profileImagePreviewUrl ? (
@@ -392,19 +392,19 @@ export default function LandlordOnboardingPage() {
                         <button
                           type="button"
                           onClick={() => window.open(profileImagePreviewUrl ?? undefined, "_blank")}
-                          className="font-medium text-champagne underline underline-offset-2 hover:text-champagne/80"
+                          className="font-medium text-brand-teal underline underline-offset-2 hover:text-brand-teal/80"
                         >
                           View
                         </button>
-                        <span className="text-ivory/40">·</span>
+                        <span className="text-text-primary/40">·</span>
                         <button
                           type="button"
                           onClick={() => profileImageInputRef.current?.click()}
-                          className="font-medium text-champagne underline underline-offset-2 hover:text-champagne/80"
+                          className="font-medium text-brand-teal underline underline-offset-2 hover:text-brand-teal/80"
                         >
                           Change
                         </button>
-                        <span className="text-ivory/40">·</span>
+                        <span className="text-text-primary/40">·</span>
                         <button
                           type="button"
                           onClick={handleProfileImageDelete}
@@ -414,20 +414,20 @@ export default function LandlordOnboardingPage() {
                         </button>
                       </div>
                     ) : (
-                      <p className="text-xs text-ivory/50">Upload a headshot or company logo. This will be visible to tenants.</p>
+                      <p className="text-xs text-text-muted">Upload a headshot or company logo. This will be visible to tenants.</p>
                     )}
                   </div>
                 </div>
                 <div className="mt-4">
-                  <label className="mb-1 block text-xs text-ivory/60">Bio / Management Philosophy</label>
+                  <label className="mb-1 block text-xs text-text-muted">Bio / Management Philosophy</label>
                   <OnboardingTextarea placeholder="Tell tenants about your management style (e.g., 'Hands-on landlord with 10 years experience')" />
                 </div>
               </div>
-              <p className="flex items-center gap-2 text-sm text-ivory/50">
+              <p className="flex items-center gap-2 text-sm text-text-muted">
                 🛡 FairRent uses bank-level encryption. Your personal documents are used only for verification and never shared with tenants.
               </p>
             </div>
-            <Button className="mt-8 w-full rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg" onClick={handleContinue}>
+            <Button className="mt-8 w-full rounded-[2rem] bg-brand-teal text-text-primary hover:bg-accent-lime" size="lg" onClick={handleContinue}>
               Set up my profile and continue
             </Button>
           </>
@@ -435,26 +435,26 @@ export default function LandlordOnboardingPage() {
 
         {step === 1 && (
           <>
-            <h1 className="text-2xl font-semibold tracking-tight text-ivory md:text-3xl" style={{ letterSpacing: "-0.02em" }}>
+            <h1 className="text-2xl font-display font-bold uppercase tracking-display text-text-primary md:text-3xl">
               {savedProperties.length === 0 ? "List your first home." : "List another home."}
             </h1>
-            <p className="mt-2 text-ivory/60">
+            <p className="mt-2 text-text-muted">
               Add your asset to the marketplace. High-quality data attracts high-quality matches.
             </p>
             {savedProperties.length > 0 && (
-              <section className="mt-6 rounded-[2rem] border border-white/[0.06] bg-white/5 p-4 backdrop-blur-sm">
-                <h3 className="text-xs font-medium text-champagne">Your saved properties</h3>
+              <section className="mt-6 rounded-[2rem] border border-ui-tags bg-bg-card p-4 backdrop-blur-sm">
+                <h3 className="text-xs font-medium text-brand-teal">Your saved properties</h3>
                 <ul className="mt-3 space-y-2">
                   {savedProperties.map((p, index) => (
-                    <li key={index} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2">
-                      <span className="text-sm text-ivory/80 truncate">
+                    <li key={index} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-ui-tags bg-bg-card px-3 py-2">
+                      <span className="text-sm text-text-muted truncate">
                         {p.fullAddress || `Property ${index + 1}`}
                         {p.desiredMonthlyRent ? ` · ${p.desiredMonthlyRent}` : ""}
                       </span>
                       <button
                         type="button"
                         onClick={() => handleEditSavedProperty(index)}
-                        className="text-xs font-medium text-champagne underline underline-offset-2 hover:text-champagne/80"
+                        className="text-xs font-medium text-brand-teal underline underline-offset-2 hover:text-brand-teal/80"
                       >
                         Edit details
                       </button>
@@ -464,16 +464,16 @@ export default function LandlordOnboardingPage() {
               </section>
             )}
             <div className="mt-8 space-y-6">
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Property details</h3>
+              <section className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Property details</h3>
                 <div className="mt-4 space-y-4">
                   <div>
-                    <label className="mb-1 block text-xs text-ivory/60">Full Address</label>
+                    <label className="mb-1 block text-xs text-text-muted">Full Address</label>
                     <OnboardingInput placeholder="Enter property address" value={fullAddress} onChange={(e) => setFullAddress(e.target.value)} />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-ivory/60">Property Type</label>
-                    <p className="mb-2 text-xs text-ivory/50">Select one.</p>
+                    <label className="mb-1 block text-xs text-text-muted">Property Type</label>
+                    <p className="mb-2 text-xs text-text-muted">Select one.</p>
                     <div className="flex flex-wrap gap-2">
                       {(
                         [
@@ -491,7 +491,7 @@ export default function LandlordOnboardingPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => setPropertyType(value)}
-                          className={`rounded-[2rem] ${propertyType === value ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                          className={`rounded-[2rem] ${propertyType === value ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                         >
                           {label}
                         </Button>
@@ -500,23 +500,23 @@ export default function LandlordOnboardingPage() {
                   </div>
                   <div className="flex flex-wrap gap-6">
                     <div>
-                      <label className="mb-1 block text-xs text-ivory/60">Bedrooms</label>
+                      <label className="mb-1 block text-xs text-text-muted">Bedrooms</label>
                       <div className="flex items-center gap-2">
                         <Button
                           type="button"
                           variant="outline"
                           size="icon"
-                          className="rounded-[2rem] border-white/20 text-ivory hover:border-champagne/50"
+                          className="rounded-[2rem] border-ui-tags text-text-primary hover:border-brand-teal/50"
                           onClick={() => setBedrooms((n) => Math.max(1, n - 1))}
                         >
                           −
                         </Button>
-                        <span className="w-8 text-center text-sm text-ivory">{bedrooms}</span>
+                        <span className="w-8 text-center text-sm text-text-primary">{bedrooms}</span>
                         <Button
                           type="button"
                           variant="outline"
                           size="icon"
-                          className="rounded-[2rem] border-white/20 text-ivory hover:border-champagne/50"
+                          className="rounded-[2rem] border-ui-tags text-text-primary hover:border-brand-teal/50"
                           onClick={() => setBedrooms((n) => Math.min(20, n + 1))}
                         >
                           +
@@ -524,23 +524,23 @@ export default function LandlordOnboardingPage() {
                       </div>
                     </div>
                     <div>
-                      <label className="mb-1 block text-xs text-ivory/60">Bathrooms</label>
+                      <label className="mb-1 block text-xs text-text-muted">Bathrooms</label>
                       <div className="flex items-center gap-2">
                         <Button
                           type="button"
                           variant="outline"
                           size="icon"
-                          className="rounded-[2rem] border-white/20 text-ivory hover:border-champagne/50"
+                          className="rounded-[2rem] border-ui-tags text-text-primary hover:border-brand-teal/50"
                           onClick={() => setBathrooms((n) => Math.max(1, n - 1))}
                         >
                           −
                         </Button>
-                        <span className="w-8 text-center text-sm text-ivory">{bathrooms}</span>
+                        <span className="w-8 text-center text-sm text-text-primary">{bathrooms}</span>
                         <Button
                           type="button"
                           variant="outline"
                           size="icon"
-                          className="rounded-[2rem] border-white/20 text-ivory hover:border-champagne/50"
+                          className="rounded-[2rem] border-ui-tags text-text-primary hover:border-brand-teal/50"
                           onClick={() => setBathrooms((n) => Math.min(20, n + 1))}
                         >
                           +
@@ -549,8 +549,8 @@ export default function LandlordOnboardingPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-ivory/60">Amenities</label>
-                    <p className="mb-2 text-xs text-ivory/50">Select all that apply.</p>
+                    <label className="mb-1 block text-xs text-text-muted">Amenities</label>
+                    <p className="mb-2 text-xs text-text-muted">Select all that apply.</p>
                     <div className="flex flex-wrap gap-2">
                       {AMENITY_OPTIONS.map((opt) => {
                         const selected = amenities.has(opt);
@@ -568,7 +568,7 @@ export default function LandlordOnboardingPage() {
                                 return next;
                               });
                             }}
-                            className={`rounded-[2rem] ${selected ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                            className={`rounded-[2rem] ${selected ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                           >
                             {opt}
                           </Button>
@@ -577,15 +577,15 @@ export default function LandlordOnboardingPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-ivory/60">Sharing property or whole house?</label>
-                    <p className="mb-2 text-xs text-ivory/50">Select one.</p>
+                    <label className="mb-1 block text-xs text-text-muted">Sharing property or whole house?</label>
+                    <p className="mb-2 text-xs text-text-muted">Select one.</p>
                     <div className="flex flex-wrap gap-2">
                       <Button
                         type="button"
                         variant="outline"
                         size="sm"
                         onClick={() => setSharingOrWhole("sharing")}
-                        className={`rounded-[2rem] ${sharingOrWhole === "sharing" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                        className={`rounded-[2rem] ${sharingOrWhole === "sharing" ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                       >
                         Sharing property
                       </Button>
@@ -594,33 +594,33 @@ export default function LandlordOnboardingPage() {
                         variant="outline"
                         size="sm"
                         onClick={() => { setSharingOrWhole("whole_house"); setMaxCapacity(1); }}
-                        className={`rounded-[2rem] ${sharingOrWhole === "whole_house" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                        className={`rounded-[2rem] ${sharingOrWhole === "whole_house" ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                       >
                         Whole house
                       </Button>
                     </div>
                   </div>
-                  <div className="border-t border-white/[0.06] pt-4">
-                    <h4 className="mb-3 text-xs font-medium text-champagne">Occupancy & Dynamic</h4>
+                  <div className="border-t border-ui-tags pt-4">
+                    <h4 className="mb-3 text-xs font-medium text-brand-teal">Occupancy & Dynamic</h4>
                     <div className="flex flex-wrap gap-6">
                       <div>
-                        <label className="mb-1 block text-xs text-ivory/60">Current Occupants</label>
+                        <label className="mb-1 block text-xs text-text-muted">Current Occupants</label>
                         <div className="flex items-center gap-2">
                           <Button
                             type="button"
                             variant="outline"
                             size="icon"
-                            className="rounded-[2rem] border-white/20 text-ivory hover:border-champagne/50"
+                            className="rounded-[2rem] border-ui-tags text-text-primary hover:border-brand-teal/50"
                             onClick={() => setCurrentOccupants((n) => Math.max(0, n - 1))}
                           >
                             −
                           </Button>
-                          <span className="w-8 text-center text-sm text-ivory">{currentOccupants}</span>
+                          <span className="w-8 text-center text-sm text-text-primary">{currentOccupants}</span>
                           <Button
                             type="button"
                             variant="outline"
                             size="icon"
-                            className="rounded-[2rem] border-white/20 text-ivory hover:border-champagne/50"
+                            className="rounded-[2rem] border-ui-tags text-text-primary hover:border-brand-teal/50"
                             onClick={() => setCurrentOccupants((n) => n + 1)}
                           >
                             +
@@ -628,24 +628,24 @@ export default function LandlordOnboardingPage() {
                         </div>
                       </div>
                       <div className={sharingOrWhole === "whole_house" ? "opacity-50" : ""}>
-                        <label className="mb-1 block text-xs text-ivory/60">Max Capacity</label>
+                        <label className="mb-1 block text-xs text-text-muted">Max Capacity</label>
                         <div className="flex items-center gap-2">
                           <Button
                             type="button"
                             variant="outline"
                             size="icon"
-                            className="rounded-[2rem] border-white/20 text-ivory hover:border-champagne/50 disabled:opacity-100"
+                            className="rounded-[2rem] border-ui-tags text-text-primary hover:border-brand-teal/50 disabled:opacity-100"
                             onClick={() => sharingOrWhole !== "whole_house" && setMaxCapacity((n) => Math.max(1, n - 1))}
                             disabled={sharingOrWhole === "whole_house"}
                           >
                             −
                           </Button>
-                          <span className="w-8 text-center text-sm text-ivory">{sharingOrWhole === "whole_house" ? 1 : maxCapacity}</span>
+                          <span className="w-8 text-center text-sm text-text-primary">{sharingOrWhole === "whole_house" ? 1 : maxCapacity}</span>
                           <Button
                             type="button"
                             variant="outline"
                             size="icon"
-                            className="rounded-[2rem] border-white/20 text-ivory hover:border-champagne/50 disabled:opacity-100"
+                            className="rounded-[2rem] border-ui-tags text-text-primary hover:border-brand-teal/50 disabled:opacity-100"
                             onClick={() => sharingOrWhole !== "whole_house" && setMaxCapacity((n) => n + 1)}
                             disabled={sharingOrWhole === "whole_house"}
                           >
@@ -656,7 +656,7 @@ export default function LandlordOnboardingPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-ivory/60">Date available from</label>
+                    <label className="mb-1 block text-xs text-text-muted">Date available from</label>
                     <div className="mt-2 space-y-2">
                       <div className="flex flex-wrap gap-2">
                         <Button
@@ -664,7 +664,7 @@ export default function LandlordOnboardingPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => { setAvailabilityMode("available_now"); setAvailableFromDate(""); }}
-                          className={`rounded-[2rem] ${availabilityMode === "available_now" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                          className={`rounded-[2rem] ${availabilityMode === "available_now" ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                         >
                           Available now
                         </Button>
@@ -673,7 +673,7 @@ export default function LandlordOnboardingPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => { setAvailabilityMode("already_tenanted"); setAvailableFromDate(""); }}
-                          className={`rounded-[2rem] ${availabilityMode === "already_tenanted" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                          className={`rounded-[2rem] ${availabilityMode === "already_tenanted" ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                         >
                           Already tenanted
                         </Button>
@@ -684,7 +684,7 @@ export default function LandlordOnboardingPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => setAvailabilityMode("available_from")}
-                          className={`rounded-[2rem] ${availabilityMode === "available_from" ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                          className={`rounded-[2rem] ${availabilityMode === "available_from" ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                         >
                           Pick a date
                         </Button>
@@ -699,7 +699,7 @@ export default function LandlordOnboardingPage() {
                               return d.toISOString().slice(0, 10);
                             })()}
                             onChange={(e) => setAvailableFromDate(e.target.value)}
-                            className="rounded-[2rem] border border-white/20 bg-white/5 px-3 py-2 text-sm text-ivory focus:border-champagne focus:outline-none"
+                            className="rounded-[2rem] border border-ui-tags bg-bg-card px-3 py-2 text-sm text-text-primary focus:border-brand-teal focus:outline-none"
                           />
                         )}
                       </div>
@@ -707,16 +707,16 @@ export default function LandlordOnboardingPage() {
                   </div>
                 </div>
               </section>
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Bills included</h3>
-                <p className="mt-1 text-xs text-ivory/50">Are any bills included in the rent? This helps us build your opex profile.</p>
+              <section className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Bills included</h3>
+                <p className="mt-1 text-xs text-text-muted">Are any bills included in the rent? This helps us build your opex profile.</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => setBillsIncludedInRent(false)}
-                    className={`rounded-[2rem] ${!billsIncludedInRent ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                    className={`rounded-[2rem] ${!billsIncludedInRent ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                   >
                     No
                   </Button>
@@ -725,20 +725,20 @@ export default function LandlordOnboardingPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => setBillsIncludedInRent(true)}
-                    className={`rounded-[2rem] ${billsIncludedInRent ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50 hover:text-ivory"}`}
+                    className={`rounded-[2rem] ${billsIncludedInRent ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50 hover:text-text-primary"}`}
                   >
                     Yes
                   </Button>
                 </div>
                 {!billsIncludedInRent && (
-                  <p className="mt-3 text-xs text-ivory/50">Tenant pays bills separately.</p>
+                  <p className="mt-3 text-xs text-text-muted">Tenant pays bills separately.</p>
                 )}
                 {billsIncludedInRent && (
                   <div className="mt-4 space-y-3">
-                    <p className="text-xs text-ivory/60">Select which bills are included and add monthly costs where relevant.</p>
+                    <p className="text-xs text-text-muted">Select which bills are included and add monthly costs where relevant.</p>
                     <ul className="space-y-2">
                       {billItems.map((item, index) => (
-                        <li key={item.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2">
+                        <li key={item.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-ui-tags bg-bg-card px-3 py-2">
                           <label className="flex flex-1 cursor-pointer items-center gap-2">
                             <input
                               type="checkbox"
@@ -750,13 +750,13 @@ export default function LandlordOnboardingPage() {
                                   return next;
                                 });
                               }}
-                              className="h-4 w-4 rounded border-white/30 bg-white/5 text-champagne focus:ring-champagne/50"
+                              className="h-4 w-4 rounded border-white/30 bg-bg-card text-brand-teal focus:ring-brand-teal/50"
                             />
-                            <span className="text-sm text-ivory/80">{item.label}</span>
+                            <span className="text-sm text-text-muted">{item.label}</span>
                           </label>
                           {item.included && (
                             <div className="flex items-center gap-1">
-                              <span className="text-xs text-ivory/50">£</span>
+                              <span className="text-xs text-text-muted">£</span>
                               <input
                                 type="number"
                                 min={0}
@@ -771,9 +771,9 @@ export default function LandlordOnboardingPage() {
                                     return next;
                                   });
                                 }}
-                                className="w-20 rounded-[2rem] border border-white/20 bg-white/5 px-2 py-1.5 text-sm text-ivory focus:border-champagne focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                className="w-20 rounded-[2rem] border border-ui-tags bg-bg-card px-2 py-1.5 text-sm text-text-primary focus:border-brand-teal focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                               />
-                              <span className="text-xs text-ivory/50">/mo</span>
+                              <span className="text-xs text-text-muted">/mo</span>
                             </div>
                           )}
                         </li>
@@ -782,8 +782,8 @@ export default function LandlordOnboardingPage() {
                   </div>
                 )}
               </section>
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Accountability Layer (Compliance & Docs)</h3>
+              <section className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Accountability Layer (Compliance & Docs)</h3>
                 <input
                   ref={complianceFileInputRef}
                   type="file"
@@ -829,17 +829,17 @@ export default function LandlordOnboardingPage() {
                       });
                     };
                     return (
-                      <div key={id} className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3">
+                      <div key={id} className="rounded-xl border border-ui-tags bg-bg-card p-3">
                         <div className="flex flex-wrap items-center justify-between gap-2">
-                          <span className="text-sm text-ivory/80">{label}</span>
+                          <span className="text-sm text-text-muted">{label}</span>
                           <div className="flex flex-wrap gap-2">
-                            <span className="text-xs text-ivory/50">Have one?</span>
+                            <span className="text-xs text-text-muted">Have one?</span>
                             <Button
                               type="button"
                               variant="outline"
                               size="sm"
                               onClick={() => setHaveOne(false)}
-                              className={`rounded-[2rem] ${!haveOne ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50"}`}
+                              className={`rounded-[2rem] ${!haveOne ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50"}`}
                             >
                               No
                             </Button>
@@ -848,17 +848,17 @@ export default function LandlordOnboardingPage() {
                               variant="outline"
                               size="sm"
                               onClick={() => setHaveOne(true)}
-                              className={`rounded-[2rem] ${haveOne ? "bg-champagne text-obsidian hover:bg-champagne/90" : "border-white/20 text-ivory/80 hover:border-champagne/50"}`}
+                              className={`rounded-[2rem] ${haveOne ? "bg-brand-teal text-text-primary hover:bg-accent-lime" : "border-ui-tags text-text-muted hover:border-brand-teal/50"}`}
                             >
                               Yes
                             </Button>
                           </div>
                         </div>
                         {haveOne && (
-                          <div className="mt-3 space-y-2 border-t border-white/[0.06] pt-3">
+                          <div className="mt-3 space-y-2 border-t border-ui-tags pt-3">
                             {isEpc && (
                               <div>
-                                <label className="mb-1 block text-xs text-ivory/60">EPC rating</label>
+                                <label className="mb-1 block text-xs text-text-muted">EPC rating</label>
                                 <select
                                   value={epcRating ?? ""}
                                   onChange={(e) =>
@@ -867,7 +867,7 @@ export default function LandlordOnboardingPage() {
                                       epc: { ...prev.epc, rating: e.target.value || null },
                                     }))
                                   }
-                                  className="w-full max-w-[8rem] rounded-[2rem] border border-white/20 bg-white/5 px-3 py-2 text-sm text-ivory focus:border-champagne focus:outline-none"
+                                  className="w-full max-w-[8rem] rounded-[2rem] border border-ui-tags bg-bg-card px-3 py-2 text-sm text-text-primary focus:border-brand-teal focus:outline-none"
                                 >
                                   <option value="">Select</option>
                                   {EPC_RATINGS.map((r) => (
@@ -882,13 +882,13 @@ export default function LandlordOnboardingPage() {
                               {provided ? (
                                 <>
                                   <span className="text-xs font-medium text-emerald-400">Document provided</span>
-                                  <span className="text-[10px] text-ivory/50">Pending verification</span>
+                                  <span className="text-[10px] text-text-muted">Pending verification</span>
                                   {file && (
-                                    <button type="button" onClick={() => { const url = URL.createObjectURL(file); window.open(url, "_blank", "noopener,noreferrer"); setTimeout(() => URL.revokeObjectURL(url), 60000); }} className="text-[10px] text-champagne underline hover:text-champagne/80">
+                                    <button type="button" onClick={() => { const url = URL.createObjectURL(file); window.open(url, "_blank", "noopener,noreferrer"); setTimeout(() => URL.revokeObjectURL(url), 60000); }} className="text-[10px] text-brand-teal underline hover:text-brand-teal/80">
                                       View
                                     </button>
                                   )}
-                                  <button type="button" onClick={openUpload} className="text-[10px] text-champagne underline hover:text-champagne/80">
+                                  <button type="button" onClick={openUpload} className="text-[10px] text-brand-teal underline hover:text-brand-teal/80">
                                     Change
                                   </button>
                                   <button type="button" onClick={clearDoc} className="text-[10px] text-red-400/90 underline hover:text-red-400">
@@ -899,7 +899,7 @@ export default function LandlordOnboardingPage() {
                                 <button
                                   type="button"
                                   onClick={openUpload}
-                                  className="text-xs text-champagne underline underline-offset-2 hover:text-champagne/80"
+                                  className="text-xs text-brand-teal underline underline-offset-2 hover:text-brand-teal/80"
                                 >
                                   Upload document
                                 </button>
@@ -912,11 +912,11 @@ export default function LandlordOnboardingPage() {
                   })}
                 </div>
               </section>
-              <section data-section="desired-monthly-rent" className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Desired monthly rent</h3>
-                <p className="mt-1 text-xs text-ivory/50">We use the data you’ve provided (property, bills, compliance) to help assess market rent.</p>
+              <section data-section="desired-monthly-rent" className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Desired monthly rent</h3>
+                <p className="mt-1 text-xs text-text-muted">We use the data you’ve provided (property, bills, compliance) to help assess market rent.</p>
                 <div className="mt-4">
-                  <label className="mb-1 block text-xs text-ivory/60">Monthly rent</label>
+                  <label className="mb-1 block text-xs text-text-muted">Monthly rent</label>
                   <OnboardingInput
                     placeholder="£ 0.00"
                     value={desiredMonthlyRent}
@@ -939,14 +939,14 @@ export default function LandlordOnboardingPage() {
                     const estimatedRent = "£1,450"; // Placeholder: factor in bills + EPC/compliance when engine is built
                     if (showEstimate) {
                       return (
-                        <p className="mt-3 text-xs text-ivory/70">
-                          Our engine estimates a market rental rate of <span className="font-medium text-champagne">{estimatedRent}</span> in your area given the property characteristics, bills and compliance provided.
+                        <p className="mt-3 text-xs text-text-muted">
+                          Our engine estimates a market rental rate of <span className="font-medium text-brand-teal">{estimatedRent}</span> in your area given the property characteristics, bills and compliance provided.
                         </p>
                       );
                     }
                     if (needMoreData) {
                       return (
-                        <p className="mt-3 text-xs text-ivory/60">
+                        <p className="mt-3 text-xs text-text-muted">
                           Add more property details (address, type, availability), bills included, and compliance (EPC, Gas Safety, EICR) above so we can provide an estimated market rental rate.
                         </p>
                       );
@@ -955,8 +955,8 @@ export default function LandlordOnboardingPage() {
                   })()}
                 </div>
               </section>
-              <section className="rounded-[2rem] border border-dashed border-white/20 bg-white/5 p-8 text-center">
-                <p className="text-sm text-ivory/60">Drag & drop your property photos here</p>
+              <section className="rounded-[2rem] border border-dashed border-ui-tags bg-bg-card p-8 text-center">
+                <p className="text-sm text-text-muted">Drag & drop your property photos here</p>
                 <input
                   ref={propertyPhotosInputRef}
                   type="file"
@@ -969,23 +969,23 @@ export default function LandlordOnboardingPage() {
                 <button
                   type="button"
                   onClick={() => propertyPhotosInputRef.current?.click()}
-                  className="mt-2 text-sm font-medium text-champagne underline underline-offset-4 hover:text-champagne/80"
+                  className="mt-2 text-sm font-medium text-brand-teal underline underline-offset-4 hover:text-brand-teal/80"
                 >
                   Or browse files
                 </button>
                 {propertyPhotoFiles.length > 0 && (
-                  <p className="mt-2 text-xs text-ivory/50">{propertyPhotoFiles.length} photo{propertyPhotoFiles.length !== 1 ? "s" : ""} selected</p>
+                  <p className="mt-2 text-xs text-text-muted">{propertyPhotoFiles.length} photo{propertyPhotoFiles.length !== 1 ? "s" : ""} selected</p>
                 )}
               </section>
               <Button
                 variant="outline"
-                className="w-full rounded-[2rem] border-white/20 text-ivory/80 hover:border-champagne/50"
+                className="w-full rounded-[2rem] border-ui-tags text-text-muted hover:border-brand-teal/50"
                 onClick={handleSaveAndAddAnother}
               >
                 Save and add another property to your portfolio
               </Button>
             </div>
-            <Button className="mt-8 w-full rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg" onClick={handleContinue}>
+            <Button className="mt-8 w-full rounded-[2rem] bg-brand-teal text-text-primary hover:bg-accent-lime" size="lg" onClick={handleContinue}>
               Confirm property details and continue
             </Button>
           </>
@@ -993,20 +993,20 @@ export default function LandlordOnboardingPage() {
 
         {step === 2 && (
           <>
-            <h1 className="text-2xl font-semibold tracking-tight text-ivory md:text-3xl" style={{ letterSpacing: "-0.02em" }}>
+            <h1 className="text-2xl font-display font-bold uppercase tracking-display text-text-primary md:text-3xl">
               Secure the settlement.
             </h1>
-            <p className="mt-2 text-ivory/60">
+            <p className="mt-2 text-text-muted">
               Connect your account for automated rent collection and instant payouts. With our partner connection we don&apos;t store your banking details. If you add manual details instead, we store them securely and only share them once a tenancy agreement has been initiated.
             </p>
 
             {/* Glass Vault: API-first bank connection (same pattern as dashboard financials) */}
-            <div className="relative mt-8 min-h-[280px] rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
+            <div className="relative mt-8 min-h-[280px] rounded-[2.5rem] border border-ui-tags bg-bg-card p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
               <div ref={bankInitialRef} className={bankConnected ? "pointer-events-none absolute inset-0 rounded-[2.5rem] p-6 sm:p-8" : ""}>
-                <h2 className="font-bold tracking-tight text-ivory" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
+                <h2 className="font-display font-bold uppercase tracking-display text-text-primary">
                   Secure Bank Integration
                 </h2>
-                <p className="mt-2 font-display-italic text-lg text-ivory/70">Automated Financial Intelligence.</p>
+                <p className="mt-2 font-accent italic text-lg text-text-muted">Automated Financial Intelligence.</p>
                 <div className="mt-8 flex flex-col items-center">
                   <div className="relative">
                     {bankLoading && (
@@ -1019,21 +1019,21 @@ export default function LandlordOnboardingPage() {
                       size="lg"
                       disabled={bankLoading}
                       onClick={handleBankLink}
-                      className="relative rounded-[2rem] bg-champagne px-8 py-6 text-base font-semibold text-obsidian shadow-lg transition-all hover:bg-champagne/90 disabled:opacity-90"
-                      style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+                      className="relative rounded-[2rem] bg-brand-teal px-8 py-6 text-base font-semibold text-text-primary shadow-lg transition-all hover:bg-accent-lime disabled:opacity-90"
+                      style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}
                     >
                       {bankLoading ? "Connecting…" : "Connect Bank"}
                     </Button>
                   </div>
                 </div>
-                <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-white/10 pt-6">
-                  <span className="flex items-center gap-2 text-xs text-ivory/50">
+                <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-ui-tags pt-6">
+                  <span className="flex items-center gap-2 text-xs text-text-muted">
                     <ShieldCheck className="h-4 w-4" /> Authorised partners
                   </span>
-                  <span className="flex items-center gap-2 text-xs text-ivory/50">
+                  <span className="flex items-center gap-2 text-xs text-text-muted">
                     <Lock className="h-4 w-4" /> AES-256
                   </span>
-                  <span className="flex items-center gap-2 text-xs text-ivory/50">
+                  <span className="flex items-center gap-2 text-xs text-text-muted">
                     <Globe className="h-4 w-4" /> Third-party APIs
                   </span>
                 </div>
@@ -1041,56 +1041,56 @@ export default function LandlordOnboardingPage() {
 
               <div
                 ref={bankVerifiedRef}
-                className="absolute inset-0 z-10 rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-2xl sm:p-8"
+                className="absolute inset-0 z-10 rounded-[2.5rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-2xl sm:p-8"
                 style={{ opacity: 0 }}
               >
                 <div
                   className="rounded-2xl px-4 py-3 text-center"
                   style={{
-                    background: "linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%)",
-                    border: "1px solid rgba(201,168,76,0.25)",
+                    background: "linear-gradient(135deg, rgba(0, 210, 211,0.15) 0%, rgba(0, 210, 211,0.05) 100%)",
+                    border: "1px solid rgba(0, 210, 211,0.25)",
                   }}
                 >
-                  <span className="text-sm font-medium text-champagne">Bank connected</span>
+                  <span className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Bank connected</span>
                   {bankTokenId && (
-                    <p className="mt-1 font-mono text-xs text-ivory/70" style={{ fontFamily: "var(--font-jetbrains), monospace" }}>
+                    <p className="mt-1 font-mono text-xs text-text-muted" style={{ fontFamily: "var(--font-jetbrains), monospace" }}>
                       ID: {bankTokenId}
                     </p>
                   )}
                 </div>
-                <h3 className="mt-8 text-sm font-semibold text-ivory">Payment Automation Preferences</h3>
+                <h3 className="mt-8 text-sm font-semibold text-text-primary">Payment Automation Preferences</h3>
                 <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
                   <div
                     className={`flex flex-1 items-center justify-between rounded-2xl border px-4 py-3 transition-all ${
-                      bankConnected ? "border-champagne/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]" : "border-white/10"
+                      bankConnected ? "border-brand-teal/30 shadow-[0_0_20px_rgba(0, 210, 211,0.12)]" : "border-ui-tags"
                     }`}
                   >
-                    <span className="text-sm text-ivory/80">Automated Rent Tracking</span>
-                    <Switch checked={bankAutoRentTracking} onCheckedChange={setBankAutoRentTracking} className="data-[state=checked]:bg-champagne" />
+                    <span className="text-sm text-text-muted">Automated Rent Tracking</span>
+                    <Switch checked={bankAutoRentTracking} onCheckedChange={setBankAutoRentTracking} className="data-[state=checked]:bg-brand-teal" />
                   </div>
                   <div
                     className={`flex flex-1 items-center justify-between rounded-2xl border px-4 py-3 transition-all ${
-                      bankConnected ? "border-champagne/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]" : "border-white/10"
+                      bankConnected ? "border-brand-teal/30 shadow-[0_0_20px_rgba(0, 210, 211,0.12)]" : "border-ui-tags"
                     }`}
                   >
-                    <span className="text-sm text-ivory/80">Auto-generate Monthly Invoices</span>
-                    <Switch checked={bankAutoInvoices} onCheckedChange={setBankAutoInvoices} className="data-[state=checked]:bg-champagne" />
+                    <span className="text-sm text-text-muted">Auto-generate Monthly Invoices</span>
+                    <Switch checked={bankAutoInvoices} onCheckedChange={setBankAutoInvoices} className="data-[state=checked]:bg-brand-teal" />
                   </div>
                 </div>
-                <p className="mt-3 text-xs text-ivory/50">
+                <p className="mt-3 text-xs text-text-muted">
                   Banking is connected through authorised third-party providers. We don&apos;t store your banking details.
                 </p>
               </div>
             </div>
 
             <p className="mt-6 text-center">
-              <button type="button" className="text-xs text-slate-500 hover:text-slate-400">
+              <button type="button" className="text-xs text-slate-500 hover:text-text-primary">
                 Use manual details
               </button>
-              <span className="mt-1 block text-xs text-ivory/40">Stored securely and only shared once a tenancy agreement has been initiated.</span>
+              <span className="mt-1 block text-xs text-text-primary/40">Stored securely and only shared once a tenancy agreement has been initiated.</span>
             </p>
 
-            <Button className="mt-8 w-full rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg" onClick={handleContinue}>
+            <Button className="mt-8 w-full rounded-[2rem] bg-brand-teal text-text-primary hover:bg-accent-lime" size="lg" onClick={handleContinue}>
               {bankConnected ? "Continue" : "Continue to next step"}
             </Button>
           </>
@@ -1098,19 +1098,19 @@ export default function LandlordOnboardingPage() {
 
         {step === 3 && (
           <>
-            <h1 className="text-2xl font-semibold tracking-tight text-ivory md:text-3xl" style={{ letterSpacing: "-0.02em" }}>
+            <h1 className="text-2xl font-display font-bold uppercase tracking-display text-text-primary md:text-3xl">
               Build your pedigree. Attract the best.
             </h1>
-            <p className="mt-2 text-ivory/60">
+            <p className="mt-2 text-text-muted">
               High-performance tenants look for high-performance landlords. Showcase your track record to secure a top-tier match.
             </p>
             <div className="mt-8 space-y-6">
-              <section className="rounded-[2rem] border border-dashed border-white/20 bg-white/5 p-8 text-center">
-                <p className="text-sm text-ivory/60">Upload Compliance Pack</p>
-                <p className="mt-1 text-xs text-ivory/50">Drag & drop your EPC, Gas Safety, EICR documents here</p>
+              <section className="rounded-[2rem] border border-dashed border-ui-tags bg-bg-card p-8 text-center">
+                <p className="text-sm text-text-muted">Upload Compliance Pack</p>
+                <p className="mt-1 text-xs text-text-muted">Drag & drop your EPC, Gas Safety, EICR documents here</p>
               </section>
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Certifications / Memberships</h3>
+              <section className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Certifications / Memberships</h3>
                 <div className="mt-4 space-y-4">
                   {[
                     { label: "FCA Regulated", checked: false },
@@ -1118,37 +1118,37 @@ export default function LandlordOnboardingPage() {
                     { label: "Council Accredited", checked: false },
                   ].map(({ label, checked }) => (
                     <div key={label} className="flex items-center justify-between">
-                      <span className="text-sm text-ivory/80">{label}</span>
-                      <Switch defaultChecked={checked} className="data-[state=checked]:bg-champagne" />
+                      <span className="text-sm text-text-muted">{label}</span>
+                      <Switch defaultChecked={checked} className="data-[state=checked]:bg-brand-teal" />
                     </div>
                   ))}
                 </div>
               </section>
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Past Tenant Endorsements</h3>
+              <section className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Past Tenant Endorsements</h3>
                 <div className="mt-4 flex gap-2">
                   <OnboardingInput placeholder="tenant@example.com" className="flex-1" />
-                  <Button size="sm" className="rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90">Request a pedigree voucher</Button>
+                  <Button size="sm" className="rounded-[2rem] bg-brand-teal text-text-primary hover:bg-accent-lime">Request a pedigree voucher</Button>
                 </div>
-                <p className="mt-2 text-xs text-ivory/50">A quick 1-question verification from a past tenant boosts your landlord score significantly.</p>
+                <p className="mt-2 text-xs text-text-muted">A quick 1-question verification from a past tenant boosts your landlord score significantly.</p>
               </section>
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Professional Stats</h3>
+              <section className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Professional Stats</h3>
                 <div className="mt-4 space-y-4">
                   <div>
-                    <label className="mb-1 block text-xs text-ivory/60">Average Response Time</label>
-                    <select className="w-full rounded-[2rem] rounded-b-none rounded-t-[0.25rem] border-b border-white/20 bg-white/5 py-3 text-ivory focus:border-champagne focus:outline-none">
+                    <label className="mb-1 block text-xs text-text-muted">Average Response Time</label>
+                    <select className="w-full rounded-[2rem] rounded-b-none rounded-t-[0.25rem] border-b border-ui-tags bg-bg-card py-3 text-text-primary focus:border-brand-teal focus:outline-none">
                       <option>&lt;2 hours</option>
                     </select>
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-ivory/60">Years in Property</label>
+                    <label className="mb-1 block text-xs text-text-muted">Years in Property</label>
                     <OnboardingInput placeholder="e.g., 5" />
                   </div>
                 </div>
               </section>
             </div>
-            <Button className="mt-8 w-full rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg" onClick={handleContinue}>
+            <Button className="mt-8 w-full rounded-[2rem] bg-brand-teal text-text-primary hover:bg-accent-lime" size="lg" onClick={handleContinue}>
               Confirm my pedigree and continue
             </Button>
           </>
@@ -1156,58 +1156,58 @@ export default function LandlordOnboardingPage() {
 
         {step === 4 && (
           <>
-            <h1 className="text-2xl font-semibold tracking-tight text-ivory md:text-3xl" style={{ letterSpacing: "-0.02em" }}>
+            <h1 className="text-2xl font-display font-bold uppercase tracking-display text-text-primary md:text-3xl">
               Your Portfolio is ready for the market.
             </h1>
-            <p className="mt-2 text-ivory/60">
+            <p className="mt-2 text-text-muted">
               Your profile is optimized and your pedigree is verified. Review your assets before we start matching.
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <section className="overflow-hidden rounded-[2rem] border border-white/[0.06] bg-white/5">
+              <section className="overflow-hidden rounded-[2rem] border border-ui-tags bg-bg-card">
                 <div className="aspect-video">
                   <LuxeImage src={LUXE_IMAGE_LIST[0]} alt="Property" className="h-full w-full object-cover" />
                 </div>
                 <div className="p-4">
-                  <p className="text-xs text-ivory/50">Property Type</p>
-                  <p className="text-sm text-champagne">Address/Postcode · Target Rent</p>
+                  <p className="text-xs text-text-muted">Property Type</p>
+                  <p className="text-sm text-brand-teal">Address/Postcode · Target Rent</p>
                 </div>
               </section>
-              <section className="overflow-hidden rounded-[2rem] border border-white/[0.06] bg-white/5">
+              <section className="overflow-hidden rounded-[2rem] border border-ui-tags bg-bg-card">
                 <div className="aspect-video">
                   <LuxeImage src={LUXE_IMAGE_LIST[1]} alt="Property" className="h-full w-full object-cover" />
                 </div>
                 <div className="p-4">
-                  <p className="text-xs text-ivory/50">Property Type</p>
-                  <p className="text-sm text-champagne">Address/Postcode · Target Rent</p>
+                  <p className="text-xs text-text-muted">Property Type</p>
+                  <p className="text-sm text-brand-teal">Address/Postcode · Target Rent</p>
                 </div>
               </section>
-              <section className="flex min-h-[120px] flex-col items-center justify-center rounded-[2rem] border border-dashed border-white/20 bg-white/5 text-ivory/50">
+              <section className="flex min-h-[120px] flex-col items-center justify-center rounded-[2rem] border border-dashed border-ui-tags bg-bg-card text-text-muted">
                 <span className="text-2xl">+</span>
                 <p className="mt-2 text-sm">Add another property to this portfolio</p>
               </section>
             </div>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Identity</h3>
-                <p className="mt-2 text-sm text-champagne">Name/Entity · Current Location · Management Style</p>
+              <section className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Identity</h3>
+                <p className="mt-2 text-sm text-brand-teal">Name/Entity · Current Location · Management Style</p>
               </section>
-              <section className="rounded-[2rem] border border-white/[0.06] bg-white/5 p-6 backdrop-blur-sm">
-                <h3 className="text-sm font-medium text-champagne">Verified Pedigree</h3>
-                <p className="mt-2 text-sm text-champagne">Compliance Docs: Verified</p>
-                <p className="text-sm text-ivory/50">Tenant Refs: Status · Bank Link: Connected</p>
+              <section className="rounded-[2rem] border border-ui-tags bg-bg-card p-6 backdrop-blur-sm">
+                <h3 className="text-sm font-display font-bold uppercase tracking-display text-brand-teal">Verified Pedigree</h3>
+                <p className="mt-2 text-sm text-brand-teal">Compliance Docs: Verified</p>
+                <p className="text-sm text-text-muted">Tenant Refs: Status · Bank Link: Connected</p>
               </section>
             </div>
-            <section className="mt-8 rounded-[2rem] border border-champagne/20 bg-champagne/10 p-6">
-              <h3 className="text-sm font-medium text-ivory">Your Estimated FairRent Score</h3>
-              <p className="mt-2 text-3xl font-semibold tabular-nums text-champagne">4.1 / 5.0</p>
-              <p className="mt-2 text-sm text-ivory/70">
+            <section className="mt-8 rounded-[2rem] border border-brand-teal/20 bg-brand-teal/10 p-6">
+              <h3 className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Your Estimated FairRent Score</h3>
+              <p className="mt-2 text-3xl font-semibold tabular-nums text-brand-teal">4.1 / 5.0</p>
+              <p className="mt-2 text-sm text-text-muted">
                 A 4.1 is a strong start—you&apos;re already outperforming 70% of the local market. Once you&apos;re in the portal, we&apos;ll show you how to hit that 5.0 (like completing your compliance pack) to attract the highest-rated tenants in the city.
               </p>
             </section>
-            <p className="mt-4 flex items-center gap-2 text-sm text-ivory/60">
+            <p className="mt-4 flex items-center gap-2 text-sm text-text-muted">
               ❤ We&apos;ve found 28 verified tenants in your area currently searching for properties in your portfolio.
             </p>
-            <Button className="mt-8 w-full rounded-[2rem] bg-champagne text-obsidian hover:bg-champagne/90" size="lg" onClick={handleContinue}>
+            <Button className="mt-8 w-full rounded-[2rem] bg-brand-teal text-text-primary hover:bg-accent-lime" size="lg" onClick={handleContinue}>
               Open my portal and view matches
             </Button>
           </>

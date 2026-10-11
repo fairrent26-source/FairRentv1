@@ -38,7 +38,7 @@ export function OnboardingGuard({ role, children }: OnboardingGuardProps) {
   if (!hydrated) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-950">
-        <p className="text-slate-400">Loading…</p>
+        <p className="text-text-muted">Loading…</p>
       </div>
     );
   }
@@ -47,7 +47,7 @@ export function OnboardingGuard({ role, children }: OnboardingGuardProps) {
   if (!isLoggedIn || currentRole !== role || onboardingComplete) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-950">
-        <p className="text-slate-400">Redirecting…</p>
+        <p className="text-text-muted">Redirecting…</p>
       </div>
     );
   }

@@ -10,6 +10,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        "bg-main": "#F9F9F9",
+        "bg-card": "#FFFFFF",
+        "landing-band": "#D4EBE3",
+        "text-primary": "#1A1A1A",
+        "text-muted": "#6B7280",
+        "brand-teal": "#00D2D3",
+        "accent-lime": "#C6FF00",
+        "alert-watermelon": "#FF5252",
+        "ui-tags": "#E5E7EB",
         obsidian: "#0D0D12",
         champagne: {
           DEFAULT: "#C9A84C",
@@ -60,9 +69,11 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-playfair)", "Georgia", "serif"],
-        mono: ["var(--font-jetbrains)", "monospace"],
+        display: ["var(--font-display)", "ui-sans-serif", "sans-serif"],
+        accent: ["var(--font-accent)", "Georgia", "serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "monospace"],
       },
       fontSize: {
         eyebrow: ["0.6875rem", { lineHeight: "1", letterSpacing: "0.2em" }],
@@ -90,6 +101,7 @@ const config: Config = {
       letterSpacing: {
         tighter: "-0.03em",
         tight: "-0.02em",
+        display: "0.14em",
       },
       borderRadius: {
         "2xl": "1rem",
@@ -109,8 +121,13 @@ const config: Config = {
         "border-beam": "border-beam 4s linear infinite",
         "progress-shimmer": "progress-shimmer 2.2s ease-in-out infinite",
         "skeleton-pulse": "skeleton-pulse 1.6s ease-in-out infinite",
+        marquee: "marquee 28s linear infinite",
       },
       keyframes: {
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
         "border-beam": {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },

@@ -7,15 +7,15 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-slate-luxe/50 bg-slate-luxe/60 text-ivory",
-        positive: "border-champagne/40 bg-champagne/10 text-champagne",
-        premium: "border-champagne/40 bg-champagne/10 text-champagne",
+        default: "border-ui-tags bg-ui-tags text-text-primary",
+        positive: "border-ui-tags bg-ui-tags text-text-primary",
+        premium: "border-ui-tags bg-ui-tags text-text-primary",
         verified: "border-verified/40 bg-verified/10 text-verified",
         success: "border-success/40 bg-success/10 text-success",
         warning: "border-warning/40 bg-warning/10 text-warning",
-        destructive: "border-destructive/40 bg-destructive/10 text-destructive",
-        secondary: "border-slate-luxe/50 bg-slate-luxe/60 text-ivory/70",
-        info: "border-info/40 bg-info/10 text-info",
+        destructive: "border-alert-watermelon/40 bg-alert-watermelon/10 text-alert-watermelon",
+        secondary: "border-ui-tags bg-ui-tags text-text-muted",
+        info: "border-brand-teal/40 bg-brand-teal/10 text-text-primary",
       },
       dot: {
         true: "",
@@ -30,14 +30,14 @@ const badgeVariants = cva(
 );
 
 const dotColor: Record<string, string> = {
-  default: "bg-ivory/60",
-  positive: "bg-champagne",
-  premium: "bg-champagne",
+  default: "bg-text-muted",
+  positive: "bg-brand-teal",
+  premium: "bg-brand-teal",
   verified: "bg-verified",
   success: "bg-success",
   warning: "bg-warning",
   destructive: "bg-destructive",
-  secondary: "bg-ivory/50",
+  secondary: "bg-text-muted",
   info: "bg-info",
 };
 

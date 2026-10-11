@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { FairRentLockup } from "@/components/brand/FairRentLogo";
 import { useAuthStore } from "@/store/auth-store";
 import {
   LayoutDashboard,
@@ -73,15 +74,15 @@ function NavLinks({
             className={cn(
               "relative flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors duration-200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
               compact ? "flex-col gap-1 py-2" : "",
-              isActive ? "bg-champagne/10 text-champagne" : "text-ivory/70 hover:bg-slate-luxe/50 hover:text-ivory"
+              isActive ? "bg-brand-teal/10 text-brand-teal" : "text-text-muted hover:bg-ui-tags/50 hover:text-text-primary"
             )}
             title={item.label}
           >
             {isActive && !compact && (
-              <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-champagne" />
+              <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-brand-teal" />
             )}
             {isActive && compact && (
-              <span className="absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-t bg-champagne" />
+              <span className="absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-t bg-brand-teal" />
             )}
             <Icon className="h-4 w-4 shrink-0 opacity-90" />
             {!compact && (
@@ -123,32 +124,31 @@ export function Sidebar({ role, unreadMessages, entityName }: SidebarProps) {
       <aside
         className={cn(
           "hidden md:flex md:fixed md:inset-y-0 md:left-0 md:z-40 md:h-screen md:w-64 md:flex-col",
-          "border-r border-white/10 bg-obsidian"
+          "border-r border-ui-tags bg-bg-main"
         )}
       >
-        <div className="flex h-14 shrink-0 items-center gap-2 border-b border-white/10 px-4">
-          <Link href={role === "landlord" ? "/landlord" : "/tenant"} className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03]">
-              <span className="text-base font-medium text-champagne">✓</span>
-            </div>
-            <span className="font-bold tracking-tight text-ivory" style={{ letterSpacing: "-0.02em" }}>
-              FairRent
-            </span>
+        <div className="flex h-14 shrink-0 items-center gap-2 border-b border-ui-tags px-4">
+          <Link
+            href={role === "landlord" ? "/landlord" : "/tenant"}
+            className="flex items-center"
+            aria-label="FairRent home"
+          >
+            <FairRentLockup />
           </Link>
         </div>
         <nav className="min-h-0 flex-1 space-y-0.5 overflow-y-auto p-3">
           <NavLinks role={role} pathname={pathname} unreadMessages={unreadMessages} compact={false} />
         </nav>
-        <div className="shrink-0 border-t border-white/10 p-3">
-          <div className="mb-2 flex items-center gap-2.5 rounded-xl px-3 py-2 text-ivory/60">
-            <div className="h-8 w-8 shrink-0 rounded-full border border-white/10 bg-white/[0.03]" />
+        <div className="shrink-0 border-t border-ui-tags p-3">
+          <div className="mb-2 flex items-center gap-2.5 rounded-xl px-3 py-2 text-text-muted">
+            <div className="h-8 w-8 shrink-0 rounded-full border border-ui-tags bg-bg-card" />
             <span className="truncate text-sm">{entityName}</span>
           </div>
           <Link
             href={role === "landlord" ? "/landlord/settings" : "/tenant/settings"}
             className={cn(
-              "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-ivory/70 transition-colors hover:bg-white/[0.06] hover:text-ivory",
-              pathname.includes("settings") ? "bg-white/[0.06] text-ivory" : ""
+              "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-text-muted transition-colors hover:bg-bg-card hover:text-text-primary",
+              pathname.includes("settings") ? "bg-bg-card text-text-primary" : ""
             )}
           >
             <Settings className="h-4 w-4 shrink-0" />
@@ -157,7 +157,7 @@ export function Sidebar({ role, unreadMessages, entityName }: SidebarProps) {
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-ivory/70 transition-colors hover:bg-white/[0.06] hover:text-ivory"
+            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-text-muted transition-colors hover:bg-bg-card hover:text-text-primary"
           >
             <LogOut className="h-4 w-4 shrink-0" />
             Log out
@@ -169,7 +169,7 @@ export function Sidebar({ role, unreadMessages, entityName }: SidebarProps) {
       <nav
         className={cn(
           "fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around gap-0.5 overflow-x-auto",
-          "border-t border-white/10 bg-obsidian/90 px-1 py-2 backdrop-blur-3xl",
+          "border-t border-ui-tags bg-bg-main/90 px-1 py-2 backdrop-blur-3xl",
           "md:hidden"
         )}
       >
@@ -177,8 +177,8 @@ export function Sidebar({ role, unreadMessages, entityName }: SidebarProps) {
         <Link
           href={role === "landlord" ? "/landlord/settings" : "/tenant/settings"}
           className={cn(
-            "flex shrink-0 flex-col items-center gap-0.5 rounded-xl px-2 py-2 text-ivory/70",
-            pathname.includes("settings") ? "text-champagne" : ""
+            "flex shrink-0 flex-col items-center gap-0.5 rounded-xl px-2 py-2 text-text-muted",
+            pathname.includes("settings") ? "text-brand-teal" : ""
           )}
           title="Settings"
         >

@@ -35,7 +35,7 @@ const statusConfig: Record<
   unverified: {
     icon: ShieldAlert,
     label: "Unverified",
-    classes: "border-slate-luxe/60 bg-slate-luxe/40 text-ivory/60",
+    classes: "border-ui-tags bg-ui-tags text-text-muted",
   },
 };
 

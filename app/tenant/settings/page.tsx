@@ -8,21 +8,21 @@ export default function TenantSettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-slate-100">Settings</h2>
-        <p className="text-slate-400">Manage your account and preferences.</p>
+        <h2 className="text-xl font-display font-bold uppercase tracking-display text-text-primary">Settings</h2>
+        <p className="text-text-muted">Manage your account and preferences.</p>
       </div>
 
       <Card>
         <CardHeader>
-          <span className="text-sm font-medium text-slate-100">Profile</span>
+          <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Profile</span>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="mb-1 block text-xs text-slate-400">Display name</label>
+            <label className="mb-1 block text-xs text-text-muted">Display name</label>
             <Input defaultValue="Name" readOnly className="bg-slate-800" />
           </div>
           <div>
-            <label className="mb-1 block text-xs text-slate-400">Email</label>
+            <label className="mb-1 block text-xs text-text-muted">Email</label>
             <Input defaultValue="tenant@example.com" readOnly className="bg-slate-800" />
           </div>
         </CardContent>
@@ -30,7 +30,7 @@ export default function TenantSettingsPage() {
 
       <Card>
         <CardHeader>
-          <span className="text-sm font-medium text-slate-100">Notifications</span>
+          <span className="text-sm font-display font-bold uppercase tracking-display text-text-primary">Notifications</span>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">

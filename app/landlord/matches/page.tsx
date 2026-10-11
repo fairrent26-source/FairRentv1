@@ -8,8 +8,8 @@ export default function LandlordMatchesPage() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-slate-100">Tenant Matches</h2>
-      <p className="text-slate-400">Top matches for your portfolio based on strength and verification.</p>
+      <h2 className="text-xl font-display font-bold uppercase tracking-display text-text-primary">Tenant Matches</h2>
+      <p className="text-text-muted">Top matches for your portfolio based on strength and verification.</p>
       {list.length === 0 ? (
         <div className="rounded-2xl border border-slate-700 bg-slate-900/50 py-16 text-center text-slate-500">
           No matches found. Add properties and criteria to see tenant matches.

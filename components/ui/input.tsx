@@ -16,7 +16,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 const stateRing: Record<NonNullable<InputProps["state"]>, string> = {
   default:
-    "border-slate-luxe/50 focus-visible:ring-champagne/40 focus-visible:border-champagne/40",
+    "border-ui-tags focus-visible:ring-brand-teal/40 focus-visible:border-brand-teal/40",
   error:
     "border-destructive/60 focus-visible:ring-destructive/40 focus-visible:border-destructive/60",
   success:
@@ -54,7 +54,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const enhanced = state !== "default" || !!hint || !!leadingIcon || !!trailing;
 
     const baseClasses =
-      "flex h-10 w-full rounded-2xl border bg-slate-luxe/40 px-3 py-2 text-sm text-ivory placeholder:text-ivory/50 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50";
+      "flex h-10 w-full rounded-2xl border bg-bg-card px-3 py-2 text-sm text-text-primary font-body placeholder:text-text-muted transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50";
 
     // Backward-compatible path: a bare input identical to the original primitive
     // so existing call sites (layout classes, flex rows) are untouched.
@@ -77,7 +77,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div className={cn("w-full", wrapperClassName)}>
         <div className="relative">
           {leadingIcon && (
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ivory/50">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
               {leadingIcon}
             </span>
           )}
@@ -111,7 +111,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 ? "text-destructive"
                 : state === "success"
                   ? "text-verified"
-                  : "text-ivory/55"
+                  : "text-text-muted"
             )}
           >
             {hint}

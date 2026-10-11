@@ -17,7 +17,7 @@ const maxDefault = 5;
 
 function getScoreColor(value: number, max: number): string {
   const pct = value / max;
-  if (pct >= 0.9) return "text-champagne";
+  if (pct >= 0.9) return "text-brand-teal";
   if (pct >= 0.6) return "text-amber-400";
   return "text-red-400";
 }
@@ -31,7 +31,7 @@ function getStrokeGradient(value: number, max: number): string {
 
 function getGlow(value: number, max: number): string {
   const pct = value / max;
-  if (pct >= 0.9) return "drop-shadow(0 0 6px rgba(201, 168, 76, 0.45))";
+  if (pct >= 0.9) return "drop-shadow(0 0 6px rgba(0, 210, 211, 0.45))";
   if (pct >= 0.6) return "drop-shadow(0 0 6px rgba(245, 158, 11, 0.35))";
   return "drop-shadow(0 0 6px rgba(248, 113, 113, 0.35))";
 }
@@ -67,7 +67,7 @@ export function ScoreDisplay({
   return (
     <div className={cn("flex flex-col items-center gap-2", className)}>
       {label && (
-        <span className="text-xs font-medium uppercase tracking-wider text-ivory/60">
+        <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
           {label}
         </span>
       )}
@@ -75,8 +75,8 @@ export function ScoreDisplay({
         <svg className="h-full w-full -rotate-90" viewBox="0 0 100 100" aria-hidden>
           <defs>
             <linearGradient id="score-champagne" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#C9A84C" />
-              <stop offset="100%" stopColor="#a88b3a" />
+              <stop offset="0%" stopColor="#00D2D3" />
+              <stop offset="100%" stopColor="#C6FF00" />
             </linearGradient>
             <linearGradient id="score-amber" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="rgb(245 158 11)" />
@@ -120,14 +120,14 @@ export function ScoreDisplay({
           >
             {value.toFixed(1)}
           </span>
-          <span className="text-[10px] font-medium tabular-nums text-ivory/50">
+          <span className="text-[10px] font-medium tabular-nums text-text-muted">
             / {max}
           </span>
         </div>
       </div>
       {breakdown && breakdown.length > 0 && (
-        <details className="text-xs text-ivory/60">
-          <summary className="cursor-pointer hover:text-ivory/80">Breakdown</summary>
+        <details className="text-xs text-text-muted">
+          <summary className="cursor-pointer hover:text-text-primary">Breakdown</summary>
           <ul className="mt-1 space-y-0.5 pl-4">
             {breakdown.map((b) => (
               <li key={b.label}>

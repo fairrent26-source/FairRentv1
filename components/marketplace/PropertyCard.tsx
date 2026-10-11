@@ -57,18 +57,18 @@ export function PropertyCard({
         )}
       </div>
       <CardContent className="space-y-1 pt-4">
-        <p className="font-medium text-ivory">{property.address}</p>
+        <p className="font-medium text-text-primary">{property.address}</p>
         {property.tenantName && (
-          <p className="text-sm text-ivory/70">Current tenant: {property.tenantName}</p>
+          <p className="text-sm text-text-muted">Current tenant: {property.tenantName}</p>
         )}
         {property.rent > 0 && (
-          <p className="text-sm font-mono text-champagne">£{property.rent}/mo</p>
+          <p className="text-sm font-mono text-brand-teal">£{property.rent}/mo</p>
         )}
         {property.leaseEndDate && (
-          <p className="text-sm text-ivory/70">Lease end: {property.leaseEndDate}</p>
+          <p className="text-sm text-text-muted">Lease end: {property.leaseEndDate}</p>
         )}
         {!property.tenantName && property.status === "vacant" && (
-          <p className="text-sm text-ivory/50">Current tenant: N/A · Lease end: N/A</p>
+          <p className="text-sm text-text-muted">Current tenant: N/A · Lease end: N/A</p>
         )}
       </CardContent>
       <CardFooter>

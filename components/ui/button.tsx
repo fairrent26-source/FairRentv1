@@ -5,17 +5,17 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-medium tracking-tight transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne/60 focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian disabled:pointer-events-none disabled:opacity-50 active:opacity-90 motion-reduce:transition-none",
+  "relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-medium font-body tracking-tight transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-main disabled:pointer-events-none disabled:opacity-50 active:opacity-90 motion-reduce:transition-none",
   {
     variants: {
       variant: {
-        default: "bg-champagne text-obsidian shadow-sm hover:bg-champagne/90",
-        destructive: "bg-red-600/90 text-white hover:bg-red-500",
-        outline: "border border-slate-luxe/50 bg-transparent text-ivory hover:border-champagne/50 hover:bg-slate-luxe/30",
-        secondary: "bg-slate-luxe/60 text-ivory hover:bg-slate-luxe/80",
-        ghost: "text-ivory hover:bg-slate-luxe/50",
-        link: "text-champagne underline-offset-4 hover:text-champagne/80 hover:underline",
-        info: "bg-champagne/20 text-champagne border border-slate-luxe/50 hover:bg-champagne/30",
+        default: "bg-brand-teal text-text-primary shadow-sm hover:bg-accent-lime",
+        destructive: "bg-alert-watermelon text-white hover:bg-alert-watermelon/90",
+        outline: "border border-ui-tags bg-transparent text-text-primary hover:border-brand-teal/50 hover:bg-ui-tags",
+        secondary: "bg-ui-tags text-text-primary hover:bg-ui-tags/80",
+        ghost: "text-text-primary hover:bg-ui-tags",
+        link: "text-brand-teal underline-offset-4 hover:text-brand-teal/80 hover:underline",
+        info: "bg-brand-teal/20 text-text-primary border border-ui-tags hover:bg-accent-lime/40",
       },
       size: {
         default: "h-10 px-4 py-2",

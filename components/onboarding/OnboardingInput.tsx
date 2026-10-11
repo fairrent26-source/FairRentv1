@@ -12,8 +12,8 @@ const OnboardingInput = React.forwardRef<HTMLInputElement, OnboardingInputProps>
       <input
         type={type}
         className={cn(
-          "w-full bg-white/5 px-3 py-3 text-ivory placeholder:text-ivory/50 transition-all duration-300",
-          "border-b border-white/20 focus:border-champagne focus:outline-none focus:ring-0",
+          "w-full bg-bg-card px-3 py-3 text-text-primary font-body placeholder:text-text-muted transition-all duration-300",
+          "border-b border-ui-tags focus:border-brand-teal focus:outline-none focus:ring-0",
           "rounded-[2rem] rounded-b-none rounded-t-[0.25rem]",
           "disabled:cursor-not-allowed disabled:opacity-50",
           className
