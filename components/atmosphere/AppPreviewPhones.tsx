@@ -368,7 +368,7 @@ function TenantPhones() {
         </PhoneFrame>
 
         <PhoneFrame
-          title="Your landlord confirms the repair is finished."
+          title="Notify your landlord of any issues, repair times are logged and stored securely"
           tabs={TENANT_TABS}
           activeTab="chat"
         >

@@ -283,10 +283,6 @@ export function LandingFlywheel({ audience }: { audience: "landlord" | "tenant" 
       aria-label={isLandlord ? "Landlord journey" : "Tenant journey"}
     >
         <div className="flex flex-col gap-5">
-          <Flywheel
-            role={isLandlord ? "Landlord" : "Tenant"}
-            steps={isLandlord ? LANDLORD_STEPS : TENANT_STEPS}
-          />
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {isLandlord ? (
               <AudienceCallout
@@ -305,6 +301,10 @@ export function LandingFlywheel({ audience }: { audience: "landlord" | "tenant" 
             )}
             <ExclusiveAccessCard forRenters={!isLandlord} />
           </div>
+          <Flywheel
+            role={isLandlord ? "Landlord" : "Tenant"}
+            steps={isLandlord ? LANDLORD_STEPS : TENANT_STEPS}
+          />
         </div>
     </section>
   );
