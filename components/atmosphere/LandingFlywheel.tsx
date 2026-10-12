@@ -1,3 +1,4 @@
+import { Fraunces } from "next/font/google";
 import {
   Award,
   Building2,
@@ -10,6 +11,13 @@ import {
   Wrench,
   type LucideIcon,
 } from "lucide-react";
+
+const stepScript = Fraunces({
+  subsets: ["latin"],
+  style: "italic",
+  weight: "600",
+  display: "swap",
+});
 import { JoinEarlyAccessButton } from "@/components/atmosphere/WaitlistCta";
 import { LANDING_SECTIONS } from "@/lib/landing-sections";
 import { formatGbp, landingFeeSnapshot, roundToSigFigs } from "@/lib/landing-financials";
@@ -47,7 +55,7 @@ const FLYWHEEL = {
   ry: 92,
 } as const;
 
-const ARROW = "#1A1A1A";
+const ARROW = "#FFFFFF";
 
 function ellipsePoint(index: number, count: number, radiusScale = 1) {
   const angle = (index / count) * 2 * Math.PI - Math.PI / 2;
@@ -73,10 +81,12 @@ function StepCopy({
         align === "left" ? "text-right" : align === "right" ? "text-left" : "text-center"
       }
     >
-      <p className="font-display text-xs font-bold uppercase tracking-display text-text-primary md:text-sm">
+      <p className="font-display text-xs font-bold uppercase tracking-display text-white md:text-sm">
         {title}
       </p>
-      <p className="mt-1 font-accent text-xs italic leading-snug text-text-muted md:text-sm">
+      <p
+        className={`${stepScript.className} mt-1 text-xs italic font-semibold leading-snug text-white md:text-sm`}
+      >
         {blurb}
       </p>
     </div>
@@ -91,8 +101,8 @@ function StepIcon({
   n: number;
 }) {
   return (
-    <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-teal shadow-sm">
-      <span className="absolute -left-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-text-primary font-display text-xs font-bold leading-none text-white ring-2 ring-bg-card">
+    <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
+      <span className="absolute -left-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-text-primary font-display text-xs font-bold leading-none text-white ring-2 ring-white">
         {n}
       </span>
       <Icon className="h-6 w-6 text-text-primary" strokeWidth={2.1} />
@@ -111,8 +121,8 @@ function Flywheel({
   const markerId = `flywheel-arrow-${role.toLowerCase()}`;
 
   return (
-    <article className="w-full rounded-3xl border border-ui-tags bg-bg-card p-6 pb-10 shadow-card md:px-12 md:pb-12 md:pt-8 lg:px-14">
-      <p className="text-center font-display font-bold text-lg uppercase tracking-display text-brand-teal md:text-xl">
+    <article className="w-full rounded-3xl border border-white/25 bg-brand-teal p-6 pb-10 shadow-card md:px-12 md:pb-12 md:pt-8 lg:px-14">
+      <p className="text-center font-display font-bold text-lg uppercase tracking-display text-white md:text-xl">
         {role}
       </p>
       <ol className="sr-only">
@@ -128,7 +138,7 @@ function Flywheel({
           <li key={step.title} className="relative flex gap-3 pb-6 last:pb-0">
             {i < steps.length - 1 ? (
               <span
-                className="absolute left-6 top-12 h-[calc(100%-1.5rem)] w-px bg-brand-teal/40"
+                className="absolute left-6 top-12 h-[calc(100%-1.5rem)] w-px bg-white/45"
                 aria-hidden
               />
             ) : null}
@@ -138,7 +148,7 @@ function Flywheel({
         ))}
       </ol>
 
-      <div className="relative mx-auto mt-8 hidden h-[26rem] w-full overflow-visible px-6 pb-8 sm:block md:px-10 md:pb-10 lg:h-[28rem] lg:px-12">
+      <div className="relative mx-auto mt-14 hidden h-[26rem] w-full overflow-visible px-6 pb-8 sm:block md:mt-16 md:px-10 md:pb-10 lg:h-[28rem] lg:px-12">
         <svg
           className="absolute inset-0 h-full w-full"
           viewBox={`0 0 ${FLYWHEEL.vbW} ${FLYWHEEL.vbH}`}
@@ -181,8 +191,10 @@ function Flywheel({
           const side: "left" | "right" | "center" =
             Math.cos(angle) > 0.35 ? "right" : Math.cos(angle) < -0.35 ? "left" : "center";
           const isTop = Math.sin(angle) < -0.5;
+          const sideNudge = side === "center" ? 0 : Math.sin(angle) < 0 ? -26 : 16;
+          const iconY = iconPoint.y + sideNudge;
           const labelX = iconPoint.x + Math.cos(angle) * (side === "center" ? 0 : 78);
-          const labelY = iconPoint.y + (side === "center" ? (isTop ? -52 : 52) : Math.sin(angle) * 10);
+          const labelY = iconY + (side === "center" ? (isTop ? -52 : 52) : 0);
           const transform =
             side === "left"
               ? "translate(-100%, -50%)"
@@ -197,7 +209,7 @@ function Flywheel({
                 className="absolute"
                 style={{
                   left: `${(iconPoint.x / FLYWHEEL.vbW) * 100}%`,
-                  top: `${(iconPoint.y / FLYWHEEL.vbH) * 100}%`,
+                  top: `${(iconY / FLYWHEEL.vbH) * 100}%`,
                   transform: "translate(-50%, -50%)",
                 }}
               >
