@@ -105,7 +105,7 @@ export function TrackRecordDiagram() {
         <SideCta href={LANDING_PATHS.renters} tone="renter">
           Renters
         </SideCta>
-        <p className="mb-4 text-left font-body text-sm font-semibold leading-snug text-text-primary md:text-base">
+        <p className="mb-4 text-left font-body text-[13px] font-semibold leading-snug text-text-primary md:text-sm">
           Find a home you can feel good about.
         </p>
         <RecordList items={RENTER_SEES} dotClass="bg-brand-teal" />
@@ -140,8 +140,8 @@ export function TrackRecordDiagram() {
         <SideCta href={LANDING_PATHS.landlords} tone="landlord">
           Landlords
         </SideCta>
-        <p className="mb-4 text-left font-body text-sm font-semibold leading-snug text-text-primary md:text-base">
-          Rent to top-quality tenants and meet all regulatory requirements.
+        <p className="mb-4 text-left font-body text-[13px] font-semibold leading-snug text-text-primary md:text-sm">
+          Rent to quality tenants and stay compliant.
         </p>
         <RecordList items={LANDLORD_SEES} dotClass="bg-[#0F766E]" />
       </article>

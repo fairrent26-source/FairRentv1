@@ -122,8 +122,13 @@ const config: Config = {
         "progress-shimmer": "progress-shimmer 2.2s ease-in-out infinite",
         "skeleton-pulse": "skeleton-pulse 1.6s ease-in-out infinite",
         marquee: "marquee 28s linear infinite",
+        "savings-tape": "savings-tape 0.4s ease-out both",
       },
       keyframes: {
+        "savings-tape": {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
         marquee: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
