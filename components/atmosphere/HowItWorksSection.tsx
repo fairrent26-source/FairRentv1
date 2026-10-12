@@ -6,23 +6,28 @@ import { cn } from "@/lib/utils";
 import { LANDING_SECTIONS } from "@/lib/landing-sections";
 import { LUXE_IMAGES } from "@/lib/images";
 
-const STEPS = [
-  {
-    num: "01",
-    title: "Measure",
-    desc: "Payment history, repairs, notices and how tenants showed up before are measured into a signal of tenant quality.",
-  },
-  {
-    num: "02",
-    title: "Score",
-    desc: "The scoring algorithm places you at a starting point, then suggests ways to improve your score: shorter waits on queries, regular photo updates and positive tenant feedback.",
-  },
-  {
-    num: "03",
-    title: "Match",
-    desc: "An evidence-based match can lead to a higher probability of a successful rental partnership.",
-  },
-] as const;
+const MATCH_STEP = {
+  num: "03",
+  title: "Match",
+  desc: "Evidence-based matching along with a reward system for positive actions, increases the chances of a successful partnership and a positive rental experience.",
+} as const;
+
+function stepsFor(audience: "landlord" | "tenant") {
+  const measure =
+    audience === "tenant"
+      ? "We measure factors such as response times, quality of repairs and deposit security, as key signals of landlord quality."
+      : "We measure factors such as payment history, speed of flagging issues, and communication, to create a key signal of tenant quality.";
+  const score =
+    audience === "tenant"
+      ? "Our scoring algorithm ranks users based on their history. Renters can improve their scores through verified references and paying rent through direct-debits, for example."
+      : "Our scoring algorithm ranks users based on their history. Landlords have the opportunity to improve their score by responding more quickly to queries and regularly updating property information for instance.";
+
+  return [
+    { num: "01", title: "Measure", desc: measure },
+    { num: "02", title: "Score", desc: score },
+    MATCH_STEP,
+  ];
+}
 
 function GlassPanel({
   className,
@@ -42,7 +47,8 @@ function GlassPanel({
   );
 }
 
-export function HowItWorksSection() {
+export function HowItWorksSection({ audience = "landlord" }: { audience?: "landlord" | "tenant" }) {
+  const steps = stepsFor(audience);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -97,7 +103,7 @@ export function HowItWorksSection() {
               </p>
             </div>
             <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
-              {STEPS.map((s) => (
+              {steps.map((s) => (
                 <GlassPanel
                   key={s.num}
                   data-landing-card

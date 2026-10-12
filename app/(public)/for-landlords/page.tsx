@@ -47,7 +47,7 @@ export default function ForLandlordsPage() {
       >
         <AppPreviewPhones audience="landlord" />
       </section>
-      <HowItWorksSection />
+      <HowItWorksSection audience="landlord" />
       <LandingSavingsCalculator />
     </LandingPageFrame>
   );

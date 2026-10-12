@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 
-const NAVY = "#0B1F4A";
+const TEAL = "#00D2D3";
 const GREEN = "#2DCC7A";
-const BLUE = "#2F84F0";
+const BLACK = "#1A1A1A";
 const ICON_BG = "#EEF2F8";
 
 function HouseMarkPaths() {
@@ -18,7 +18,7 @@ function HouseMarkPaths() {
       />
       <path
         d="M32 5L51 21.5V49"
-        stroke={BLUE}
+        stroke={BLACK}
         strokeWidth="8"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -26,19 +26,19 @@ function HouseMarkPaths() {
       />
       <path
         d="M51 22.5c10 0 12.5 12 1 16"
-        stroke={BLUE}
+        stroke={BLACK}
         strokeWidth="8"
         strokeLinecap="round"
         fill="none"
       />
       <path
         d="M49 36.5L61 50"
-        stroke={BLUE}
+        stroke={BLACK}
         strokeWidth="8"
         strokeLinecap="round"
         fill="none"
       />
-      <g fill={NAVY}>
+      <g fill={TEAL}>
         <rect x="24.2" y="24.2" width="4.1" height="4.1" rx="0.85" />
         <rect x="30.2" y="24.2" width="4.1" height="4.1" rx="0.85" />
         <rect x="24.2" y="30.2" width="4.1" height="4.1" rx="0.85" />
@@ -83,7 +83,7 @@ export function FairRentWordmark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center font-display font-extrabold tracking-[-0.04em] text-[#0B1F4A]",
+        "inline-flex items-center font-display font-extrabold tracking-[-0.04em] text-brand-teal",
         className
       )}
     >
@@ -95,11 +95,19 @@ export function FairRentWordmark({ className }: { className?: string }) {
 }
 
 /** Navbar lockup: app icon + wordmark. */
-export function FairRentLockup({ className }: { className?: string }) {
+export function FairRentLockup({
+  className,
+  iconClassName,
+  wordmarkClassName,
+}: {
+  className?: string;
+  iconClassName?: string;
+  wordmarkClassName?: string;
+}) {
   return (
     <span className={cn("inline-flex items-center gap-1.5", className)}>
-      <FairRentAppIcon className="h-6 w-6 shrink-0" />
-      <FairRentWordmark className="text-[15px] leading-none" />
+      <FairRentAppIcon className={cn("h-6 w-6 shrink-0", iconClassName)} />
+      <FairRentWordmark className={cn("text-[15px] leading-none", wordmarkClassName)} />
     </span>
   );
 }

@@ -5,20 +5,20 @@ import { Button } from "@/components/ui/button";
 import { LANDING_PATHS } from "@/lib/landing-sections";
 import { cn } from "@/lib/utils";
 
-/** What renters check on a landlord */
+/** What renters gain by using FairRent */
 const RENTER_SEES = [
-  "Listing accuracy",
-  "Responsiveness to repairs",
-  "Communication",
-  "Deposit experience",
+  "Know who you're renting from",
+  "Listings you can trust",
+  "Repairs that get a response",
+  "A deposit you can account for",
 ] as const;
 
-/** What landlords check on a tenant */
+/** What landlords gain by using FairRent */
 const LANDLORD_SEES = [
-  "Payment reliability",
-  "Successful tenancies",
-  "Property care",
-  "Verified references",
+  "Tenants who pay on time",
+  "Fewer failed tenancies",
+  "Homes left in good shape",
+  "References you can trust",
 ] as const;
 
 function RecordList({
@@ -29,15 +29,15 @@ function RecordList({
   dotClass: string;
 }) {
   return (
-    <ul className="space-y-2">
+    <ul className="space-y-2 text-left">
       {items.map((item) => (
-        <li key={item} className="flex items-center gap-2">
+        <li key={item} className="flex items-start gap-2">
           <span
-            className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-bg-card shadow-sm`}
+            className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-bg-card shadow-sm`}
           >
             <span className={`h-2 w-2 rounded-full ${dotClass}`} />
           </span>
-          <span className="whitespace-nowrap font-body text-[11px] font-medium leading-none text-text-primary md:text-xs">
+          <span className="text-left font-body text-[11px] font-medium leading-snug text-text-primary md:text-xs">
             {item}
           </span>
         </li>
@@ -82,7 +82,7 @@ function SideCta({
     <Button
       asChild
       className={cn(
-        "mb-4 h-11 w-full rounded-xl border-2 border-text-primary/15 font-semibold shadow-md hover:-translate-y-0.5 hover:bg-accent-lime hover:text-text-primary hover:shadow-lg",
+        "mb-3 h-11 w-full rounded-xl border-2 border-text-primary/15 font-semibold shadow-md hover:-translate-y-0.5 hover:bg-accent-lime hover:text-text-primary hover:shadow-lg",
         tone === "landlord" &&
           "bg-[#0F766E] text-white hover:!bg-accent-lime hover:!text-text-primary"
       )}
@@ -99,12 +99,15 @@ export function TrackRecordDiagram() {
   return (
     <div
       className="grid items-stretch gap-3 md:grid-cols-[1fr_auto_minmax(12rem,1.15fr)_auto_1fr] md:gap-2 lg:gap-4"
-      aria-label="How FairRent verifies tenant and landlord track records"
+      aria-label="What renters and landlords gain from FairRent"
     >
       <article className="rounded-2xl bg-[#E6FBFA] p-5 md:p-6">
         <SideCta href={LANDING_PATHS.renters} tone="renter">
           Renters
         </SideCta>
+        <p className="mb-4 text-left font-body text-sm font-semibold leading-snug text-text-primary md:text-base">
+          Find a home you can feel good about.
+        </p>
         <RecordList items={RENTER_SEES} dotClass="bg-brand-teal" />
       </article>
 
@@ -119,9 +122,8 @@ export function TrackRecordDiagram() {
 
       <article className="flex flex-col items-center justify-center rounded-2xl bg-accent-lime px-5 py-8 text-center md:px-6">
         <h3 className="font-display font-bold text-2xl uppercase tracking-display text-text-primary md:text-3xl">FairRent</h3>
-        <p className="mt-2 font-accent italic text-text-primary">Verified rental history</p>
-        <p className="mt-4 max-w-[16rem] font-body text-xs leading-relaxed text-text-primary/80 md:text-sm">
-          A shared record of how the rental relationship actually performed.
+        <p className="mt-3 max-w-[16rem] font-accent text-lg italic leading-snug text-text-primary md:text-xl">
+          Better matches, built to last.
         </p>
       </article>
 
@@ -138,6 +140,9 @@ export function TrackRecordDiagram() {
         <SideCta href={LANDING_PATHS.landlords} tone="landlord">
           Landlords
         </SideCta>
+        <p className="mb-4 text-left font-body text-sm font-semibold leading-snug text-text-primary md:text-base">
+          Rent to top-quality tenants and meet all regulatory requirements.
+        </p>
         <RecordList items={LANDLORD_SEES} dotClass="bg-[#0F766E]" />
       </article>
     </div>

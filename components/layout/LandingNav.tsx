@@ -37,12 +37,12 @@ function LandingNavLink({
   const pathname = usePathname();
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    onNavigate?.();
     if (!href.startsWith("/#")) return;
     const id = href.slice(2);
     if ((pathname === "/" || pathname.startsWith("/for-")) && scrollToSection(id)) {
       e.preventDefault();
     }
-    onNavigate?.();
   };
 
   const isActive = pathname === href;
@@ -109,73 +109,80 @@ export function LandingNav() {
   }, [menuOpen]);
 
   const islandClass = cn(
-    "flex h-9 items-center rounded-xl border px-3 transition-colors duration-300 sm:px-4",
+    "flex h-14 items-center rounded-2xl border px-3.5 transition-colors duration-300 md:h-9 md:rounded-xl md:px-4",
     scrolled ? "border-ui-tags bg-bg-main/80" : "border-ui-tags bg-bg-card"
   );
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex justify-center bg-transparent px-4 pt-3 sm:px-5">
+    <header
+      ref={menuRef}
+      className="fixed inset-x-0 top-0 z-50 bg-transparent px-4 pt-3 sm:px-5"
+    >
       <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-3">
-        <Link href="/" className={cn(islandClass, "gap-1.5 pr-3.5")} aria-label="FairRent home">
-          <FairRentLockup />
+        <Link href="/" className={cn(islandClass, "gap-2 pr-4 md:gap-1.5 md:pr-3.5")} aria-label="FairRent home">
+          <FairRentLockup
+            iconClassName="h-8 w-8 md:h-6 md:w-6"
+            wordmarkClassName="text-xl md:text-[15px]"
+            className="gap-2 md:gap-1.5"
+          />
         </Link>
 
-        <div ref={menuRef} className="relative">
-          <nav className={cn(islandClass, "gap-2 sm:gap-3")} aria-label="Landing">
-            <div className="hidden items-center gap-3 md:flex">
-              <LandingNavLink href={LANDING_PATHS.renters} label="Renters" tone="renter">
-                Renters
-              </LandingNavLink>
-              <LandingNavLink href={LANDING_PATHS.landlords} label="Landlords" tone="landlord">
-                Landlords
-              </LandingNavLink>
-            </div>
+        <nav className={cn(islandClass, "gap-2.5 md:gap-3")} aria-label="Landing">
+          <div className="hidden items-center gap-3 md:flex">
+            <LandingNavLink href={LANDING_PATHS.renters} label="Renters" tone="renter">
+              Renters
+            </LandingNavLink>
+            <LandingNavLink href={LANDING_PATHS.landlords} label="Landlords" tone="landlord">
+              Landlords
+            </LandingNavLink>
+          </div>
 
-            <button
-              type="button"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-text-primary hover:bg-ui-tags md:hidden"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              aria-controls="landing-nav-menu"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-            </button>
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-text-primary hover:bg-ui-tags md:hidden"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="landing-nav-menu"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
 
-            <JoinEarlyAccessButton size="sm" className="h-7 rounded-lg px-2 text-[11px]">
-              Join
-            </JoinEarlyAccessButton>
-          </nav>
-
-          {menuOpen && (
-            <div
-              id="landing-nav-menu"
-              className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-ui-tags bg-bg-card p-2 shadow-card md:hidden"
-            >
-              <LandingNavLink
-                href={LANDING_PATHS.renters}
-                label="Renters"
-                tone="renter"
-                className="block px-3 py-2 text-xs"
-                onNavigate={closeMenu}
-              >
-                Renters
-              </LandingNavLink>
-              <LandingNavLink
-                href={LANDING_PATHS.landlords}
-                label="Landlords"
-                tone="landlord"
-                className="block px-3 py-2 text-xs"
-                onNavigate={closeMenu}
-              >
-                Landlords
-              </LandingNavLink>
-            </div>
-          )}
-        </div>
+          <JoinEarlyAccessButton size="sm" className="h-11 rounded-xl px-4 text-sm md:h-7 md:rounded-lg md:px-2 md:text-[11px]">
+            Join
+          </JoinEarlyAccessButton>
+        </nav>
       </div>
+
+      {menuOpen && (
+        <div
+          id="landing-nav-menu"
+          className="absolute inset-x-0 top-full z-50 border-y border-ui-tags bg-bg-card shadow-card md:hidden"
+        >
+          <div className="flex w-full flex-col py-2">
+            <LandingNavLink
+              href={LANDING_PATHS.renters}
+              label="Renters"
+              tone="renter"
+              className="block w-full rounded-none px-5 py-4 text-base"
+              onNavigate={closeMenu}
+            >
+              Renters
+            </LandingNavLink>
+            <LandingNavLink
+              href={LANDING_PATHS.landlords}
+              label="Landlords"
+              tone="landlord"
+              className="block w-full rounded-none px-5 py-4 text-base"
+              onNavigate={closeMenu}
+            >
+              Landlords
+            </LandingNavLink>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

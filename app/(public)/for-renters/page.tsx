@@ -1,5 +1,6 @@
 import { AccountabilityTicker } from "@/components/atmosphere/AccountabilityTicker";
 import { AppPreviewPhones } from "@/components/atmosphere/AppPreviewPhones";
+import { HowItWorksSection } from "@/components/atmosphere/HowItWorksSection";
 import { LandingFlywheel } from "@/components/atmosphere/LandingFlywheel";
 import { LandingPageFrame } from "@/components/atmosphere/LandingPageFrame";
 import { LANDING_SECTIONS } from "@/lib/landing-sections";
@@ -42,6 +43,7 @@ export default function ForRentersPage() {
       >
         <AppPreviewPhones audience="tenant" />
       </section>
+      <HowItWorksSection audience="tenant" />
     </LandingPageFrame>
   );
 }
