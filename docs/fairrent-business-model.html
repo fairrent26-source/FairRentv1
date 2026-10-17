@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FairRent — one let, lightly held</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #17212b;
+    --muted: #5c6b76;
+    --line: #e3ddd3;
+    --paper: #f4f1ea;
+    --card: #fffcf8;
+    --green: #21764c;
+    --green-bg: #e7f4ec;
+    --blue: #215f98;
+    --blue-bg: #e7f1f8;
+    --navy: #122033;
+    --amber: #a8641c;
+    --amber-bg: #f8efe4;
+    --teal: #0e7480;
+    --teal-bg: #e5f5f6;
+    --red: #a33d36;
+    --red-bg: #f8ecea;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #121a22; overflow: hidden; }
+  body { font-family: Outfit, "Segoe UI", sans-serif; color: var(--ink); }
+  .fit { width: 100vw; height: 100vh; display: grid; place-items: center; }
+  .poster {
+    width: 1600px; height: 900px; background: var(--paper); color: var(--ink);
+    transform: scale(var(--s, 1)); transform-origin: center center;
+    display: grid; grid-template-rows: 78px 22px minmax(0, 1.2fr) minmax(0, 0.92fr) 46px;
+    gap: 8px; padding: 14px 16px 12px;
+  }
+  .top { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: end; }
+  .eyebrow { margin: 0; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--green); font-weight: 600; }
+  h1 { margin: 2px 0 0; font-family: Fraunces, Georgia, serif; font-size: 30px; font-weight: 560; letter-spacing: -0.03em; line-height: 1.12; }
+  .lede { margin: 4px 0 0; font-size: 14px; line-height: 1.3; max-width: 920px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: flex-end; align-content: end; max-width: 460px; font-size: 12px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 9px; height: 9px; border-radius: 2px; background: var(--c); }
+  .rail { display: flex; align-items: center; gap: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .rail b { color: var(--ink); font-weight: 600; }
+  .rail i { font-style: normal; color: #b7b0a4; margin: 0 8px; }
+
+  .journey, .lower { display: grid; gap: 8px; min-height: 0; }
+  .journey { grid-template-columns: 1fr 1.08fr 1fr 1.28fr 1.08fr 1.12fr 1.08fr; }
+  .lower { grid-template-columns: 1.05fr 1.05fr .95fr 1.12fr 1.05fr 1.05fr 1.08fr; }
+  .card, .col { min-height: 0; min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; }
+  .card { border-top: 4px solid var(--c, var(--green)); }
+  .card header, .col header { padding: 8px 10px 0; }
+  .kicker { margin: 0; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--c, var(--green)); font-weight: 600; }
+  h2 { margin: 1px 0 0; font-family: Fraunces, Georgia, serif; font-size: 16px; font-weight: 560; letter-spacing: -0.02em; line-height: 1.15; }
+  .lines { list-style: none; margin: 6px 8px 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  .lines li { margin: 0; padding: 4px 6px 4px 8px; border-radius: 6px; background: var(--bg); border-left: 3px solid var(--c); font-size: 12px; line-height: 1.28; }
+  .foot { margin-top: auto; padding: 6px 10px; background: var(--bg); color: var(--ink); font-size: 11px; line-height: 1.3; }
+  .hub { background: var(--navy); color: #f3f6f8; border-color: var(--navy); border-top-color: var(--teal); }
+  .hub .kicker { color: #8fd0d4; }
+  .hub h2 { font-size: 17px; }
+  .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px 8px 0; }
+  .side { background: #1b3148; border-radius: 7px; padding: 6px 7px; }
+  .side p { margin: 0; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #8fd0d4; font-weight: 600; }
+  .side span { display: block; margin-top: 2px; font-size: 11.5px; line-height: 1.25; }
+  .mods { list-style: none; margin: 6px 8px 8px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .mods li { margin: 0; background: #163246; border-left: 3px solid var(--teal); border-radius: 6px; padding: 5px 6px; font-size: 11.5px; line-height: 1.25; }
+
+  .col header { padding: 7px 9px; background: var(--c); color: #fff; }
+  .col header h2 { font-size: 13px; }
+  .col .lines { margin: 6px 8px 8px; gap: 2px; }
+  .col .lines li { background: transparent; border-left: 0; padding: 1px 0 1px 11px; position: relative; font-size: 11.5px; line-height: 1.28; }
+  .col .lines li::before { content: ""; position: absolute; left: 0; top: .48em; width: 5px; height: 5px; border-radius: 1px; background: var(--c); }
+  .money .price { margin: 6px 9px 0; font-family: Fraunces, Georgia, serif; font-size: 14px; line-height: 1.2; }
+  .money .price small { display: block; font-family: Outfit, sans-serif; font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 1px; }
+  .sum { display: flex; gap: 6px; margin: 6px 9px 0; }
+  .sum div { flex: 1; background: #f6f3ed; border-radius: 6px; padding: 4px 5px; }
+  .sum b { display: block; font-family: Fraunces, Georgia, serif; font-size: 14px; }
+  .sum span { font-size: 10px; color: var(--muted); }
+  .note { margin: 6px 9px 8px; font-size: 10.5px; line-height: 1.3; color: var(--muted); }
+
+  .band { background: var(--navy); color: #f4f7f8; border-radius: 10px; display: flex; align-items: center; gap: 16px; padding: 0 16px; }
+  .band strong { font-family: Fraunces, Georgia, serif; font-size: 15px; font-weight: 560; white-space: nowrap; }
+  .band span { font-size: 13px; line-height: 1.3; }
+  .g { --c: var(--green); --bg: var(--green-bg); }
+  .b { --c: var(--blue); --bg: var(--blue-bg); }
+  .a { --c: var(--amber); --bg: var(--amber-bg); }
+  .t { --c: var(--teal); --bg: var(--teal-bg); }
+  .r { --c: var(--red); --bg: var(--red-bg); }
+  .n { --c: var(--navy); --bg: #e7eef3; }
+</style>
+</head>
+<body>
+<div class="fit">
+<article class="poster">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Follow one let, from the listing to the last repair</p>
+      <h1>FairRent holds the match. The landlord holds the rest.</h1>
+      <p class="lede">A tenant is found, scored, and introduced. The viewing, the agreement, the rent, and the repair bill stay with the people who should carry them.</p>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="--c:#21764c"></i>FairRent does this</span>
+      <span><i class="dot" style="--c:#215f98"></i>The landlord does this</span>
+      <span><i class="dot" style="--c:#a8641c"></i>Someone else does this</span>
+      <span><i class="dot" style="--c:#122033"></i>The landlord keeps it</span>
+      <span><i class="dot" style="--c:#0e7480"></i>The platform holds it</span>
+      <span><i class="dot" style="--c:#a33d36"></i>The line we do not cross</span>
+    </div>
+  </header>
+
+  <div class="rail">
+    <b>List</b><i>→</i><b>Score</b><i>→</i><b>Meet</b><i>→</i><b>Hold</b><i>→</i><b>Pay</b><i>→</i><b>Mend</b><i>→</i><b>Remember</b>
+  </div>
+
+  <section class="journey">
+    <article class="card g">
+      <header><p class="kicker">01 · The offer</p><h2>A home goes up</h2></header>
+      <ul class="lines">
+        <li class="b">The landlord brings the property, and the truth of the listing.</li>
+        <li class="g">FairRent gives it a place to be found.</li>
+      </ul>
+      <p class="foot">They supply the home. We open the door. They still decide.</p>
+    </article>
+    <article class="card g">
+      <header><p class="kicker">02 · The match</p><h2>A tenant comes into focus</h2></header>
+      <ul class="lines">
+        <li class="b">Someone discovers the home and applies.</li>
+        <li class="g">FairRent scores them in the open.</li>
+        <li class="b">The landlord makes the final yes.</li>
+      </ul>
+      <p class="foot">We show the picture. The landlord chooses the person.</p>
+    </article>
+    <article class="card g">
+      <header><p class="kicker">03 · The meeting</p><h2>They meet at the door</h2></header>
+      <ul class="lines">
+        <li class="g">One shared calendar finds an hour that suits both.</li>
+        <li class="b">The landlord walks them through the home.</li>
+      </ul>
+      <p class="foot">We schedule the hour. FairRent does not attend.</p>
+    </article>
+    <article class="card hub">
+      <header><p class="kicker">The hinge</p><h2>FairRent holds the thread</h2></header>
+      <div class="sides">
+        <div class="side"><p>The tenant brings</p><span>An application, and themselves at the viewing.</span></div>
+        <div class="side"><p>Others bring</p><span>The payment rail, a reference, a contractor.</span></div>
+      </div>
+      <ul class="mods">
+        <li>The marketplace, and the match</li>
+        <li>The open tenant score</li>
+        <li>The calendar, and the tenancy file</li>
+        <li>The repair, from report to record</li>
+      </ul>
+    </article>
+    <article class="card b">
+      <header><p class="kicker">04 · The money</p><h2>Rent goes home</h2></header>
+      <ul class="lines">
+        <li class="b">The tenant instructs a payment into the landlord’s own account.</li>
+        <li class="r">That money never sits with FairRent.</li>
+        <li class="b">If it is late, the landlord chases it, and can mark it here.</li>
+      </ul>
+      <p class="foot a">A bank moves the cash. The landlord watches it, and the arrears.</p>
+    </article>
+    <article class="card g">
+      <header><p class="kicker">05 · The break</p><h2>Something needs mending</h2></header>
+      <ul class="lines">
+        <li class="b">The tenant raises it in the app.</li>
+        <li class="g">An assistant checks the report and lines up a contractor.</li>
+        <li class="a">The contractor prices the job.</li>
+        <li class="b">The landlord approves the quote, and pays it.</li>
+      </ul>
+      <p class="foot">We coordinate. They fund. A contractor does the work.</p>
+    </article>
+    <article class="card t">
+      <header><p class="kicker">06 · The close</p><h2>The record stays</h2></header>
+      <ul class="lines">
+        <li class="a">The contractor finishes.</li>
+        <li class="b">Landlord and tenant can say how it went.</li>
+        <li class="g">FairRent keeps the cost, the time, and who did the work.</li>
+      </ul>
+      <p class="foot r">The legal edge of this service still has to be confirmed before launch.</p>
+    </article>
+  </section>
+
+  <section class="lower">
+    <article class="col g">
+      <header><h2>What FairRent keeps</h2></header>
+      <ul class="lines">
+        <li>The digital marketplace</li>
+        <li>Matching, and the open score</li>
+        <li>The shared viewing calendar</li>
+        <li>The tenancy file, stored for both</li>
+        <li>Setting up the rent instruction</li>
+        <li>Taking in a repair, and triaging it</li>
+        <li>The assistant who coordinates</li>
+        <li>The contractor list</li>
+        <li>Passing the quote across</li>
+        <li>The record of how it went</li>
+      </ul>
+    </article>
+    <article class="col n">
+      <header><h2>What the landlord keeps</h2></header>
+      <ul class="lines">
+        <li>A listing that is accurate</li>
+        <li>The final choice of tenant</li>
+        <li>The physical viewing</li>
+        <li>Writing the tenancy agreement</li>
+        <li>Rent, paid into their account</li>
+        <li>Watching it arrive</li>
+        <li>Chasing what is late</li>
+        <li>Saying yes to a repair</li>
+        <li>Paying the contractor</li>
+        <li>A landlord’s legal duties</li>
+        <li>The call, when something is urgent</li>
+      </ul>
+    </article>
+    <article class="col a">
+      <header><h2>Who else steps in</h2></header>
+      <ul class="lines">
+        <li>A bank or payment firm moves the rent</li>
+        <li>A handyman inspects and repairs</li>
+        <li>A specialist takes regulated work</li>
+        <li>A referencing firm may add a check</li>
+        <li>A lawyer advises when it is needed</li>
+      </ul>
+    </article>
+    <article class="col money" style="--c:#1d3f6e">
+      <header><h2>What a let costs</h2></header>
+      <p class="price">25% of one month<small>Charged when a landlord lets through FairRent.</small></p>
+      <p class="price">2–3% of the rental income<small>For the platform, and the repair coordination.</small></p>
+      <div class="sum">
+        <div><b>£500</b><span>To let a £2,000 month</span></div>
+        <div><b>£600</b><span>Care, across the year</span></div>
+        <div><b>£1,100</b><span>First year, illustrated</span></div>
+      </div>
+      <p class="note">Illustrative, before VAT. The repair invoice is never taken from this fee. The landlord pays the contractor.</p>
+    </article>
+    <article class="col r">
+      <header><h2>The line we do not cross</h2></header>
+      <ul class="lines">
+        <li>We do not walk the property</li>
+        <li>We do not choose the tenant</li>
+        <li>We do not write the lease</li>
+        <li>We do not hold or pass on rent</li>
+        <li>We are not the rent collector</li>
+        <li>We do not fund ordinary repairs</li>
+        <li>We do not do the physical work</li>
+        <li>We do not take on every legal duty</li>
+        <li>We do not promise unlimited cover</li>
+      </ul>
+    </article>
+    <article class="col g">
+      <header><h2>Why a landlord stays</h2></header>
+      <ul class="lines">
+        <li>A lighter fee than a high-street let</li>
+        <li>Software, coordination, and the visit stay apart</li>
+        <li>A small standing team</li>
+        <li>No repair float inside the fee</li>
+        <li>Quotes the landlord can actually see</li>
+        <li>The match gets sharper as the record grows</li>
+        <li>The relationship pays on, month after month</li>
+      </ul>
+    </article>
+    <article class="col r">
+      <header><h2>What still has to be true</h2></header>
+      <ul class="lines">
+        <li>Landlords must show up, and chase arrears</li>
+        <li>The score must be fair, and governed</li>
+        <li>Paying the landlord direct needs a proper setup</li>
+        <li>Repairs can swallow hours</li>
+        <li>Emergencies need a clear path</li>
+        <li>A small fee leaves less to win the next landlord</li>
+        <li>Contractors must be good, and free</li>
+        <li>Legal duties stay with the landlord</li>
+        <li>A specialist must say what FairRent is, in law</li>
+      </ul>
+    </article>
+  </section>
+
+  <footer class="band">
+    <strong>A marketplace with a light operations layer.</strong>
+    <span>Own the matching, the score, and the coordination. Leave the visit, the cash, and the repair bill with the party who should carry them.</span>
+  </footer>
+</article>
+</div>
+<script>
+  function fit() {
+    var scale = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+    document.documentElement.style.setProperty("--s", String(scale));
+  }
+  window.addEventListener("resize", fit);
+  fit();
+</script>
+</body>
+</html>
