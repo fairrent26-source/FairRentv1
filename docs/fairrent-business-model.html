@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FairRent business model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,560;8..60,650&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --stage-w: 250px;
+    --paper: #f3f1eb;
+    --card: #fffcf8;
+    --ink: #14202c;
+    --muted: #5d6c78;
+    --line: #e3ddd2;
+    --fairrent: #2f7d52;
+    --fairrent-bg: #e5f3eb;
+    --landlord: #2f6ea8;
+    --landlord-bg: #e6f1f8;
+    --owns: #17324a;
+    --owns-bg: #e7eef3;
+    --third: #b26a22;
+    --third-bg: #f8efe4;
+    --module: #0f7c86;
+    --module-bg: #e4f4f5;
+    --risk: #b2433a;
+    --risk-bg: #f8ecea;
+    --platform: #102033;
+    --revenue: #1d3f6e;
+    --shadow: none;
+    font-family: "Source Sans 3", "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  button, select, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  h1, h2, h3, .serif { font-family: "Source Serif 4", Georgia, serif; font-weight: 560; }
+  [contenteditable="true"] { border-radius: 4px; }
+  [contenteditable="true"]:hover { background: rgba(255,255,255,.45); }
+  [contenteditable="true"]:focus { background: #fff; outline: 1px solid var(--line); }
+  [contenteditable="true"]:empty::before { content: attr(data-placeholder); color: var(--muted); }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 5;
+    display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center;
+    padding: 10px 22px;
+    background: rgba(243,241,235,.94);
+    border-bottom: 1px solid var(--line);
+  }
+  .toolbar p { margin: 0; color: var(--muted); font-size: 13px; flex: 1 1 280px; }
+  .cluster { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .btn, .select, .num {
+    border: 1px solid var(--line); background: var(--card); border-radius: 6px;
+    padding: 5px 10px; font-size: 13px;
+  }
+  .btn:hover { border-color: #c9c1b4; }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .width { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+  .width input { width: 110px; }
+
+  .page { max-width: 1280px; margin: 0 auto; padding: 28px 22px 64px; }
+  header.mast { margin-bottom: 18px; }
+  header.mast h1 { font-size: 34px; line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.02em; }
+  header.mast .sub { font-size: 17px; line-height: 1.45; margin: 0; max-width: 70ch; }
+  .source { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--line); background: var(--card); border-radius: 999px;
+    padding: 4px 10px 4px 6px; font-size: 13px;
+  }
+  .chip.on { border-color: var(--ink); }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; background: var(--tone); flex: 0 0 auto; }
+  .legend-note { margin: 0 0 18px; color: var(--muted); font-size: 13px; max-width: 78ch; }
+
+  .rail { display: flex; flex-wrap: wrap; gap: 6px 0; align-items: center; margin: 0 0 12px; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .rail span { white-space: nowrap; }
+  .rail i { font-style: normal; margin: 0 8px; color: #b7b1a6; }
+
+  .journey { display: flex; gap: 12px; align-items: stretch; }
+  .journey.board { flex-wrap: wrap; }
+  .journey.strip { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
+  .card {
+    flex: 1 1 var(--stage-w);
+    min-width: min(100%, 300px);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--tone, var(--ink));
+    border-radius: 10px;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .journey.strip .card { flex: 0 0 var(--stage-w); }
+  .card.platform {
+    flex-basis: calc(var(--stage-w) * 1.7);
+    background: var(--platform); color: #f4f7f8; border-color: var(--platform); border-top-color: var(--module);
+  }
+  .journey.strip .card.platform { flex-basis: calc(var(--stage-w) * 1.7); }
+  .card.dim, .line.dim, .panel.dim, .cap.dim { opacity: .38; }
+  .card.drop, .line.drop, .panel.drop, .cap.drop { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  .card-h, .panel-h { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; padding: 10px 12px 0; }
+  .card.platform .card-h { padding-bottom: 0; }
+  .kicker { margin: 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--tone); font-weight: 700; }
+  .card.platform .kicker { color: #8fd0d4; }
+  .kicker, .card-h .serif, .panel-h .serif, .lede, .sub, .source, .disclaimer,
+  .line .text, .cap .text, .item .text, .foot .text {
+    display: block; width: 100%; white-space: normal; overflow-wrap: break-word;
+  }
+  .cluster .text { display: inline-block; width: auto; min-width: 8em; }
+  .card-h .serif { margin: 2px 0 0; font-size: 20px; line-height: 1.25; }
+  .panel-h .serif { font-size: 18px; line-height: 1.25; color: #fff; }
+  .band .serif { display: block; font-size: 22px; line-height: 1.3; }
+  .fee { font-family: "Source Serif 4", Georgia, serif; }
+  .grow { flex: 1 1 100%; min-width: 0; }
+  .controls { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+  .icon, .mini {
+    border: 1px solid var(--line); background: rgba(255,255,255,.7); border-radius: 5px;
+    padding: 2px 6px; font-size: 12px; line-height: 1.4;
+  }
+  .card.platform .icon, .card.platform .mini, .card.platform .select { background: #1b3148; color: #f4f7f8; border-color: #2c4664; }
+  .grip { cursor: grab; }
+  .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .line, .cap, .item {
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start;
+    padding: 7px 8px; border-radius: 7px; background: var(--tone-bg, var(--paper));
+    border-left: 3px solid var(--tone, var(--line));
+  }
+  .line .text, .cap .text, .item .text { flex: 1 1 100%; }
+  .item { border-left-width: 0; background: transparent; padding: 4px 0; }
+  .line .text, .cap .text, .item .text, .foot .text { min-width: 0; font-size: 14px; line-height: 1.45; }
+  .foot { margin-top: auto; padding: 8px 12px; background: var(--tone-bg); border-radius: 0 0 9px 9px; font-size: 13px; }
+  .card.platform .foot { background: transparent; }
+  .sides { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .side { background: #1b3148; border-radius: 8px; padding: 8px; }
+  .side .label { margin: 0; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #8fd0d4; font-weight: 700; }
+  .side .text { font-size: 13px; line-height: 1.35; }
+  .lede { margin: 0; color: #d5dee6; font-size: 14px; line-height: 1.4; }
+  .caps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cap { background: #163246; border-left-color: var(--module); color: #f4f7f8; }
+  .add { align-self: flex-start; }
+
+  .panels { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+  .panel {
+    grid-column: span var(--span, 4);
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    min-width: 0; display: flex; flex-direction: column;
+  }
+  .panel-h { padding: 10px 12px; background: var(--tone); color: #fff; border-radius: 9px 9px 0 0; }
+  .panel-h h2 { font-size: 18px; margin: 0; }
+  .panel-h .icon, .panel-h .mini, .panel-h .select { background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.28); }
+  .panel .body { padding: 12px 14px 14px; }
+  .span-read { font-size: 12px; opacity: .85; }
+
+  .streams { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stream h3 { margin: 0 0 4px; font-size: 15px; }
+  .stream .fee { margin: 0; font-size: 22px; }
+  .stream .text { font-size: 14px; line-height: 1.4; }
+  .figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+  .figure { background: var(--paper); border-radius: 8px; padding: 10px; }
+  .figure span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+  .figure strong { display: block; font-size: 26px; line-height: 1.1; }
+  .figure .num { width: 100%; margin-top: 6px; background: #fff; }
+  .formula, .disclaimer { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .warn { color: var(--risk); }
+
+  .band {
+    margin-top: 22px; background: var(--platform); color: #f4f7f8;
+    border-radius: 12px; padding: 18px 20px;
+  }
+  .band h2 { margin: 0 0 6px; font-size: 22px; }
+  .band p { margin: 0; font-size: 16px; line-height: 1.45; }
+
+  body.presenting .edit-only { display: none !important; }
+  @media (max-width: 860px) {
+    header.mast h1 { font-size: 28px; }
+    .panel { grid-column: 1 / -1 !important; }
+    .streams, .figures, .caps, .sides { grid-template-columns: 1fr; }
+  }
+  @media print {
+    .toolbar, .edit-only { display: none !important; }
+    .page { max-width: none; }
+    .card, .panel { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const STORAGE_KEY = "fairrent-model-board-v1";
+
+const TONES = {
+  fairrent: { label: "FairRent activity", ink: "#2f7d52", bg: "#e5f3eb" },
+  landlord: { label: "Landlord responsibility", ink: "#2f6ea8", bg: "#e6f1f8" },
+  owns: { label: "Landlord owns", ink: "#17324a", bg: "#e7eef3" },
+  third: { label: "Outsourced third party", ink: "#b26a22", bg: "#f8efe4" },
+  module: { label: "Platform activity", ink: "#0f7c86", bg: "#e4f4f5" },
+  risk: { label: "Exclusion or risk", ink: "#b2433a", bg: "#f8ecea" },
+  platform: { label: "Platform", ink: "#102033", bg: "#e7eef3" },
+  revenue: { label: "Revenue", ink: "#1d3f6e", bg: "#e8eef6" }
+};
+
+const POSTER = {
+  version: 1,
+  title: "Investor-quality business model",
+  subtitle: "FairRent, a technology-enabled rental marketplace to reduce the cost and complexity of renting residential property in the UK.",
+  source: "Rebuilt from the FairRent investor diagram. Fees are proposed. The worked example uses the diagram’s £2,000 rent, 25% letting fee and 2.5% illustration rate.",
+  legendNote: "The fifth label on the source legend is too small to read. That colour marks the four modules in the hub, so it is named Platform activities. Click the name to rename it.",
+  flowNote: "Stage numbers follow the source diagram. The platform sits in the middle, so the journey runs 1, 2, 3, then 5, 6, 7.",
+  footerTitle: "FairRent: a rental marketplace with a lightweight operations layer",
+  footerText: "Own the matching, scoring and digital coordination. Leave physical execution, rental cash flows and repair expenditure with the appropriate party.",
+  legend: [
+    { tone: "fairrent", label: "Activities FairRent" },
+    { tone: "owns", label: "Landlord owns" },
+    { tone: "third", label: "Outsourced third party" },
+    { tone: "landlord", label: "Landlord responsibility" },
+    { tone: "module", label: "Platform activities" },
+    { tone: "risk", label: "Exclusions, risks and potential failure points" }
+  ],
+  ui: { stageWidth: 320, editing: true, layout: "board", filter: "" },
+  journey: [
+    {
+      id: "s1", kind: "stage", tone: "fairrent", kicker: "Stage 1", title: "Property listing",
+      lines: [
+        { id: "s1a", tone: "landlord", text: "Landlord supplies property details and lists the property." },
+        { id: "s1b", tone: "fairrent", text: "FairRent provides the digital marketplace." }
+      ],
+      foot: { tone: "landlord", text: "Landlord supplies the property information. FairRent facilitates; the landlord decides." }
+    },
+    {
+      id: "s2", kind: "stage", tone: "fairrent", kicker: "Stage 2", title: "Tenant discovery and scoring",
+      lines: [
+        { id: "s2a", tone: "landlord", text: "Tenant discovers and applies for a property." },
+        { id: "s2b", tone: "fairrent", text: "FairRent provides matching functionality and a transparent tenant-scoring process." },
+        { id: "s2c", tone: "landlord", text: "Landlord reviews the application and makes the final selection decision." }
+      ],
+      foot: { tone: "fairrent", text: "FairRent facilitates; the landlord decides." }
+    },
+    {
+      id: "s3", kind: "stage", tone: "fairrent", kicker: "Stage 3", title: "Viewing scheduling",
+      lines: [
+        { id: "s3a", tone: "fairrent", text: "FairRent provides a shared calendar." },
+        { id: "s3b", tone: "landlord", text: "Landlord and tenant select mutually convenient viewing times." },
+        { id: "s3c", tone: "landlord", text: "Landlord conducts the physical viewing." }
+      ],
+      foot: { tone: "landlord", text: "Scheduling by FairRent; viewing by the landlord." }
+    },
+    {
+      id: "hub", kind: "platform", tone: "platform", kicker: "FairRent platform",
+      title: "Tenant matching, scoring, digital coordination and maintenance workflow",
+      leftLabel: "Tenant",
+      leftText: "Information, application and personal viewing",
+      rightLabel: "Third-party service providers",
+      rightText: "Payment, referencing and contractors",
+      capabilities: [
+        { id: "c1", tone: "module", text: "Property marketplace and tenant matching" },
+        { id: "c2", tone: "module", text: "Tenant scoring and assessment tools" },
+        { id: "c3", tone: "module", text: "Shared viewing calendar and digital tenancy records" },
+        { id: "c4", tone: "module", text: "Maintenance reporting, triage, coordination and outcome tracking" }
+      ]
+    },
+    {
+      id: "s5", kind: "stage", tone: "landlord", kicker: "Stage 5", title: "Rental payment setup",
+      lines: [
+        { id: "s5a", tone: "landlord", text: "Tenant establishes a recurring payment instruction to the landlord’s nominated bank account, using a supported payment provider." },
+        { id: "s5b", tone: "landlord", text: "Rent flows directly to the landlord." },
+        { id: "s5c", tone: "risk", text: "FairRent does not receive, hold or distribute rent." },
+        { id: "s5d", tone: "landlord", text: "Landlord monitors receipts and manages arrears." }
+      ],
+      foot: { tone: "third", text: "Payment infrastructure is supplied by a suitable third party. The landlord handles rent collection and arrears." }
+    },
+    {
+      id: "s6", kind: "stage", tone: "fairrent", kicker: "Stage 6", title: "Maintenance request",
+      lines: [
+        { id: "s6a", tone: "landlord", text: "Tenant submits a maintenance issue through the FairRent application." },
+        { id: "s6b", tone: "fairrent", text: "A FairRent virtual assistant triages the request, gathers information and coordinates with an independent contractor." },
+        { id: "s6c", tone: "third", text: "Contractor assesses the problem and provides a quotation." },
+        { id: "s6d", tone: "fairrent", text: "FairRent communicates the quotation to the landlord." },
+        { id: "s6e", tone: "landlord", text: "Landlord approves the expenditure and pays for the work." }
+      ],
+      foot: { tone: "fairrent", text: "FairRent coordinates. The landlord approves and funds. The contractor performs the repair." }
+    },
+    {
+      id: "s7", kind: "stage", tone: "module", kicker: "Stage 7", title: "Completion and performance record",
+      lines: [
+        { id: "s7a", tone: "third", text: "Contractor completes the work." },
+        { id: "s7b", tone: "landlord", text: "Tenant and landlord can provide feedback." },
+        { id: "s7c", tone: "fairrent", text: "FairRent records completion, costs, response times and contractor performance." },
+        { id: "s7d", tone: "module", text: "The platform retains an auditable record of the maintenance process." }
+      ],
+      foot: { tone: "risk", text: "The final service scope and regulatory position must be validated before launch." }
+    }
+  ],
+  panels: [
+    listPanel("p-fr", "FairRent owns", "fairrent", 4, [
+      "Digital rental marketplace",
+      "Tenant matching and scoring tools",
+      "Shared viewing calendar",
+      "Digital tenancy-document storage",
+      "Supported recurring-payment setup workflow",
+      "Maintenance request intake and triage",
+      "Virtual-assistant coordination",
+      "Contractor network administration",
+      "Quotation communication",
+      "Maintenance tracking and performance records",
+      "Platform reporting and notifications"
+    ]),
+    listPanel("p-ll", "Landlord owns", "owns", 4, [
+      "Property listing accuracy",
+      "Final tenant selection",
+      "Physical viewings",
+      "Completing the tenancy agreements",
+      "Receiving rent directly",
+      "Monitoring rent payments",
+      "Chasing arrears",
+      "Approving repair expenditure",
+      "Paying contractors for maintenance",
+      "Meeting applicable landlord obligations",
+      "Making decisions when urgent issues are escalated"
+    ]),
+    listPanel("p-tp", "Third parties deliver", "third", 4, [
+      "Bank or payment provider executes supported payment instructions",
+      "Independent handymen and tradespeople inspect and repair properties",
+      "Specialist contractors handle complex or regulated work",
+      "Referencing or verification providers may supply relevant information",
+      "Legal professionals provide advice when required"
+    ]),
+    {
+      id: "p-rev", kind: "revenue", tone: "revenue", span: 7, title: "Revenue",
+      lettingPct: 25,
+      bandLow: 2,
+      bandHigh: 3,
+      basis: "rental income",
+      lettingWhen: "Charged when a landlord successfully lets a property through FairRent.",
+      covers: "Covers the defined digital platform and maintenance-coordination service.",
+      rent: 2000,
+      illustrationPct: 2.5,
+      disclaimer: "Figures are labelled as illustrative and subject to final pricing and VAT treatment.",
+      repairNote: "Landlords pay repair and maintenance costs directly. FairRent coordinates the process but does not automatically absorb repair expenditure."
+    },
+    listPanel("p-op", "Operating model", "fairrent", 5, [
+      "One or two virtual assistants at launch",
+      "Centralised digital maintenance workflow",
+      "Independent local contractor network",
+      "Landlord approval before non-emergency expenditure",
+      "Escalation for urgent, complex or unresolved issues",
+      "Performance tracking through the application"
+    ]),
+    listPanel("p-not", "What FairRent deliberately does not do", "risk", 4, [
+      "Does not conduct physical property viewings",
+      "Does not make the final tenant-selection decision",
+      "Does not prepare or complete tenancy agreements on the landlord’s behalf",
+      "Does not receive, hold or distribute rental income",
+      "Does not act as a full-service rent-collection agent",
+      "Does not fund ordinary repairs from the management fee",
+      "Does not physically perform maintenance",
+      "Does not automatically assume all landlord compliance obligations",
+      "Does not provide unrestricted or unlimited maintenance cover"
+    ]),
+    listPanel("p-adv", "Strategic advantages", "fairrent", 4, [
+      "Lower-cost alternative to traditional letting agents",
+      "Clear separation between software, coordination and physical service delivery",
+      "Lower fixed staffing requirements",
+      "No routine exposure to underlying repair expenditure",
+      "Transparent contractor quotations and expenditure",
+      "Potential network effects between landlords and tenants",
+      "Potential to improve tenant matching and operational efficiency through data",
+      "Recurring revenue from ongoing platform usage"
+    ]),
+    listPanel("p-risk", "Key risks to validate", "risk", 4, [
+      "Landlords must be willing to conduct viewings and manage arrears",
+      "Tenant scoring must be accurate, fair, transparent and appropriately governed",
+      "Direct-to-landlord payments require an appropriate technical and legal structure",
+      "Maintenance requests can become labour-intensive",
+      "Emergency issues require clear escalation procedures",
+      "Low recurring fees may limit customer-acquisition budgets",
+      "Contractor quality and availability can affect the customer experience",
+      "The landlord retains relevant statutory responsibilities",
+      "The legal and regulatory implications of FairRent’s exact activities require specialist review"
+    ])
+  ]
+};
+
+function listPanel(id, title, tone, span, items) {
+  return {
+    id, kind: "list", title, tone, span,
+    items: items.map((text, i) => ({ id: id + "-" + (i + 1), text }))
+  };
+}
+
+let model = load();
+let undoStack = [];
+let drag = null;
+let seq = 100;
+
+function clone(value) { return JSON.parse(JSON.stringify(value)); }
+function uid(prefix) { seq += 1; return prefix + "-" + seq.toString(36); }
+function money(value) {
+  return new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(Math.round(Number(value) || 0));
+}
+function editing() { return model.ui.editing !== false; }
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.version === 1 && Array.isArray(parsed.journey) && Array.isArray(parsed.panels)) return parsed;
+    }
+  } catch (err) { /* use the poster */ }
+  return clone(POSTER);
+}
+function commit() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(model)); } catch (err) { /* private mode */ }
+  const tag = document.getElementById("save-state");
+  if (tag) tag.textContent = "Saved in this browser";
+}
+function snapshot() {
+  undoStack.push(JSON.stringify(model));
+  if (undoStack.length > 60) undoStack.shift();
+}
+function undo() {
+  const prev = undoStack.pop();
+  if (!prev) return;
+  model = JSON.parse(prev);
+  commit();
+  render();
+}
+function resetPoster() {
+  if (!confirm("Replace your edits with the source diagram?")) return;
+  snapshot();
+  model = clone(POSTER);
+  commit();
+  render();
+}
+
+function h(tag, attrs, kids) {
+  const node = document.createElement(tag);
+  Object.entries(attrs || {}).forEach(([key, value]) => {
+    if (value == null || value === false) return;
+    if (key === "class") node.className = value;
+    else if (key === "style") node.setAttribute("style", value);
+    else if (key === "text") node.textContent = value;
+    else node.setAttribute(key, value === true ? "" : value);
+  });
+  (kids || []).flat().forEach((kid) => {
+    if (kid == null || kid === false) return;
+    node.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  });
+  return node;
+}
+function cssVars(tone) {
+  const meta = TONES[tone] || TONES.fairrent;
+  return "--tone:" + meta.ink + ";--tone-bg:" + meta.bg;
+}
+function editable(value, attrs, onCommit) {
+  const node = h("div", Object.assign({ contenteditable: editing() ? "true" : "false", spellcheck: "true" }, attrs));
+  node.textContent = value || "";
+  node.addEventListener("paste", (event) => {
+    event.preventDefault();
+    const text = (event.clipboardData || window.clipboardData).getData("text/plain");
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
+    sel.deleteFromDocument();
+    sel.getRangeAt(0).insertNode(document.createTextNode(text));
+    sel.collapseToEnd();
+  });
+  node.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); node.blur(); }
+  });
+  node.addEventListener("blur", () => {
+    const next = node.textContent.replace(/\s+/g, " ").trim();
+    if (next === (value || "")) return;
+    snapshot();
+    onCommit(next);
+    commit();
+  });
+  return node;
+}
+function toneSelect(current, onChange) {
+  const sel = h("select", { class: "select edit-only", title: "Colour" });
+  Object.entries(TONES).forEach(([key, meta]) => {
+    const opt = h("option", { value: key, text: meta.label });
+    if (key === current) opt.selected = true;
+    sel.append(opt);
+  });
+  sel.addEventListener("change", () => { snapshot(); onChange(sel.value); commit(); render(); });
+  return sel;
+}
+function icon(label, title, onClick, className) {
+  const btn = h("button", { class: "icon edit-only " + (className || ""), type: "button", title: title || label, text: label });
+  btn.addEventListener("click", (event) => { event.stopPropagation(); onClick(); });
+  return btn;
+}
+function grip(payload) {
+  const btn = h("button", { class: "icon grip edit-only", type: "button", title: "Drag to reorder", draggable: "true", text: "↕" });
+  btn.addEventListener("dragstart", (event) => {
+    drag = payload;
+    event.dataTransfer.setData("text/plain", payload.id);
+    event.dataTransfer.effectAllowed = "move";
+    event.stopPropagation();
+  });
+  btn.addEventListener("dragend", () => { drag = null; clearDrop(); });
+  return btn;
+}
+function clearDrop() {
+  document.querySelectorAll(".drop").forEach((node) => node.classList.remove("drop"));
+}
+function allow(event, zone) {
+  if (!drag || !compatible(drag, zone)) return;
+  event.preventDefault();
+  event.currentTarget.classList.add("drop");
+}
+function drop(event, zone) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.currentTarget.classList.remove("drop");
+  if (!drag || !compatible(drag, zone) || drag.id === zone.beforeId) { drag = null; return; }
+  const moving = drag;
+  drag = null;
+  snapshot();
+  const moved = relocate(moving, zone);
+  if (!moved) { undoStack.pop(); return; }
+  commit();
+  render();
+}
+function compatible(payload, zone) {
+  if (payload.kind === "journey") return zone.kind === "journey";
+  if (payload.kind === "line") return zone.kind === "line";
+  if (payload.kind === "cap") return zone.kind === "cap";
+  if (payload.kind === "panel") return zone.kind === "panel";
+  if (payload.kind === "item") return zone.kind === "item";
+  return false;
+}
+function take(list, id) {
+  const index = list.findIndex((item) => item.id === id);
+  if (index < 0) return null;
+  return list.splice(index, 1)[0];
+}
+function insertBefore(list, beforeId, item) {
+  const index = beforeId ? list.findIndex((entry) => entry.id === beforeId) : -1;
+  list.splice(index < 0 ? list.length : index, 0, item);
+}
+function relocate(payload, zone) {
+  if (payload.kind === "journey" && zone.kind === "journey") {
+    const item = take(model.journey, payload.id);
+    if (!item) return false;
+    insertBefore(model.journey, zone.beforeId, item);
+    return true;
+  }
+  if (payload.kind === "panel" && zone.kind === "panel") {
+    const item = take(model.panels, payload.id);
+    if (!item) return false;
+    insertBefore(model.panels, zone.beforeId, item);
+    return true;
+  }
+  if (payload.kind === "line") {
+    let item = null;
+    model.journey.forEach((block) => { if (block.lines && !item) item = take(block.lines, payload.id); });
+    const host = model.journey.find((block) => block.id === zone.hostId);
+    if (!item || !host) return false;
+    insertBefore(host.lines, zone.beforeId, item);
+    return true;
+  }
+  if (payload.kind === "cap") {
+    const hub = model.journey.find((block) => block.kind === "platform");
+    if (!hub) return false;
+    const item = take(hub.capabilities, payload.id);
+    if (!item) return false;
+    insertBefore(hub.capabilities, zone.beforeId, item);
+    return true;
+  }
+  if (payload.kind === "item") {
+    let item = null;
+    model.panels.forEach((panel) => { if (panel.items && !item) item = take(panel.items, payload.id); });
+    const host = model.panels.find((panel) => panel.id === zone.hostId);
+    if (!item || !host) return false;
+    insertBefore(host.items, zone.beforeId, item);
+    return true;
+  }
+  return false;
+}
+function moveBy(list, id, dir) {
+  const index = list.findIndex((item) => item.id === id);
+  const next = index + dir;
+  if (index < 0 || next < 0 || next >= list.length) return;
+  snapshot();
+  const [item] = list.splice(index, 1);
+  list.splice(next, 0, item);
+  commit();
+  render();
+}
+function removeById(list, id) {
+  const index = list.findIndex((item) => item.id === id);
+  if (index < 0) return;
+  snapshot();
+  list.splice(index, 1);
+  commit();
+  render();
+}
+function duplicate(list, id) {
+  const index = list.findIndex((item) => item.id === id);
+  if (index < 0) return;
+  snapshot();
+  const copy = clone(list[index]);
+  refreshIds(copy);
+  list.splice(index + 1, 0, copy);
+  commit();
+  render();
+}
+function refreshIds(node) {
+  node.id = uid(node.kind || "n");
+  ["lines", "capabilities", "items"].forEach((key) => {
+    if (Array.isArray(node[key])) node[key].forEach((child) => { child.id = uid("n"); });
+  });
+}
+function dim(tone) {
+  return model.ui.filter && model.ui.filter !== tone ? " dim" : "";
+}
+function zoneBind(node, zone) {
+  node.addEventListener("dragover", (event) => allow(event, zone));
+  node.addEventListener("dragleave", () => node.classList.remove("drop"));
+  node.addEventListener("drop", (event) => drop(event, zone));
+}
+
+function render() {
+  document.documentElement.style.setProperty("--stage-w", (model.ui.stageWidth || 320) + "px");
+  document.body.classList.toggle("presenting", !editing());
+  const app = document.getElementById("app");
+  app.replaceChildren(toolbar(), page());
+}
+
+function button(label, onClick, className) {
+  const node = h("button", { class: className || "btn", type: "button", text: label });
+  node.addEventListener("click", onClick);
+  return node;
+}
+
+function page() {
+  return h("main", { class: "page" }, [
+    mast(),
+    legend(),
+    editing() ? h("p", { class: "legend-note edit-only", text: model.legendNote }) : null,
+    h("div", { class: "rail" }, railBits()),
+    editing() ? editable(model.flowNote, { class: "source edit-only" }, (value) => { model.flowNote = value; }) : h("p", { class: "source", text: model.flowNote }),
+    journey(),
+    editing() ? button("Add stage", addStage, "btn edit-only add") : null,
+    h("section", { class: "panels" }, model.panels.map(renderPanel)),
+    editing() ? button("Add list", addPanel, "btn edit-only add") : null,
+    h("footer", { class: "band" }, [
+      editable(model.footerTitle, { class: "serif" }, (value) => { model.footerTitle = value; }),
+      editable(model.footerText, {}, (value) => { model.footerText = value; })
+    ])
+  ]);
+}
+
+function mast() {
+  return h("header", { class: "mast" }, [
+    editable(model.title, { class: "serif", style: "font-size:34px;line-height:1.15" }, (value) => { model.title = value; }),
+    editable(model.subtitle, { class: "sub" }, (value) => { model.subtitle = value; }),
+    editable(model.source, { class: "source" }, (value) => { model.source = value; })
+  ]);
+}
+function legend() {
+  return h("div", { class: "legend" }, model.legend.map((entry) => {
+    const chip = h("div", { class: "chip" + (model.ui.filter === entry.tone ? " on" : ""), style: cssVars(entry.tone), title: "Show only this colour" }, [
+      h("i", { class: "swatch" }),
+      editable(entry.label, {}, (value) => { entry.label = value; })
+    ]);
+    chip.addEventListener("click", (event) => {
+      if (event.target.closest("[contenteditable]")) return;
+      model.ui.filter = model.ui.filter === entry.tone ? "" : entry.tone;
+      commit();
+      render();
+    });
+    return chip;
+  }));
+}
+function railBits() {
+  const bits = [];
+  model.journey.forEach((block, index) => {
+    if (index) bits.push(h("i", { text: "→" }));
+    bits.push(h("span", { text: block.kind === "platform" ? "Platform" : block.kicker + " " + block.title }));
+  });
+  return bits;
+}
+function journey() {
+  const wrap = h("section", { class: "journey " + (model.ui.layout === "strip" ? "strip" : "board"), "aria-label": "Operating journey" });
+  model.journey.forEach((block) => wrap.append(block.kind === "platform" ? platformCard(block) : stageCard(block)));
+  return wrap;
+}
+function stageCard(block) {
+  const card = h("article", { class: "card" + (model.ui.filter && !stageToneMatch(block) ? " dim" : ""), style: cssVars(block.tone) });
+  zoneBind(card, { kind: "journey", beforeId: block.id });
+  card.append(
+    h("div", { class: "card-h" }, [
+      h("div", { class: "grow" }, [
+        editable(block.kicker, { class: "kicker" }, (value) => { block.kicker = value; }),
+        editable(block.title, { class: "serif" }, (value) => { block.title = value; })
+      ]),
+      h("div", { class: "controls" }, [
+        grip({ kind: "journey", id: block.id }),
+        icon("←", "Move left", () => moveBy(model.journey, block.id, -1)),
+        icon("→", "Move right", () => moveBy(model.journey, block.id, 1)),
+        toneSelect(block.tone, (tone) => { block.tone = tone; }),
+        icon("Copy", "Duplicate", () => duplicate(model.journey, block.id)),
+        icon("×", "Remove", () => removeById(model.journey, block.id))
+      ])
+    ]),
+    lineList(block),
+    h("div", { class: "foot", style: cssVars(block.foot.tone) }, [
+      editable(block.foot.text, { class: "text" }, (value) => { block.foot.text = value; })
+    ])
+  );
+  return card;
+}
+function stageToneMatch(block) {
+  if (!model.ui.filter) return true;
+  if (block.tone === model.ui.filter || block.foot.tone === model.ui.filter) return true;
+  return block.lines.some((line) => line.tone === model.ui.filter);
+}
+function lineList(block) {
+  const body = h("div", { class: "body" }, block.lines.map((line) => lineRow(block, line)).concat([
+    editing() ? button("Add step", () => addLine(block), "btn edit-only add") : null
+  ]));
+  zoneBind(body, { kind: "line", hostId: block.id, beforeId: null });
+  return body;
+}
+function lineRow(block, line) {
+  const row = h("div", { class: "line" + (model.ui.filter && line.tone !== model.ui.filter ? " dim" : ""), style: cssVars(line.tone) });
+  zoneBind(row, { kind: "line", hostId: block.id, beforeId: line.id });
+  row.append(
+    editable(line.text, { class: "text" }, (value) => { line.text = value; }),
+    h("div", { class: "controls edit-only" }, [
+      grip({ kind: "line", id: line.id }),
+      toneSelect(line.tone, (tone) => { line.tone = tone; }),
+      icon("×", "Remove step", () => removeById(block.lines, line.id))
+    ])
+  );
+  return row;
+}
+function platformCard(block) {
+  const card = h("article", { class: "card platform" + (model.ui.filter && model.ui.filter !== "platform" && model.ui.filter !== "module" ? " dim" : ""), style: cssVars("platform") });
+  zoneBind(card, { kind: "journey", beforeId: block.id });
+  card.append(
+    h("div", { class: "card-h" }, [
+      h("div", { class: "grow" }, [
+        editable(block.kicker, { class: "kicker" }, (value) => { block.kicker = value; })
+      ]),
+      h("div", { class: "controls" }, [
+        grip({ kind: "journey", id: block.id }),
+        icon("←", "Move left", () => moveBy(model.journey, block.id, -1)),
+        icon("→", "Move right", () => moveBy(model.journey, block.id, 1))
+      ])
+    ]),
+    h("div", { class: "body" }, [
+      h("div", { class: "sides" }, [
+        h("div", { class: "side" }, [
+          editable(block.leftLabel, { class: "label" }, (value) => { block.leftLabel = value; }),
+          editable(block.leftText, { class: "text" }, (value) => { block.leftText = value; })
+        ]),
+        h("div", { class: "side" }, [
+          editable(block.rightLabel, { class: "label" }, (value) => { block.rightLabel = value; }),
+          editable(block.rightText, { class: "text" }, (value) => { block.rightText = value; })
+        ])
+      ]),
+      editable(block.title, { class: "lede" }, (value) => { block.title = value; }),
+      capList(block)
+    ])
+  );
+  return card;
+}
+function capList(block) {
+  const wrap = h("div", { class: "caps" }, block.capabilities.map((cap) => capRow(block, cap)).concat([
+    editing() ? button("Add module", () => addCap(block), "btn edit-only add") : null
+  ]));
+  zoneBind(wrap, { kind: "cap", beforeId: null });
+  return wrap;
+}
+function capRow(block, cap) {
+  const row = h("div", { class: "cap" + (model.ui.filter && cap.tone !== model.ui.filter && model.ui.filter !== "platform" ? " dim" : ""), style: cssVars(cap.tone) });
+  zoneBind(row, { kind: "cap", beforeId: cap.id });
+  row.append(
+    editable(cap.text, { class: "text" }, (value) => { cap.text = value; }),
+    h("div", { class: "controls edit-only" }, [
+      grip({ kind: "cap", id: cap.id }),
+      icon("×", "Remove module", () => removeById(block.capabilities, cap.id))
+    ])
+  );
+  return row;
+}
+function renderPanel(panel) {
+  if (panel.kind === "revenue") return revenuePanel(panel);
+  const node = h("section", { class: "panel" + dim(panel.tone), style: cssVars(panel.tone) + ";--span:" + (panel.span || 4) });
+  zoneBind(node, { kind: "panel", beforeId: panel.id });
+  const body = h("div", { class: "body" }, panel.items.map((item) => itemRow(panel, item)).concat([
+    editing() ? button("Add item", () => addItem(panel), "btn edit-only add") : null
+  ]));
+  zoneBind(body, { kind: "item", hostId: panel.id, beforeId: null });
+  node.append(panelHead(panel, model.panels), body);
+  return node;
+}
+function panelHead(panel, list) {
+  return h("div", { class: "panel-h" }, [
+    editable(panel.title, { class: "serif grow" }, (value) => { panel.title = value; }),
+    h("div", { class: "controls" }, [
+      grip({ kind: "panel", id: panel.id }),
+      icon("←", "Move earlier", () => moveBy(list, panel.id, -1)),
+      icon("→", "Move later", () => moveBy(list, panel.id, 1)),
+      icon("−", "Narrower", () => setSpan(panel, -1)),
+      h("span", { class: "span-read edit-only", text: String(panel.span || 4) }),
+      icon("+", "Wider", () => setSpan(panel, 1)),
+      toneSelect(panel.tone, (tone) => { panel.tone = tone; }),
+      icon("Copy", "Duplicate", () => duplicate(list, panel.id)),
+      icon("×", "Remove", () => removeById(list, panel.id))
+    ])
+  ]);
+}
+function setSpan(panel, dir) {
+  const next = Math.min(12, Math.max(3, (panel.span || 4) + dir));
+  if (next === panel.span) return;
+  snapshot();
+  panel.span = next;
+  commit();
+  render();
+}
+function itemRow(panel, item) {
+  const row = h("div", { class: "item" });
+  zoneBind(row, { kind: "item", hostId: panel.id, beforeId: item.id });
+  row.append(
+    editable(item.text, { class: "text" }, (value) => { item.text = value; }),
+    h("div", { class: "controls edit-only" }, [
+      grip({ kind: "item", id: item.id }),
+      icon("×", "Remove item", () => removeById(panel.items, item.id))
+    ])
+  );
+  return row;
+}
+function revenuePanel(panel) {
+  const letting = (Number(panel.rent) || 0) * (Number(panel.lettingPct) || 0) / 100;
+  const annual = (Number(panel.rent) || 0) * 12 * (Number(panel.illustrationPct) || 0) / 100;
+  const first = letting + annual;
+  const outside = panel.illustrationPct < panel.bandLow || panel.illustrationPct > panel.bandHigh;
+  const node = h("section", { class: "panel" + dim(panel.tone), style: cssVars(panel.tone) + ";--span:" + (panel.span || 7) });
+  zoneBind(node, { kind: "panel", beforeId: panel.id });
+  node.append(
+    panelHead(panel, model.panels),
+    h("div", { class: "body" }, [
+      h("div", { class: "streams" }, [
+        h("div", { class: "stream" }, [
+          h("h3", { class: "serif", text: "Successful letting" }),
+          h("p", { class: "fee serif", id: "letting-label", text: panel.lettingPct + "% of one month’s rent" }),
+          editable(panel.lettingWhen, { class: "text" }, (value) => { panel.lettingWhen = value; })
+        ]),
+        h("div", { class: "stream" }, [
+          h("h3", { class: "serif", text: "Ongoing coordination" }),
+          h("p", { class: "fee serif", id: "band-label", text: panel.bandLow + "–" + panel.bandHigh + "% of " + panel.basis }),
+          editable(panel.covers, { class: "text" }, (value) => { panel.covers = value; })
+        ])
+      ]),
+      h("div", { class: "figures" }, [
+        figure("Monthly rent", "fig-rent", money(panel.rent), numberInput(panel, "rent", "1")),
+        figure("Letting percent", "fig-let", panel.lettingPct + "%", numberInput(panel, "lettingPct", "0.1")),
+        figure("Illustration percent", "fig-rate", panel.illustrationPct + "%", numberInput(panel, "illustrationPct", "0.1"))
+      ]),
+      h("div", { class: "figures" }, [
+        figure("This letting", "out-let", money(letting)),
+        figure("Annual coordination", "out-ann", money(annual)),
+        figure("First year", "out-sum", money(first))
+      ]),
+      h("p", { class: "formula", id: "formula", text: formula(panel, letting, annual) }),
+      outside ? h("p", { class: "formula warn", id: "band-warn", text: "The illustration rate sits outside the proposed " + panel.bandLow + "–" + panel.bandHigh + "% band." }) : h("p", { id: "band-warn", class: "formula", text: "" }),
+      h("div", { class: "cluster edit-only", style: "margin-top:8px" }, [
+        h("label", { class: "width", text: "Band from" }),
+        numberInput(panel, "bandLow", "0.1"),
+        h("label", { class: "width", text: "to" }),
+        numberInput(panel, "bandHigh", "0.1"),
+        h("label", { class: "width", text: "% of" }),
+        editable(panel.basis, { class: "text" }, (value) => { panel.basis = value; paintRevenue(); })
+      ]),
+      editable(panel.disclaimer, { class: "disclaimer" }, (value) => { panel.disclaimer = value; }),
+      editable(panel.repairNote, { class: "disclaimer" }, (value) => { panel.repairNote = value; })
+    ])
+  );
+  return node;
+}
+function figure(label, id, value, extra) {
+  return h("div", { class: "figure" }, [
+    h("span", { text: label }),
+    h("strong", { class: "serif", id: id, text: value }),
+    extra
+  ]);
+}
+function numberInput(panel, key, step) {
+  const input = h("input", { class: "num", type: "number", step: step, value: String(panel[key]) });
+  let before = "";
+  input.addEventListener("focus", () => { before = JSON.stringify(model); });
+  input.addEventListener("input", () => {
+    panel[key] = Number(input.value);
+    paintRevenue();
+  });
+  input.addEventListener("change", () => {
+    if (JSON.stringify(model) !== before) undoStack.push(before);
+    commit();
+  });
+  return input;
+}
+function formula(panel, letting, annual) {
+  return money(letting) + " letting fee = " + money(panel.rent) + " × " + panel.lettingPct + "%. "
+    + money(annual) + " annual coordination = " + money(panel.rent) + " × 12 × " + panel.illustrationPct + "%.";
+}
+function paintRevenue() {
+  const panel = model.panels.find((item) => item.kind === "revenue");
+  if (!panel) return;
+  const letting = (Number(panel.rent) || 0) * (Number(panel.lettingPct) || 0) / 100;
+  const annual = (Number(panel.rent) || 0) * 12 * (Number(panel.illustrationPct) || 0) / 100;
+  const set = (id, text) => { const node = document.getElementById(id); if (node) node.textContent = text; };
+  set("letting-label", panel.lettingPct + "% of one month’s rent");
+  set("band-label", panel.bandLow + "–" + panel.bandHigh + "% of " + panel.basis);
+  set("fig-rent", money(panel.rent));
+  set("fig-let", panel.lettingPct + "%");
+  set("fig-rate", panel.illustrationPct + "%");
+  set("out-let", money(letting));
+  set("out-ann", money(annual));
+  set("out-sum", money(letting + annual));
+  set("formula", formula(panel, letting, annual));
+  const warn = document.getElementById("band-warn");
+  if (warn) {
+    const outside = panel.illustrationPct < panel.bandLow || panel.illustrationPct > panel.bandHigh;
+    warn.textContent = outside ? "The illustration rate sits outside the proposed " + panel.bandLow + "–" + panel.bandHigh + "% band." : "";
+  }
+}
+function addStage() {
+  snapshot();
+  model.journey.push({
+    id: uid("st"), kind: "stage", tone: "fairrent", kicker: "Stage", title: "New stage",
+    lines: [{ id: uid("ln"), tone: "fairrent", text: "Describe what happens here." }],
+    foot: { tone: "landlord", text: "Who closes this step." }
+  });
+  commit(); render();
+}
+function addLine(block) {
+  snapshot();
+  block.lines.push({ id: uid("ln"), tone: "fairrent", text: "New step" });
+  commit(); render();
+}
+function addCap(block) {
+  snapshot();
+  block.capabilities.push({ id: uid("cap"), tone: "module", text: "New module" });
+  commit(); render();
+}
+function addItem(panel) {
+  snapshot();
+  panel.items.push({ id: uid("it"), text: "New item" });
+  commit(); render();
+}
+function addPanel() {
+  snapshot();
+  model.panels.push(listPanel(uid("p"), "New list", "fairrent", 4, ["First item"]));
+  commit(); render();
+}
+function exportJson() {
+  const blob = new Blob([JSON.stringify(model, null, 2)], { type: "application/json" });
+  const link = h("a", { href: URL.createObjectURL(blob), download: "fairrent-business-model.json" });
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+}
+function importJson(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(String(reader.result));
+      if (!parsed || !Array.isArray(parsed.journey) || !Array.isArray(parsed.panels)) throw new Error("missing");
+      snapshot();
+      parsed.version = 1;
+      parsed.ui = Object.assign(clone(POSTER.ui), parsed.ui || {});
+      model = parsed;
+      commit();
+      render();
+    } catch (err) {
+      alert("That file is not a FairRent model export.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function toolbar() {
+  const file = h("input", { id: "import-file", type: "file", accept: "application/json", style: "display:none" });
+  file.addEventListener("change", () => importJson(file.files && file.files[0]));
+  const width = h("input", { type: "range", min: "260", max: "420", value: String(model.ui.stageWidth || 320), "aria-label": "Card width" });
+  width.addEventListener("input", () => {
+    model.ui.stageWidth = Number(width.value);
+    document.documentElement.style.setProperty("--stage-w", model.ui.stageWidth + "px");
+  });
+  width.addEventListener("change", commit);
+  const layout = h("select", { class: "select edit-only", "aria-label": "Journey layout" });
+  [["board", "Wrapped board"], ["strip", "Single strip"]].forEach(([value, label]) => {
+    const opt = h("option", { value: value, text: label });
+    if (model.ui.layout === value) opt.selected = true;
+    layout.append(opt);
+  });
+  layout.addEventListener("change", () => { model.ui.layout = layout.value; commit(); render(); });
+  const undoBtn = button("Undo", undo, "btn");
+  undoBtn.disabled = undoStack.length === 0;
+  return h("div", { class: "toolbar" }, [
+    h("p", {}, [
+      editing()
+        ? "Click wording to amend it. Drag ↕ to reorder. Span and card width reflow the layout. "
+        : "Presentation view. ",
+      h("span", { id: "save-state", text: "Edits stay in this browser." })
+    ]),
+    h("label", { class: "width edit-only" }, ["Card width", width]),
+    h("div", { class: "cluster" }, [
+      layout,
+      button(editing() ? "Present" : "Edit", () => { model.ui.editing = !editing(); commit(); render(); }, "btn primary"),
+      undoBtn,
+      button("Reset", resetPoster, "btn edit-only"),
+      button("Export", exportJson, "btn edit-only"),
+      button("Import", () => file.click(), "btn edit-only"),
+      file
+    ])
+  ]);
+}
+
+document.addEventListener("keydown", (event) => {
+  const typing = document.activeElement && document.activeElement.isContentEditable;
+  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "z" && !typing) {
+    event.preventDefault();
+    undo();
+  }
+});
+
+render();
+</script>
+</body>
+</html>
